@@ -1,21 +1,55 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-4">
-      <label>Paste local here.</label>
-      <textarea type=" text "></textarea>
+      <label>Local Scan</label>
+      <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'"></textarea>
+      <button class="btn btn-primary btn-block" (click)="onSubmit(localInput.value)">Scan</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Corporations</label>
-      <div class="local-area"></div>
+      <div class="local-area container">
+        <div class="row display-item" *ngFor="let corp of getDisplayCorporations()">
+          <div class="col-3">
+            <img [src]="corp.corporation.image" alt="">
+          </div>
+          <div class="col-7">
+            {{corp.corporation.name}}
+          </div>
+          <div class="col-2">
+            {{corp.count}}
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Alliances</label>
-      <div class="local-area"></div>
+      <div class="local-area container">
+        <div class="row display-item" *ngFor="let item of getDisplayAlliances()">
+          <div class="col-3">
+            <img [src]="item.alliance.image" alt="">
+          </div>
+          <div class="col-7">
+            {{item.alliance.name}}
+          </div>
+          <div class="col-2">
+            {{item.count}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row ">
-    <div class="col-sm-12 col-md-12 col-lg-4 ">
-      <button class="btn btn-primary btn-block ">Scan</button>
-    </div>
+  <!-- Debug Info -->
+  <div *ngIf="false">
+    <div class="row">
+      <b>Characters:</b> {{localScanService.characters | json}}</div>
+    <div class="row">
+      <b>Corporations:</b> {{localScanService.corporations | json}}</div>
+    <div class="row">
+      <b>Alliances:</b> {{localScanService.alliances | json}}</div>
+    <div class="row">
+      <b>Displayed Corporations:</b> {{localScanService.displayCorporations | json}}</div>
+    <div class="row">
+      <b>Displayed Alliances:</b> {{localScanService.displayAlliances | json}}</div>
   </div>
+  <!-- End Debug Info -->
 </div>

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "eve-local-scan": {
+    "eve-electron-tools": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/eve-local-scan",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,12 +52,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -73,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eve-local-scan:build"
+            "browserTarget": "eve-electron-tools:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "eve-local-scan:build:production"
+              "browserTarget": "eve-electron-tools:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "eve-local-scan:build"
+            "browserTarget": "eve-electron-tools:build"
           }
         },
         "lint": {
@@ -101,7 +99,7 @@
         }
       }
     },
-    "eve-local-scan-e2e": {
+    "eve-electron-tools-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -109,11 +107,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "eve-local-scan:serve"
+            "devServerTarget": "eve-electron-tools:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "eve-local-scan:serve:production"
+              "devServerTarget": "eve-electron-tools:serve:production"
             }
           }
         },
@@ -129,5 +127,5 @@
       }
     }
   },
-  "defaultProject": "eve-local-scan"
+  "defaultProject": "eve-electron-tools"
 }
