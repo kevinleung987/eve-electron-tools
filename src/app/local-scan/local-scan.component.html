@@ -4,6 +4,7 @@
       <label>Local Scan</label>
       <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'"></textarea>
       <button class="btn btn-primary btn-block" (click)="onSubmit(localInput.value)">Scan</button>
+      <button class="btn btn-success btn-block" (click)="resetView()">Reset</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Corporations</label>
@@ -39,7 +40,7 @@
     </div>
   </div>
   <!-- Debug Info -->
-  <div *ngIf="false">
+  <div *ngIf="true">
     <div class="row">
       <b>Characters:</b> {{localScanService.characters | json}}</div>
     <div class="row">

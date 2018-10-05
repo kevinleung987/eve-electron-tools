@@ -28,22 +28,22 @@ export class LocalScanService {
     this.displayAlliances = {};
   }
 
-  addDisplayCorporation(corpId: number, corp: EveCorporation) {
+  addDisplayCorporation(corpId: number) {
     if (this.displayCorporations[corpId]) {
       this.displayCorporations[corpId].count++;
     } else {
       this.displayCorporations[corpId] = {
-        corporation: corp,
+        corporation: this.corporations[corpId],
         count: 1
       };
     }
   }
-  addDisplayAlliance(allianceId: number, alliance: EveAlliance) {
+  addDisplayAlliance(allianceId: number) {
     if (this.displayAlliances[allianceId]) {
       this.displayAlliances[allianceId].count++;
     } else {
       this.displayAlliances[allianceId] = {
-        alliance: alliance,
+        alliance: this.alliances[allianceId],
         count: 1
       };
     }
@@ -55,11 +55,7 @@ export class LocalScanService {
     for (let i = 0; i < lines.length; i++) {
       // Search the character in ESI
       this.http
-        .get(
-          'https://esi.evetech.net/latest/search/?categories=character&datasource=tranquility&language=en-us&search=' +
-            lines[i] +
-            '&strict=true'
-        )
+        .get(`https://esi.evetech.net/latest/search/?categories=character&datasource=tranquility&language=en-us&search=${lines[i]}&strict=true`)
         .subscribe(searchData => {
           // If the character exists in ESI
           if (searchData['character']) {
@@ -67,11 +63,7 @@ export class LocalScanService {
             if (!this.characters[id]) {
               // Find the character's id and corporation
               this.http
-                .get(
-                  'https://esi.evetech.net/latest/characters/' +
-                    id +
-                    '/?datasource=tranquility'
-                )
+                .get(`https://esi.evetech.net/latest/characters/${id}/?datasource=tranquility`)
                 .subscribe(charData => {
                   this.characters[id] = {
                     name: lines[i],
@@ -79,58 +71,41 @@ export class LocalScanService {
                   };
                   const corpId = charData['corporation_id'];
                   if (this.corporations[corpId]) {
-                    this.addDisplayCorporation(
-                      corpId,
-                      this.corporations[corpId]
-                    );
+                    this.addDisplayCorporation(corpId);
                   } else {
                     this.http
                       .get(
-                        'https://esi.evetech.net/latest/corporations/' +
-                          corpId +
-                          '/?datasource=tranquility'
-                      )
+                        `https://esi.evetech.net/latest/corporations/${corpId}/?datasource=tranquility`)
                       .subscribe(corpData => {
                         this.corporations[corpId] = {
                           name: corpData['name'],
                           alliance: corpData['alliance_id'] || null,
                           image: `http://image.eveonline.com/Corporation/${corpId}_128.png`
                         };
-                        this.addDisplayCorporation(
-                          corpId,
-                          this.corporations[corpId]
-                        );
+                        this.addDisplayCorporation(corpId);
                         if (corpData['alliance_id']) {
                           this.http
                             .get(
-                              'https://esi.evetech.net/latest/alliances/' +
-                                corpData['alliance_id'] +
-                                '/?datasource=tranquility'
-                            )
+                              `https://esi.evetech.net/latest/alliances/${corpData['alliance_id']}/?datasource=tranquility`)
                             .subscribe(allianceData => {
                               if (this.alliances[corpData['alliance_id']]) {
-                                this.addDisplayAlliance(
-                                  corpData['alliance_id'],
-                                  this.alliances[corpData['alliance_id']]
-                                );
+                                this.addDisplayAlliance(corpData['alliance_id']);
                               } else {
                                 this.alliances[corpData['alliance_id']] = {
                                   name: allianceData['name'],
                                   corporations: null,
-                                  image: `http://image.eveonline.com/Alliance/${
-                                    corpData['alliance_id']
-                                  }_128.png`
+                                  image: `http://image.eveonline.com/Alliance/${corpData['alliance_id']}_128.png`
                                 };
-                                this.addDisplayAlliance(
-                                  corpData['alliance_id'],
-                                  this.alliances[corpData['alliance_id']]
-                                );
+                                this.addDisplayAlliance(corpData['alliance_id']);
                               }
                             });
                         }
                       });
                   }
                 });
+            } else {
+              this.addDisplayCorporation(this.characters[id].corporation);
+              this.addDisplayAlliance(this.corporations[this.characters[id].corporation].alliance);
             }
           }
         });

@@ -7,9 +7,9 @@ import { LocalScanService } from '../services/local-scan.service';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
-  constructor(public localScanService: LocalScanService) {}
+  constructor(public localScanService: LocalScanService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSubmit(input) {
     this.localScanService.parse(input);
@@ -31,5 +31,10 @@ export class LocalScanComponent implements OnInit {
       output.push(this.localScanService.displayAlliances[element]);
     });
     return output;
+  }
+
+  resetView() {
+    this.localScanService.displayCorporations = {};
+    this.localScanService.displayAlliances = {};
   }
 }

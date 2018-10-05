@@ -8,19 +8,24 @@ import { AppComponent } from './app.component';
 import { LocalScanComponent } from './local-scan/local-scan.component';
 import { HeaderComponent } from './header/header.component';
 import { LocalScanService } from './services/local-scan.service';
+import { MarketService } from './services/market.service';
+import { MarketComponent } from './market/market.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LocalScanComponent,
-    HeaderComponent
+    HeaderComponent,
+    MarketComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [LocalScanService],
+  providers: [LocalScanService, MarketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
