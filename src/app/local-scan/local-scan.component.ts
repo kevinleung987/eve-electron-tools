@@ -19,7 +19,12 @@ export class LocalScanComponent implements OnInit {
     const keys = Object.keys(this.localScanService.displayCorporations);
     const output = [];
     keys.forEach(element => {
-      output.push(this.localScanService.displayCorporations[element]);
+      if (this.localScanService.displayCorporations[element] != null) {
+        output.push(this.localScanService.displayCorporations[element]);
+      }
+    });
+    output.sort(function (a, b) {
+      return b.count - a.count;
     });
     return output;
   }
@@ -28,8 +33,14 @@ export class LocalScanComponent implements OnInit {
     const keys = Object.keys(this.localScanService.displayAlliances);
     const output = [];
     keys.forEach(element => {
-      output.push(this.localScanService.displayAlliances[element]);
+      if (this.localScanService.displayAlliances[element] != null) {
+        output.push(this.localScanService.displayAlliances[element]);
+      }
     });
+    output.sort(function (a, b) {
+      return b.count - a.count;
+    });
+    console.log(output);
     return output;
   }
 

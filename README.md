@@ -2,6 +2,8 @@
 
 Open-source, back-end-optional, desktop alternative for popular community tools for EVE Online. Built using ElectronJS, Angular, and Bootstrap.
 
+
+![](preview.jpg?raw=true)
 ## About
 Why is EVE Electron Tools...
 - **Open-Source:** This application is free and open-source to allow you to be independent of any third-party, so you don't unknowingly feed your data to an enigmatic server with no idea where your it's going.

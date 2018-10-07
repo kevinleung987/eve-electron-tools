@@ -103,7 +103,7 @@ export class LocalScanService {
                       });
                   }
                 });
-            } else {
+            } else { // If the character already exists in our cache
               this.addDisplayCorporation(this.characters[id].corporation);
               this.addDisplayAlliance(this.corporations[this.characters[id].corporation].alliance);
             }
