@@ -1,4 +1,4 @@
-﻿TYPEID,GROUPID,TYPENAME
+typeID,groupID,typeName
 0,0,#System
 2,2,Corporation
 3,3,Region
@@ -17301,7 +17301,7 @@
 30949,952,Josameto Verification Center
 30950,673,Corporate Liaison
 30951,314,Verification Key
-30952,314,Dossier  Author Unknown
+30952,314,Dossier – Author Unknown
 30953,952,Cargo Facility 7A-21
 30954,314,Hyasyoda Captain
 30955,314,S.I Formula Sheet
@@ -18500,8 +18500,8 @@
 32368,306,Training Container - Salvaging
 32369,1207,Training Container - Data
 32370,306,Assembly Station DC105-A
-32371,314,Capital Ship Design  Dictator
-32372,283,Minedrill  E518 Crew
+32371,314,Capital Ship Design – “Dictator”
+32372,283,Minedrill – E518 Crew
 32374,280,Holoreel GRS-81A
 32375,314,Gas Passkey
 32376,314,Proof of Discovery: Gas
@@ -18511,7 +18511,7 @@
 32380,182,Roden Police Major
 32381,182,Roden Police Sergeant
 32382,306,Damaged Caldari Shuttle
-32383,314,Guristas Dirty' Explosive System
+32383,314,Guristas ‘Dirty' Explosive System
 32384,671,Captured Caldari State Shuttle
 32385,612,Guristas Battleship Vessel
 32386,226,Violent Wormhole
@@ -18526,7 +18526,7 @@
 32395,517,Atma Aulato's Falcon
 32396,517,Arment Caute's Lachesis
 32397,517,Yada Vinjivas's Gila
-32398,283,Lieutenant Kipo Foxfire Tekira
+32398,283,Lieutenant Kipo “Foxfire” Tekira
 32399,226,Statehood Incarnate Monument
 32400,597,Angel Frigate Vessel
 32401,595,Angel Cruiser Vessel
@@ -18535,7 +18535,7 @@
 32404,952,Cilis Leglise's Headquarters
 32405,226,Serpentis Research Facility
 32406,306,Caldari Storage Warehouse
-32407,314,Holoreel  Torture Log I15B
+32407,314,Holoreel – Torture Log I15B
 32408,314,Correspondence Log KL-513
 32409,517,Aton Hordner's Tempest
 32410,517,Arajna Ashia's Arbitrator
@@ -18895,14 +18895,14 @@
 33038,1195,NEO YC 114: Tinkerhell and Alts
 33039,1195,NEO YC 114: Tengu Terror
 33040,1195,NEO YC 114: Oxygen Isonopes
-33041,1195,NEO YC 114: Africas Finest
+33041,1195,NEO YC 114: Africa‘s Finest
 33042,1195,NEO YC 114: Something Else
 33043,1195,NEO YC 114: The Exiled Gaming
 33044,1195,NEO YC 114: Perihelion Beryllium Duralumin
 33045,1195,NEO YC 114: Goggle Wearing Internet Crime Fighters
-33046,1195,NEO YC 114: ISN  Incursion Shiny Network
+33046,1195,NEO YC 114: ISN – Incursion Shiny Network
 33047,1195,NEO YC 114: Baaaramu
-33048,1195,NEO YC 114: Asine Hitamas team
+33048,1195,NEO YC 114: Asine Hitama‘s team
 33049,1195,NEO YC 114: EFS
 33050,1195,NEO YC 114: Much Crying Old Experts
 33051,1195,NEO YC 114: DeepWater
@@ -19557,11 +19557,11 @@
 33850,644,Federation Navy Drone Navigation Computer
 33852,644,Sentient Drone Navigation Computer
 33856,257,Expedition Frigates
-33857,310,??????
-33858,226,???????
-33864,1285,Mordus Special Warfare Unit Operative
-33865,1286,Mordus Special Warfare Unit Specialist
-33866,1287,Mordus Special Warfare Unit Commander
+33857,310,泰坦会战遗址
+33858,226,泰坦会战纪念碑
+33864,1285,Mordu’s Special Warfare Unit Operative
+33865,1286,Mordu’s Special Warfare Unit Specialist
+33866,1287,Mordu’s Special Warfare Unit Commander
 33867,397,Thukker Component Assembly Array
 33868,1048,Thukker Component Assembly Array Blueprint
 33869,419,Brutix Serpentis Edition
@@ -20056,25 +20056,25 @@
 34412,997,Small Intact Hull Section
 34414,997,Small Malfunctioning Hull Section
 34416,997,Small Wrecked Hull Section
-34417,1194,Manufacturing Unions Placard
+34417,1194,Manufacturing Union’s Placard
 34418,1194,The Galactic Party Planning Guide
 34419,1194,Jump Fatigue Recovery Agent
 34420,1194,Cooking With Veldspar
-34421,1194,Chribbas Modified Strip Miner
-34422,1194,Rooks & Kings  The Clarion Call Compilation
+34421,1194,Chribba’s Modified Strip Miner
+34422,1194,Rooks & Kings – The Clarion Call Compilation
 34423,1194,Pre-Completed CSM 10 Ballot Paper
 34424,1194,Titanium Plated Cranial Shielding
-34425,1194,SCC Guidelines  Lotteries For Dummies
-34426,1194,Sort Dragons Guide To Diplomacy
+34425,1194,SCC Guidelines – Lotteries For Dummies
+34426,1194,Sort Dragon’s Guide To Diplomacy
 34427,1194,Polaris Eviction Notice
 34428,1194,Jump Portal Generation Instruction Holoreel
-34429,1194,Vincent Pryces Warp Disruption Field Generator
-34430,1194,"My God, Its Full Of Holes!"
-34431,1194,Guillome Renards Sleeper Loot Stash
+34429,1194,Vincent Pryce’s Warp Disruption Field Generator
+34430,1194,"My God, It’s Full Of Holes!"
+34431,1194,Guillome Renard’s Sleeper Loot Stash
 34432,1194,Sisters Of EVE Charity Statue
-34433,1194,The Damsels Drunk Bodyguard
-34434,1194,Alice Sakis Good Posting Guide
-34435,1194,Soxfours Spaceboots
+34433,1194,The Damsel’s Drunk Bodyguard
+34434,1194,Alice Saki’s Good Posting Guide
+34435,1194,Soxfour’s Spaceboots
 34436,1194,The Friend Ship
 34437,383,Rewired Sentry Gun
 34438,306,Sentry Repair Station
@@ -20096,30 +20096,30 @@
 34454,383,Archive Sentry Tower
 34455,383,Impaired Archive Sentry Tower
 34456,226,Angel Fence
-34457,27,?????YC117????
-34458,107,?????YC117??????
-34459,27,?????YC117????
-34460,107,?????YC117??????
-34461,27,????YC117????
-34462,107,????YC117??????
-34463,27,????YC117????
-34464,107,????YC117??????
-34465,27,??????YC117????
-34466,107,??????YC117??????
-34467,27,?????YC117????
-34468,107,?????YC117??????
-34469,27,???YC117????
-34470,107,???YC117??????
-34471,27,???YC117????
-34472,107,???YC117??????
-34473,419,???YC117????
-34474,489,???YC117??????
-34475,26,???YC117????
-34476,106,???YC117??????
-34477,358,???YC117????
-34478,106,???YC117??????
-34479,358,????YC117????
-34480,106,????YC117??????
+34457,27,末日沙场级YC117年特别版
+34458,107,末日沙场级YC117年特别版蓝图
+34459,27,地狱天使级YC117年特别版
+34460,107,地狱天使级YC117年特别版蓝图
+34461,27,马克瑞级YC117年特别版
+34462,107,马克瑞级YC117年特别版蓝图
+34463,27,响尾蛇级YC117年特别版
+34464,107,响尾蛇级YC117年特别版蓝图
+34465,27,多米尼克斯级YC117年特别版
+34466,107,多米尼克斯级YC117年特别版蓝图
+34467,27,万王宝座级YC117年特别版
+34468,107,万王宝座级YC117年特别版蓝图
+34469,27,乌鸦级YC117年特别版
+34470,107,乌鸦级YC117年特别版蓝图
+34471,27,灾难级YC117年特别版
+34472,107,灾难级YC117年特别版蓝图
+34473,419,幼龙级YC117年特别版
+34474,489,幼龙级YC117年特别版蓝图
+34475,26,毒蜥级YC117年特别版
+34476,106,毒蜥级YC117年特别版蓝图
+34477,358,银鹰级YC117年特别版
+34478,106,银鹰级YC117年特别版蓝图
+34479,358,伊什塔级YC117年特别版
+34480,106,伊什塔级YC117年特别版蓝图
 34481,762,Domination Inertial Stabilizers
 34483,762,Shadow Serpentis Inertial Stabilizers
 34485,78,ORE Reinforced Bulkheads
@@ -22777,12 +22777,12 @@
 37886,1194,Capital Parking Ticket
 37887,1194,Counterfeit Dominix Model
 37888,1194,Starsi
-37889,1194,YC118 Succession Trial Champions Decree  House Tash-Murkon
-37892,1194,YC118 Succession Trial Champions Decree  House Ardishapur
-37893,1194,YC118 Succession Trial Champions Decree  House Kador
-37894,1194,YC118 Succession Trial Champions Decree  House Khanid
-37895,1194,YC118 Succession Trial Champions Decree  House Kor-Azor
-37896,1194,YC118 Succession Trial Champions Decree  House Sarum
+37889,1194,YC118 Succession Trial Champion’s Decree – House Tash-Murkon
+37892,1194,YC118 Succession Trial Champion’s Decree – House Ardishapur
+37893,1194,YC118 Succession Trial Champion’s Decree – House Kador
+37894,1194,YC118 Succession Trial Champion’s Decree – House Khanid
+37895,1194,YC118 Succession Trial Champion’s Decree – House Kor-Azor
+37896,1194,YC118 Succession Trial Champion’s Decree – House Sarum
 37897,1950,Apocalypse Ardishapur Serenity Only SKIN (Permanent)
 37898,1950,Providence Ardishapur Serenity Only SKIN (Permanent)
 37899,1950,Arbitrator Ardishapur Serenity Only SKIN (Permanent)
@@ -25468,8 +25468,8 @@
 40624,1950,Bustard Matigu Seabeast SKIN (Permanent)
 40625,1950,Charon Matigu Seabeast SKIN (Permanent)
 40626,1950,Rhea Matigu Seabeast SKIN (Permanent)
-40631,588,Holy Destiny Electromagnetic Lance
-40632,588,Divine Harvest Electromagnetic Reaper
+40631,588,‘Holy Destiny’ Electromagnetic Lance
+40632,588,‘Divine Harvest’ Electromagnetic Reaper
 40633,588,Bosonic Field Generator
 40634,588,Gravitational Transportation Field Oscillator
 40635,842,Stasis Webification Burst Projector
@@ -25821,18 +25821,18 @@
 41021,1954,Bifrost Tronhadar Ink Serenity Only SKIN (90 Days)
 41022,1955,Bifrost Tronhadar Ink Serenity Only SKIN (365 Days)
 41023,280,Convoy Hawk 6 Escort Roster
-41024,280,Audio Log Backup  115/11/11 A-0477
-41025,280,Audio Log Backup  117/07/01 G-6640
-41026,280,Manifest  Cargo 118/01/06  CLEARENCE 1B
+41024,280,Audio Log Backup – 115/11/11 A-0477
+41025,280,Audio Log Backup – 117/07/01 G-6640
+41026,280,Manifest – Cargo 118/01/06 – CLEARENCE 1B
 41027,280,Secure Comms Uplink ALPHA-6
-41028,280,Medical Report 0401A  117/01/19
-41029,280,Progress Report 0466B  117/02/28
+41028,280,Medical Report 0401A – 117/01/19
+41029,280,Progress Report 0466B – 117/02/28
 41030,101,'Excavator' Mining Drone
 41031,646,AML Compact Omnidirectional Tracking Link
 41032,646,Denny Enduring Omnidirectional Tracking Link
 41033,1292,N-JM Compact Omnidirectional Tracking Enhancer
 41034,645,AE-K Compact Drone Damage Amplifier
-41035,1194,???????
+41035,1194,未来人类纪念章
 41036,1670,Men's 'Boneweld' Facial Augmentation
 41038,65,Republic Fleet Stasis Webifier
 41040,1672,Heavy Stasis Grappler I
@@ -26212,20 +26212,20 @@
 41436,1709,OLD L-Set Ice Grading Processor II Blueprint
 41437,1709,OLD M-Set LNS Materials Reclamation I Blueprint
 41438,651,Gravitational Transportation Field Oscillator Blueprint
-41439,588,Iron Pike Kinetic Lance
-41440,588,Phalarica Thermal Lance
-41441,588,Geiravor Explosive Lance
-41442,588,Cold Wind Kinetic Reaper
-41443,588,Guillotine Thermal Reaper
-41444,588,Jormungandr Explosive Reaper
-41445,651,Holy Destiny Electromagnetic Lance Blueprint
-41446,651,Iron Pike Kinetic Lance Blueprint
-41447,651,Phalarica Thermal Lance Blueprint
-41448,651,Geiravor Explosive Lance Blueprint
-41449,651,Cold Wind Kinetic Reaper Blueprint
-41450,651,Guillotine Thermal Reaper Blueprint
-41451,651,Jormungandr Explosive Reaper Blueprint
-41452,651,Divine Harvest Electromagnetic Reaper Blueprint
+41439,588,‘Iron Pike’ Kinetic Lance
+41440,588,‘Phalarica’ Thermal Lance
+41441,588,‘Geiravor’ Explosive Lance
+41442,588,‘Cold Wind’ Kinetic Reaper
+41443,588,‘Guillotine’ Thermal Reaper
+41444,588,‘Jormungandr’ Explosive Reaper
+41445,651,‘Holy Destiny’ Electromagnetic Lance Blueprint
+41446,651,‘Iron Pike’ Kinetic Lance Blueprint
+41447,651,‘Phalarica’ Thermal Lance Blueprint
+41448,651,‘Geiravor’ Explosive Lance Blueprint
+41449,651,‘Cold Wind’ Kinetic Reaper Blueprint
+41450,651,‘Guillotine’ Thermal Reaper Blueprint
+41451,651,‘Jormungandr’ Explosive Reaper Blueprint
+41452,651,‘Divine Harvest’ Electromagnetic Reaper Blueprint
 41456,329,CONCORD 25000mm Steel Plates
 41457,329,Dark Blood 25000mm Steel Plates
 41458,329,Shadow Serpentis 25000mm Steel Plates
@@ -26316,8 +26316,8 @@
 41566,67,Capital Inductive Compact Remote Capacitor Transmitter
 41567,12,Hangar Container
 41573,226,Astrahus Citadel
-41575,1083,Women's Mirelle Upwell Executive Spectacles 
-41576,1083,Men's Mirelle Upwell Executive Spectacles
+41575,1083,Women's “Mirelle” Upwell Executive Spectacles 
+41576,1083,Men's “Mirelle” Upwell Executive Spectacles
 41579,1950,Capsule Upwell SKIN (Permanent)
 41580,1950,Capsule Palatine SKIN (Permanent)
 41581,227,Astrahus Lights On
@@ -27191,9 +27191,9 @@
 42530,1770,Skirmish Command Burst I
 42531,303,Expired Cerebral Accelerator
 42532,1882,Effect NPE Vortex
-42533,1764,? Venture
-42534,1765,? Retriever
-42535,1766,? Skiff
+42533,1764,♦ Venture
+42534,1765,♦ Retriever
+42535,1766,♦ Skiff
 42536,227,MidPoint Effect
 42538,319,Drifter Hive
 42540,226,Drifter Battleship
@@ -27285,14 +27285,14 @@
 42651,1950,Orca Digmaster Blazon SKIN (Permanent)
 42652,1950,Rorqual Digmaster Blazon SKIN (Permanent)
 42653,1950,Apostle Purity of the Throne SKIN (Permanent)
-42654,1767,? Bestower
-42655,1767,? Impel
-42656,1767,? Badger
-42657,1767,? Bustard
-42658,1767,? Iteron Mark V
-42659,1767,? Occator
-42660,1767,? Mammoth
-42661,1767,? Mastodon
+42654,1767,♦ Bestower
+42655,1767,♦ Impel
+42656,1767,♦ Badger
+42657,1767,♦ Bustard
+42658,1767,♦ Iteron Mark V
+42659,1767,♦ Occator
+42660,1767,♦ Mammoth
+42661,1767,♦ Mastodon
 42662,186,Wrecked Amarr Battleship
 42663,306,Wrecked Amarr Apocalypse Battleship
 42664,306,Wrecked Amarr Armageddon Battleship
@@ -27338,13 +27338,13 @@
 42706,1088,Women's 'Outlaw' Coat (Blood Raiders extra red)
 42707,1089,Women's 'Sterling' Dress Blouse (Blood Raider)
 42708,1092,Men's Beret (Blood Raiders)
-42709,1092,Women's Defender Beret (Gallente Federation)
+42709,1092,Women's ‘Defender’ Beret (Gallente Federation)
 42710,1092,Men's Federation Grand Prix 'Pit Stop' Cap
 42711,1092,Cap Male Green
-42712,1092,Men's Liberator Beret (Minmatar Republic)
+42712,1092,Men's ‘Liberator’ Beret (Minmatar Republic)
 42713,1092,Cap Male Orange
 42714,1092,Cap Male White/Black
-42715,1092,Women's Liberator Cap (Minmatar Republic)
+42715,1092,Women's ‘Liberator’ Cap (Minmatar Republic)
 42716,1092,Cap Female Black/White
 42717,1092,Women's 'Pithum' Beret (Guristas)
 42718,1092,Women's Cap (Blood Raiders)
@@ -27359,18 +27359,18 @@
 42727,1092,Cap Female Green
 42728,1092,Cap Male Amarr
 42729,1092,Women's 'Boarder' Cap (Digital Camo)
-42730,1092,Men's Liberator Cap (Minmatar Republic)
+42730,1092,Men's ‘Liberator’ Cap (Minmatar Republic)
 42731,1092,Cap Male Caldari
 42732,1092,Men's 'Boarder' Cap (Digital Camo)
 42733,1092,Women's Beret (Blood Raiders)
 42734,1092,Women's 'Sable' Cap (Black)
 42735,1092,Cap Female Orange
-42736,1092,Men's Protector Beret (Caldari State)
+42736,1092,Men's ‘Protector’ Beret (Caldari State)
 42737,1092,Beret Female Concord
-42738,1092,Women's Liberator Beret (Minmatar Republic)
-42739,1092,Men's Defender Beret (Gallente Federation)
-42740,1092,Women's Protector Beret (Caldari State)
-42741,1092,Mens Crusader Beret (Amarr Empire)
+42738,1092,Women's ‘Liberator’ Beret (Minmatar Republic)
+42739,1092,Men's ‘Defender’ Beret (Gallente Federation)
+42740,1092,Women's ‘Protector’ Beret (Caldari State)
+42741,1092,Men’s ‘Crusader’ Beret (Amarr Empire)
 42742,1092,Cap Female Concord
 42743,1092,Cap Male Guristas
 42744,1092,Women's 'Crusader' Beret (Amarr Empire)
@@ -27456,12 +27456,12 @@
 42838,1772,Evasive Maneuvers Charge
 42839,1772,Interdiction Maneuvers Charge
 42840,1772,Rapid Deployment Charge
-42841,1803,? Tormentor
-42842,1803,? Inquisitor
-42843,1803,? Executioner
+42841,1803,♦ Tormentor
+42842,1803,♦ Inquisitor
+42843,1803,♦ Executioner
 42844,1804,Amarr Apostle
-42845,1803,? Crucifier
-42846,1803,? Punisher
+42845,1803,♦ Crucifier
+42846,1803,♦ Punisher
 42847,1805,Caldari Minokawa
 42848,1806,Gallente Ninazu
 42849,1807,Minmatar Lif
@@ -28084,96 +28084,96 @@
 43554,1770,Information Command Burst II
 43555,1770,Shield Command Burst II
 43556,1770,Skirmish Command Burst II
-43557,1813,? Omen
-43558,1813,? Augoror
-43559,1813,? Arbitrator
-43560,1813,? Maller
-43561,1814,? Apocalypse
-43562,1814,? Armageddon
-43563,1803,? Kestrel
-43564,1803,? Bantam
-43565,1803,? Condor
-43566,1803,? Merlin
-43567,1803,? Griffin
-43568,1813,? Caracal
-43569,1813,? Osprey
-43570,1813,? Moa
-43571,1813,? Blackbird
-43572,1814,? Raven
-43573,1814,? Scorpion
-43574,1803,? Incursus
-43575,1803,? Navitas
-43576,1803,? Atron
-43577,1803,? Maulus
-43578,1803,? Tristan
-43579,1813,? Thorax
-43580,1813,? Exequror
-43581,1813,? Celestis
-43582,1813,? Vexor
-43583,1814,? Megathron
-43584,1814,? Dominix
-43585,1803,? Rifter
-43586,1803,? Burst
-43587,1803,? Slasher
-43588,1803,? Vigil
-43589,1803,? Breacher
-43590,1813,? Rupture
-43591,1813,? Scythe
-43592,1813,? Bellicose
-43593,1813,? Stabber
-43594,1814,? Tempest
-43595,1814,? Typhoon
-43596,1803,? Punisher
-43597,1803,? Inquisitor
-43598,1803,? Executioner
-43599,1803,? Crucifier
-43600,1803,? Cruor
-43601,1813,? Omen
-43602,1813,? Augoror
-43603,1813,? Arbitrator
-43604,1813,? Ashimmu
-43605,1814,? Apocalypse
-43606,1814,? Bhaalgorn
+43557,1813,♦ Omen
+43558,1813,♦ Augoror
+43559,1813,♦ Arbitrator
+43560,1813,♦ Maller
+43561,1814,♦ Apocalypse
+43562,1814,♦ Armageddon
+43563,1803,♦ Kestrel
+43564,1803,♦ Bantam
+43565,1803,♦ Condor
+43566,1803,♦ Merlin
+43567,1803,♦ Griffin
+43568,1813,♦ Caracal
+43569,1813,♦ Osprey
+43570,1813,♦ Moa
+43571,1813,♦ Blackbird
+43572,1814,♦ Raven
+43573,1814,♦ Scorpion
+43574,1803,♦ Incursus
+43575,1803,♦ Navitas
+43576,1803,♦ Atron
+43577,1803,♦ Maulus
+43578,1803,♦ Tristan
+43579,1813,♦ Thorax
+43580,1813,♦ Exequror
+43581,1813,♦ Celestis
+43582,1813,♦ Vexor
+43583,1814,♦ Megathron
+43584,1814,♦ Dominix
+43585,1803,♦ Rifter
+43586,1803,♦ Burst
+43587,1803,♦ Slasher
+43588,1803,♦ Vigil
+43589,1803,♦ Breacher
+43590,1813,♦ Rupture
+43591,1813,♦ Scythe
+43592,1813,♦ Bellicose
+43593,1813,♦ Stabber
+43594,1814,♦ Tempest
+43595,1814,♦ Typhoon
+43596,1803,♦ Punisher
+43597,1803,♦ Inquisitor
+43598,1803,♦ Executioner
+43599,1803,♦ Crucifier
+43600,1803,♦ Cruor
+43601,1813,♦ Omen
+43602,1813,♦ Augoror
+43603,1813,♦ Arbitrator
+43604,1813,♦ Ashimmu
+43605,1814,♦ Apocalypse
+43606,1814,♦ Bhaalgorn
 43607,1812,Armor Command Burst II Blueprint
 43608,1812,Information Command Burst II Blueprint
 43609,1812,Mining Foreman Burst II Blueprint
 43610,1812,Shield Command Burst II Blueprint
 43611,1812,Skirmish Command Burst II Blueprint
-43612,1767,? Badger
-43613,1767,? Bustard
-43614,1803,? Kestrel
-43615,1803,? Bantam
-43616,1803,? Condor
-43617,1803,? Worm
-43618,1803,? Griffin
-43622,1813,? Caracal
-43623,1813,? Osprey
-43624,1813,? Gila
-43625,1813,? Blackbird
-43626,1814,? Raven
-43627,1814,? Rattlesnake
+43612,1767,♦ Badger
+43613,1767,♦ Bustard
+43614,1803,♦ Kestrel
+43615,1803,♦ Bantam
+43616,1803,♦ Condor
+43617,1803,♦ Worm
+43618,1803,♦ Griffin
+43622,1813,♦ Caracal
+43623,1813,♦ Osprey
+43624,1813,♦ Gila
+43625,1813,♦ Blackbird
+43626,1814,♦ Raven
+43627,1814,♦ Rattlesnake
 43630,1739,Mini Skill Injector
-43633,1803,? Dramiel
-43634,1803,? Swordspine
-43635,1803,? Fury
-43636,1803,? Medusa
-43638,1803,? Lynx
+43633,1803,♦ Dramiel
+43634,1803,♦ Swordspine
+43635,1803,♦ Fury
+43636,1803,♦ Medusa
+43638,1803,♦ Lynx
 43640,1194,Empire Civilian Container
-43641,1813,? Cynabal
-43642,1813,? Ixion
-43643,1814,? Machariel
+43641,1813,♦ Cynabal
+43642,1813,♦ Ixion
+43643,1814,♦ Machariel
 43644,1803,Barracuda Drone
 43645,1803,Atomizer Drone
 43646,1803,Infester Drone
 43647,1803,Splinter Drone
 43648,1803,Sunder Drone
-43649,1813,? Annihilator Drone
-43650,1814,? Infested Dominix
-43653,1803,? Succubus
-43654,1803,? Ravener
-43655,1803,? Imp
-43656,1813,? Phantasm
-43657,1814,? Nightmare
+43649,1813,♦ Annihilator Drone
+43650,1814,♦ Infested Dominix
+43653,1803,♦ Succubus
+43654,1803,♦ Ravener
+43655,1803,♦ Imp
+43656,1813,♦ Phantasm
+43657,1814,♦ Nightmare
 43658,1815,Amarr Phenomena Generator
 43659,1812,Amarr Phenomena Generator Blueprint
 43660,1815,Caldari Phenomena Generator
@@ -28527,8 +28527,8 @@
 44103,136,Defender Launcher I Blueprint
 44105,227,Invisible Warp Out Object (Except POD)
 44106,487,Sunesis Blueprint
-44107,1803,? Succubus
-44108,1803,? Succubus
+44107,1803,♦ Succubus
+44108,1803,♦ Succubus
 44109,501,Display Launcher
 44110,500,Yoiul Festival Firework
 44111,205,Tahron's Custom Heat Sink
@@ -28617,12 +28617,12 @@
 44202,1950,Rifter test fix
 44203,1950,Merlin Sukuuvestaa SKIN (Permanent)
 44204,943,300 Aurum Token
-44205,1194,Jezajas Giant Secure Container
+44205,1194,Jezaja’s Giant Secure Container
 44206,1194,A Letter Of Complaint
 44207,1194,Kor-Azor Family Decree
 44208,1194,Forged Frigate Blueprints
 44209,1194,[CNS] Kiirasha Final Broadcast Fragment
-44210,1194,Scale Model Of [RFS] Mahtu Rea
+44210,1194,Scale Model Of [RFS] Mah’tu Rea
 44211,1194,Rejected Ship Replacement Program Request
 44212,1194,Upwell Consortium Propaganda Reel
 44213,1194,The Champion Ship
@@ -29356,12 +29356,12 @@
 44949,1950,Machariel Spirit SKIN (Permanent)
 44950,1950,Cynabal Spirit SKIN (Permanent)
 44951,1950,Dramiel Spirit SKIN (Permanent)
-44953,1803,? Purifier
+44953,1803,♦ Purifier
 44992,1875,PLEX
 44993,830,Pacifier
 44995,833,Enforcer
 44996,898,Marshal
-45006,1876,? Sotiyo
+45006,1876,♦ Sotiyo
 45008,1940,Moon Chunk
 45009,1887,Standup Moon Drill I
 45010,908,Focused Warp Scrambling Script
@@ -29405,8 +29405,8 @@
 45051,669,Amarr CA Destroyer
 45053,226,Test Asteroid 1
 45054,226,Test Asteroid 2
-45055,1814,? Bhaalgorn
-45056,1814,? Apocalypse
+45055,1814,♦ Bhaalgorn
+45056,1814,♦ Apocalypse
 45057,668,Amarr CA Cruiser
 45060,1194,Vintage Frigate Blueprints
 45061,1194,Subspace Energy & You
@@ -29420,11 +29420,11 @@
 45467,683,Minmatar CA Frigate
 45468,684,Minmatar CA Destroyer
 45469,705,Minmatar CA Cruiser
-45470,1880,? Chemosh
-45471,1878,? Molok
-45472,1878,? Molok
-45473,1879,? Dagon
-45474,1880,? Chemosh
+45470,1880,♦ Chemosh
+45471,1878,♦ Molok
+45472,1878,♦ Molok
+45473,1879,♦ Dagon
+45474,1880,♦ Chemosh
 45475,1950,
 45476,1952,
 45477,1953,
@@ -29624,7 +29624,7 @@
 45677,1818,Blood Raider Molok Blueprint Armored Cache
 45678,1818,Blood Raider Chemosh Blueprint Armored Cache
 45679,1818,Blood Raider Dagon Blueprint Armored Cache
-45680,1803,? Cruor
+45680,1803,♦ Cruor
 45681,973,Legion Defensive - Covert Reconfiguration Blueprint
 45682,973,Legion Defensive - Augmented Plating Blueprint
 45683,973,Legion Defensive - Nanobot Injector Blueprint
@@ -29981,42 +29981,42 @@
 46043,1950,Vehement IGC SKIN (Permanent)
 46044,1950,Vendetta IGC SKIN (Permanent)
 46045,1950,Vanquisher IGC SKIN (Permanent)
-46046,1896,? Orca
-46047,1896,? Orca
-46048,1896,? Orca
-46049,1896,? Orca
+46046,1896,♦ Orca
+46047,1896,♦ Orca
+46048,1896,♦ Orca
+46049,1896,♦ Orca
 46050,1194,Superior Exoplanets Hunter Reward Crate
 46051,1950,Daredevil IGC SKIN (Permanent)
-46052,1803,? Cruor
-46053,1803,? Worm
-46054,1813,? Ashimmu
-46055,1814,? Bhaalgorn
-46056,1813,? Gila
-46057,1814,? Rattlesnake
-46058,1803,? Daredevil
-46059,1813,? Vigilant
-46060,1814,? Vindicator
-46061,1803,? Dramiel
-46062,1813,? Cynabal
-46063,1814,? Machariel
+46052,1803,♦ Cruor
+46053,1803,♦ Worm
+46054,1813,♦ Ashimmu
+46055,1814,♦ Bhaalgorn
+46056,1813,♦ Gila
+46057,1814,♦ Rattlesnake
+46058,1803,♦ Daredevil
+46059,1813,♦ Vigilant
+46060,1814,♦ Vindicator
+46061,1803,♦ Dramiel
+46062,1813,♦ Cynabal
+46063,1814,♦ Machariel
 46064,227,Medium Refinery Placement State Default
 46065,227,Large Refinery Placement State Default
-46066,1803,? Punisher
-46067,1813,? Omen
-46068,1909,? Harbinger
-46069,1814,? Apocalypse
-46070,1803,? Merlin
-46071,1813,? Caracal
-46072,1909,? Drake
-46073,1814,? Raven
-46074,1803,? Incursus
-46075,1813,? Thorax
-46076,1909,? Brutix
-46077,1814,? Megathron
-46078,1803,? Rifter
-46079,1813,? Rupture
-46080,1909,? Hurricane
-46081,1814,? Tempest
+46066,1803,♦ Punisher
+46067,1813,♦ Omen
+46068,1909,♦ Harbinger
+46069,1814,♦ Apocalypse
+46070,1803,♦ Merlin
+46071,1813,♦ Caracal
+46072,1909,♦ Drake
+46073,1814,♦ Raven
+46074,1803,♦ Incursus
+46075,1813,♦ Thorax
+46076,1909,♦ Brutix
+46077,1814,♦ Megathron
+46078,1803,♦ Rifter
+46079,1813,♦ Rupture
+46080,1909,♦ Hurricane
+46081,1814,♦ Tempest
 46082,227,Large Industrial Array Placement State Default
 46083,227,XLarge Industrial Array Placement State Default
 46084,227,Medium Industrial Array Placement State Default
@@ -30296,7 +30296,7 @@
 46379,1950,Dominix Valkyrie SKIN (Permanent)
 46380,1950,Typhoon Valkyrie SKIN (Permanent)
 46381,1818,Agency Support Drop
-46382,1803,? Kestrel
+46382,1803,♦ Kestrel
 46383,1950,Atron Kopis Edge SKIN (Permanent)
 46384,1950,Imicus Kopis Edge SKIN (Permanent)
 46385,1950,Incursus Kopis Edge SKIN (Permanent)
@@ -30435,8 +30435,8 @@
 46520,1950,Astero Spectral Shift SKIN (Permanent)
 46521,1950,Stratios Spectral Shift SKIN (Permanent)
 46522,1950,Nestor Spectral Shift SKIN (Permanent)
-46523,1814,? Rattlesnake
-46524,1814,? Raven
+46523,1814,♦ Rattlesnake
+46524,1814,♦ Raven
 46525,1950,Purifier Imperial Jubilee SKIN (Permanent)
 46526,1950,Dragoon Imperial Jubilee SKIN (Permanent)
 46527,1950,Confessor Imperial Jubilee SKIN (Permanent)
@@ -30493,7 +30493,7 @@
 46578,1707,Dread Guristas Standup Variable Spectrum ECM Blueprint
 46579,1818,Blood Raider Standup Module Blueprint Armored Cache
 46580,1818,Guristas Standup Module Blueprint Armored Cache
-46581,1813,? Caracal
+46581,1813,♦ Caracal
 46582,1950,Serpentis Victory SKIN (Permanent)
 46583,226,Depleted Asteroid Field
 46584,1950,Daredevil Serpentis Victory SKIN (Permanent)
@@ -30539,8 +30539,8 @@
 46650,1708,Standup L-Set Reprocessing Monitor II Blueprint
 46651,1708,Standup XL-Set Reprocessing Monitor I Blueprint
 46652,1708,Standup XL-Set Reprocessing Monitor II Blueprint
-46653,1880,? Caiman
-46654,1880,? Caiman
+46653,1880,♦ Caiman
+46654,1880,♦ Caiman
 46658,1088,Women's Federal Strategic Materiel Jacket
 46659,1088,Men's Caldari State Officer Jacket
 46660,1088,Women's Gallente Federation Command Jacket
@@ -30638,7 +30638,7 @@
 46754,1950,Crane Lodestrike SKIN (Permanent)
 46755,1950,Bustard Lodestrike SKIN (Permanent)
 46756,1194,Headhunter Crate
-46760,1813,? Moa
+46760,1813,♦ Moa
 46766,1194,Glacial Drift Festival Box
 46767,226,Amarr Trade Post
 46770,226,Pashanai Bombing Monument
@@ -31050,11 +31050,11 @@
 47191,1092,Men's Capsuleer Elite XV Cap
 47192,1089,Women's Capsuleer Elite XV T-Shirt
 47193,1092,Women's Capsuleer Elite XV Cap
-47194,1803,? test_drone_damage
-47195,1803,? test_drone_logi
-47196,1803,? test_damage
-47197,1803,? test_ewar
-47198,1814,? test_boss
+47194,1803,♦ test_drone_damage
+47195,1803,♦ test_drone_logi
+47196,1803,♦ test_damage
+47197,1803,♦ test_ewar
+47198,1814,♦ test_boss
 47199,226,TestAsset_03
 47200,226,TestAsset_04
 47201,226,TestAsset_05
@@ -32332,7 +32332,7 @@
 48580,1950,Enforcer DED 'Alpha Plus' Taskforce SKIN (Permanent)
 48581,1950,Marshal DED 'Alpha Plus' Taskforce SKIN (Permanent)
 48582,303,Master-at-Arms Cerebral Accelerator
-48583,1813,? DED Special Operation Captain
+48583,1813,♦ DED Special Operation Captain
 48584,1194,TLF Recruitment Poster
 48585,1194,Vherokior Medicinal Herbs
 48586,1194,Vial of Mikramurka
@@ -35047,8 +35047,8 @@
 367456,351064,'Jotunn' Sentinel M-I+
 367457,351064,'Enkidu' Sentinel G-I+
 367472,350858,Militia Flaylock Pistol
-367477,350858,Kubos GMK-16 Plasma Cannon
-367489,350858,Beacons ELI-74 Swarm Launcher
+367477,350858,Kubo’s GMK-16 Plasma Cannon
+367489,350858,Beacon’s ELI-74 Swarm Launcher
 367499,367487,Skill Tree Reset and Refund
 367500,350858,Symb's FORK-5 Sniper Rifle
 367502,350858,Agimus' Modified AGO-56 Mass Driver
@@ -35056,7 +35056,7 @@
 367517,350858,Kalante's RXS-05 Assault Rifle
 367519,350858,Ghalag's Modified MRT-17 Rail Rifle
 367528,350858,Darth's GIO-66 Scrambler Rifle
-367541,350858,Viktors NEG-1 Laser Rifle
+367541,350858,Viktor’s NEG-1 Laser Rifle
 367548,350858,Alex's Modified ZX-030 Heavy Machine Gun
 367549,350858,Alldin's IMP-10 Forge Gun
 367552,350858,Bons' SIN-7 Shotgun
@@ -35275,7 +35275,7 @@
 368755,368726,Heavy Amarr SKIN - Yellow
 368756,368726,Light Gallente SKIN - Green
 368776,368726,Medium Minmatar SKIN - Quafe
-368777,351121,Krins LEX -71 Damage Modifier
+368777,351121,Krin’s LEX -71 Damage Modifier
 368880,351210,Marduk G-I
 368881,351210,Madrugar G/1
 368882,351210,Madrugar Gv.0
@@ -35457,6 +35457,6 @@
 369549,351064,'Dorudon' Basic-H M/I
 369550,351064,'Loceros' Basic-H mk.0
 370308,368726,'Deathshroud' AM-M SKIN
-370488,368726,Taireis Crimson AM-L SKIN
+370488,368726,‘Tairei’s Crimson’ AM-L SKIN
 370658,351844,Council's Modified Repair Tool
 371027,350858,X-MS16 Snowball Launcher

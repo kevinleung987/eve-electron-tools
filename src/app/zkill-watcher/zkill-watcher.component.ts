@@ -9,18 +9,22 @@ import { UniverseService } from '../services/universe.service';
 })
 export class ZkillWatcherComponent implements OnInit {
 
-  private socket = new WebSocketSubject('wss://zkillboard.com:2096');
+  private socket: WebSocketSubject<{}>;
+  public listening = false;
   public mails = [];
 
-  constructor(public universe: UniverseService) { }
+  constructor(public universe: UniverseService) {
+
+  }
 
   ngOnInit() {
 
   }
 
   start() {
+    this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
     this.socket.next({ 'action': 'sub', 'channel': 'killstream' });
-    console.log('Connection established.');
+    console.log('Connection Started.');
     this.socket.subscribe(
       (message) => {
         if (this.mails.length > 10) {
@@ -31,6 +35,17 @@ export class ZkillWatcherComponent implements OnInit {
       },
       (err) => console.error(err)
     );
+    this.listening = true;
+  }
+
+  stop() {
+    this.socket.unsubscribe();
+    console.log('Connection Stopped.');
+    this.listening = false;
+  }
+
+  clear() {
+    this.mails = [];
   }
 
 }
