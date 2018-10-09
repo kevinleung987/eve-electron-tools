@@ -40,7 +40,6 @@ export class LocalScanComponent implements OnInit {
     output.sort(function (a, b) {
       return b.count - a.count;
     });
-    console.log(output);
     return output;
   }
 

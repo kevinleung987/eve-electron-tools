@@ -11,6 +11,7 @@ import { LocalScanService } from './services/local-scan.service';
 import { MarketService } from './services/market.service';
 import { MarketComponent } from './market/market.component';
 import { HomeComponent } from './home/home.component';
+import { ZkillWatcherComponent } from './zkill-watcher/zkill-watcher.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HomeComponent } from './home/home.component';
     LocalScanComponent,
     HeaderComponent,
     MarketComponent,
-    HomeComponent
+    HomeComponent,
+    ZkillWatcherComponent
   ],
   imports: [
     BrowserModule,
