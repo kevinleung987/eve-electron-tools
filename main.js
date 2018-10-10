@@ -9,8 +9,8 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 1600,
+    height: 900
   });
 
   // load the dist folder from Angular
