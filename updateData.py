@@ -7,16 +7,16 @@ downloadsDir = 'downloads/'
 baseUrl = 'https://www.fuzzwork.co.uk/dump/latest/'
 
 
-def downloadData(fileName, columns):
-    os.makedirs(os.path.dirname(downloadsDir +
-                                fileName + '.bz2'), exist_ok=True)
-    r = requests.get(baseUrl + fileName + '.bz2', allow_redirects=True)
-    open(downloadsDir + fileName + '.FULL',
-         'wb').write(bz2.decompress(r.content))
+def downloadData(fileName, columns, ext='.bz2', decompress=bz2.decompress):
+    sourceFile = fileName + ext
+    tempFile = fileName + '_TEMP'
+    os.makedirs(os.path.dirname(downloadsDir + sourceFile), exist_ok=True)
+    r = requests.get(baseUrl + sourceFile, allow_redirects=True)
+    open(downloadsDir + tempFile, 'wb').write(decompress(r.content))
 
-    df = pandas.read_csv(downloadsDir + fileName + '.FULL', usecols=columns)
+    df = pandas.read_csv(downloadsDir + tempFile, usecols=columns)
     df.to_csv(downloadsDir + fileName, index=False)
-    os.remove(downloadsDir + fileName + '.FULL')
+    os.remove(downloadsDir + tempFile)
 
 
 downloadData('invTypes.csv', ['typeID', 'typeName'])
