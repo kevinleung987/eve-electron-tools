@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Papa } from 'ngx-papaparse';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class UniverseService {
   constructor(private http: HttpClient, private papa: Papa) {
     // Setup typeData
     this.initializeData('invTypes.csv', 'typeID', this.typeData).add(
-      () => {
+      () => { // Call-back hash-map validation function
         if (this.getType(670).typeName === 'Capsule') {
           console.log('typeData initialized.');
         } else {
@@ -29,7 +29,8 @@ export class UniverseService {
         this.papa.parse(data, {
           header: true,
           complete: (result) => {
-            result['data'].forEach(element => {
+            // Set the specified key to be the key in converting the csv array to a hash-map
+            result.data.forEach(element => {
               store[element[key]] = element;
               delete store[element[key]][key];
             });
