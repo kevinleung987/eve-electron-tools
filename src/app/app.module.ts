@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { PapaParseModule } from 'ngx-papaparse';
 
 
 import { AppRoutingModule, CustomReuseStrategy } from './app-routing.module';
@@ -26,7 +27,8 @@ import { RouteReuseStrategy } from '@angular/router';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PapaParseModule
   ],
   providers: [LocalScanService, MarketService, { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }],
   bootstrap: [AppComponent]
