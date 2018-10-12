@@ -14,6 +14,7 @@ import { MarketComponent } from './market/market.component';
 import { HomeComponent } from './home/home.component';
 import { ZkillWatcherComponent } from './zkill-watcher/zkill-watcher.component';
 import { RouteReuseStrategy } from '@angular/router';
+import { EveService } from './services/eve.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { RouteReuseStrategy } from '@angular/router';
     AppRoutingModule,
     PapaParseModule
   ],
-  providers: [LocalScanService, MarketService, { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }],
+  providers: [EveService, LocalScanService, MarketService, { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

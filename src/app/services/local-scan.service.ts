@@ -6,6 +6,8 @@ import {
   EveCorporation,
   EveAlliance
 } from '../models/EveModels.model';
+import { EveService } from './eve.service';
+import { from } from 'rxjs/internal/observable/from';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class LocalScanService {
   public displayAlliances: {
     [id: number]: { alliance: EveAlliance; count: number };
   };
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private eve: EveService) {
     this.characters = {};
     this.corporations = {};
     this.alliances = {};
@@ -49,21 +51,19 @@ export class LocalScanService {
     }
   }
 
-  parse(localList) {
+  async parse(localList) {
     console.log('Running Parse');
     const lines = localList.split('\n');
     for (let i = 0; i < lines.length; i++) {
       // Search the character in ESI
-      this.http
-        .get(`https://esi.evetech.net/latest/search/?categories=character&datasource=tranquility&language=en-us&search=${lines[i]}&strict=true`)
+      from(this.eve.search(lines[i], 'character', true))
         .subscribe(searchData => {
           // If the character exists in ESI
           if (searchData['character']) {
             const id = searchData['character'][0];
             if (!this.characters[id]) {
               // Find the character's id and corporation
-              this.http
-                .get(`https://esi.evetech.net/latest/characters/${id}/?datasource=tranquility`)
+              from(this.eve.characters(id))
                 .subscribe(charData => {
                   this.characters[id] = {
                     name: lines[i],
@@ -73,9 +73,7 @@ export class LocalScanService {
                   if (this.corporations[corpId]) {
                     this.addDisplayCorporation(corpId);
                   } else {
-                    this.http
-                      .get(
-                        `https://esi.evetech.net/latest/corporations/${corpId}/?datasource=tranquility`)
+                    from(this.eve.corporations(corpId))
                       .subscribe(corpData => {
                         this.corporations[corpId] = {
                           name: corpData['name'],
@@ -84,9 +82,7 @@ export class LocalScanService {
                         };
                         this.addDisplayCorporation(corpId);
                         if (corpData['alliance_id']) {
-                          this.http
-                            .get(
-                              `https://esi.evetech.net/latest/alliances/${corpData['alliance_id']}/?datasource=tranquility`)
+                          from(this.eve.alliances(corpData['alliance_id']))
                             .subscribe(allianceData => {
                               if (this.alliances[corpData['alliance_id']]) {
                                 this.addDisplayAlliance(corpData['alliance_id']);
