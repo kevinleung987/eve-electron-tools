@@ -50,7 +50,12 @@
     </div>
   </div>
   <div class="row mail-info" *ngFor="let mail of mails">
-    <img src="{{'https://imageserver.eveonline.com/Render/'+ mail['victim']['ship_type_id'] +'_128.png'}}" style="height: 64px; width: 64px;">
-    {{ mail['killmail_time'] }} {{ universe.getType(mail['victim']['ship_type_id']) }}
+    <div class="card">
+      <div class="card-body">
+        <img src="{{'https://imageserver.eveonline.com/Render/'+ mail['victim']['ship_type_id'] +'_128.png'}}" style="height: 64px; width: 64px;">
+        {{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000'}} {{ universe.getTypeName(mail['victim']['ship_type_id'])
+        }}
+      </div>
+    </div>
   </div>
 </div>

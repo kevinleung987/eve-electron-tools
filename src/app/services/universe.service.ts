@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Papa } from 'ngx-papaparse';
 import { Subscription } from 'rxjs';
+import { PapaParseResult } from 'ngx-papaparse/lib/interfaces/papa-parse-result';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UniverseService {
     // Setup typeData
     this.initializeData('invTypes.csv', 'typeID', this.typeData).add(
       () => { // Call-back hash-map validation function
-        if (this.getType(670).typeName === 'Capsule') {
+        if (this.getTypeName(670) === 'Capsule') {
           console.log('typeData initialized.');
         } else {
           throw new Error('typeData could not be parsed.');
@@ -24,11 +25,11 @@ export class UniverseService {
 
   initializeData(fileName, key, store): Subscription {
     return this.http.get('./assets/' + fileName, { responseType: 'text' })
-      .pipe(map((data: any) => data, error => console.error(error)))
+      .pipe(map((data: any) => data))
       .subscribe((data: any) => {
         this.papa.parse(data, {
           header: true,
-          complete: (result) => {
+          complete: (result: PapaParseResult) => {
             // Set the specified key to be the key in converting the csv array to a hash-map
             result.data.forEach(element => {
               store[element[key]] = element;
@@ -39,7 +40,7 @@ export class UniverseService {
       }, error => console.error(error));
   }
 
-  getType(id) {
-    return this.typeData[id];
+  getTypeName(id: number): string {
+    return this.typeData[id]['typeName'];
   }
 }
