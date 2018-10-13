@@ -13,7 +13,7 @@ export class UniverseService {
   constructor(private http: HttpClient, private papa: Papa) {
     // Setup typeData
     this.initializeData('invTypes.csv', 'typeID', this.typeData).add(
-      () => { // Call-back hash-map validation function
+      () => { // Hash-map validation function call-back
         if (this.getTypeName(670) === 'Capsule') {
           console.log('typeData initialized.');
         } else {
