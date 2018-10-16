@@ -8,7 +8,7 @@ import { UniverseService } from '../services/universe.service';
   styleUrls: ['./zkill-watcher.component.scss']
 })
 export class ZkillWatcherComponent implements OnInit {
-
+  private length = 10;
   private socket: WebSocketSubject<{}>;
   public listening = false;
   public mails = [];
@@ -302,23 +302,23 @@ export class ZkillWatcherComponent implements OnInit {
   start() {
     this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
     this.socket.next({ 'action': 'sub', 'channel': 'killstream' });
-    console.log('Connection Started.');
+    console.log('Started listening to WebSocket.');
     this.socket.subscribe(
-      (message) => {
-        if (this.mails.length > 10) {
-          this.mails.shift();
-        }
+      message => {
         this.mails.push(message);
         console.log(message);
+        if (this.mails.length > this.length) {
+          this.mails.shift();
+        }
       },
-      (err) => console.error(err)
+      err => console.error(err)
     );
     this.listening = true;
   }
 
   stop() {
     this.socket.unsubscribe();
-    console.log('Connection Stopped.');
+    console.log('Stopped listening to WebSocket.');
     this.listening = false;
   }
 

@@ -49,12 +49,42 @@
       </div>
     </div>
   </div>
-  <div class="row mail-info" *ngFor="let mail of mails">
-    <div class="card">
+  <div class="row" *ngFor="let mail of mails">
+    <div class="card mail-info" style="width:100%;">
       <div class="card-body">
-        <img src="{{'https://imageserver.eveonline.com/Render/'+ mail['victim']['ship_type_id'] +'_128.png'}}" style="height: 64px; width: 64px;">
-        {{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000'}} {{ universe.getTypeName(mail['victim']['ship_type_id'])
-        }}
+        <div class="row">
+          <div class="col-2">
+            <img src="{{'https://imageserver.eveonline.com/Render/' + mail['victim']['ship_type_id'] + '_64.png'}}" style="padding-right: 1em;">
+            <img src="{{'https://image.eveonline.com/Character/' + mail['victim']['character_id'] + '_64.jpg'}}" style="height: 64px; width: 64px;">
+          </div>
+          <div class="col-2">
+            <div class="row">
+              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
+            </div>
+            <div class="row">
+              <b>Name: </b>{{ mail['victim']['character_id'] }}
+            </div>
+            <div class="row">
+              <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }}
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="row">
+              <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" style="height: 32px; width: 32px;">
+              {{mail['victim']['alliance_id'] | eve:'alliance' | async}}
+            </div>
+            <div class="row">
+              <img src="{{'https://image.eveonline.com/Corporation/'+ mail['victim']['corporation_id'] +'_64.png'}}"
+                style="height: 32px; width: 32px;">
+              {{mail['victim']['corporation_id'] | eve:'corporation' | async}}
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="row">
+              <b>System: </b>{{ mail['solar_system_id'] }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

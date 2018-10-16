@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { ZkillWatcherComponent } from './zkill-watcher/zkill-watcher.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { EveService } from './services/eve.service';
+import { EvePipe } from './common/eve.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { EveService } from './services/eve.service';
     HeaderComponent,
     MarketComponent,
     HomeComponent,
-    ZkillWatcherComponent
+    ZkillWatcherComponent,
+    EvePipe
   ],
   imports: [
     BrowserModule,
