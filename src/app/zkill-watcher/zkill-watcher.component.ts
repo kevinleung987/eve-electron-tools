@@ -311,7 +311,10 @@ export class ZkillWatcherComponent implements OnInit {
           this.mails.shift();
         }
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+        this.listening = false;
+      }
     );
     this.listening = true;
   }

@@ -57,4 +57,22 @@ export class UniverseService {
   getSystemName(id: number): string {
     return this.systemData[id] ? this.systemData[id]['solarSystemName'] : '';
   }
+
+  getSystemSecurity(id: number): string {
+    return this.systemData[id] ? this.systemData[id]['security'] : '';
+  }
+
+  getSecurityColor(sec: number): string {
+    if (sec <= 0.0) {return '#F00000'; }
+    if (sec <= 0.1) {return '#D73000'; }
+    if (sec <= 0.2) {return '#F04800'; }
+    if (sec <= 0.3) {return '#F06000'; }
+    if (sec <= 0.4) {return '#D77700'; }
+    if (sec <= 0.5) {return '#EFEF00'; }
+    if (sec <= 0.6) {return '#8FEF2F'; }
+    if (sec <= 0.7) {return '#00F000'; }
+    if (sec <= 0.8) {return '#00EF47'; }
+    if (sec <= 0.9) {return '#48F0C0'; }
+    if (sec <= 1.0) {return '#2FEFEF'; }
+  }
 }
