@@ -1,5 +1,10 @@
 <div class="container">
   <div class="row">
+    <h1 class="mx-auto">
+      Zkill Listener
+    </h1>
+  </div>
+  <div class="row">
     <div class="col-2">
       <button type="button" class="btn btn-raised btn-primary" (click)="start()" [disabled]="listening">Start Listening</button>
     </div>
@@ -10,13 +15,13 @@
       <button type="button" class="btn btn-raised btn-success" (click)="clear()" [disabled]="mails.length === 0">Clear</button>
     </div>
     <div class="col-2">
-      
+
     </div>
     <div class="col-2">
-      
+
     </div>
     <div class="col-2">
-      
+
     </div>
   </div>
   <div class="row" *ngFor="let mail of mails">
@@ -24,7 +29,8 @@
       <div class="card-body">
         <div class="row">
           <div class="col-2">
-            <img src="{{'https://imageserver.eveonline.com/Render/' + mail['victim']['ship_type_id'] + '_64.png'}}" style="padding-right: 1em;">
+            <img src="{{'https://imageserver.eveonline.com/Render/' + mail['victim']['ship_type_id'] + '_64.png'}}"
+              style="padding-right: 1em;">
             <img src="{{'https://image.eveonline.com/Character/' + mail['victim']['character_id'] + '_64.jpg'}}" style="height: 64px; width: 64px;">
           </div>
           <div class="col-3">
@@ -40,8 +46,7 @@
           </div>
           <div class="col-3">
             <div class="row" *ngIf="mail['victim']['alliance_id']">
-              <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" 
-              style="height: 32px; width: 32px;">
+              <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" style="height: 32px; width: 32px;">
               <p>{{ mail['victim']['alliance_id'] | eve:'alliance' | async }}</p>
             </div>
             <div class="row" *ngIf="!mail['victim']['alliance_id']">
@@ -55,7 +60,7 @@
           </div>
           <div class="col-3">
             <div class="row">
-              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}} 
+              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
               [<p [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
                 {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</p>]
             </div>

@@ -25,6 +25,5 @@ def downloadData(sourceName, fileName, columns, decompress=bz2.decompress):
     df.to_csv(downloadsDir + fileName, index=False)
     os.remove(downloadsDir + tempFile)
 
-
-downloadData('invTypes.csv.bz2', 'invTypes.csv', ['typeID', 'typeName'])
+downloadData('invTypes.csv.bz2', 'invTypes.csv', ['typeID', 'groupID', 'typeName'])
 downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv', ['solarSystemID', 'solarSystemName', 'security'])
