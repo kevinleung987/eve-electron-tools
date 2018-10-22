@@ -305,7 +305,7 @@ export class ZkillWatcherComponent implements OnInit {
     console.log('Started listening to WebSocket.');
     this.socket.subscribe(
       message => {
-        this.mails.push(message);
+        this.mails.unshift(message);
         console.log(message);
         if (this.mails.length > this.length) {
           this.mails.shift();

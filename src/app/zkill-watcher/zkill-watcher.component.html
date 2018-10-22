@@ -10,43 +10,13 @@
       <button type="button" class="btn btn-raised btn-success" (click)="clear()" [disabled]="mails.length === 0">Clear</button>
     </div>
     <div class="col-2">
-      <div class="dropdown">
-        <button class="btn btn-raised btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </div>
+      
     </div>
     <div class="col-2">
-      <div class="dropdown">
-        <button class="btn btn-raised btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </div>
+      
     </div>
     <div class="col-2">
-      <div class="dropdown">
-        <button class="btn btn-raised btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </div>
+      
     </div>
   </div>
   <div class="row" *ngFor="let mail of mails">
@@ -62,16 +32,17 @@
               <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
             </div>
             <div class="row">
-              <b>Name: </b>{{ mail['victim']['character_id'] }}
+              <b>Name: </b>{{ mail['victim']['character_id'] | eve:'character' | async}}
             </div>
             <div class="row">
               <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }}
             </div>
           </div>
           <div class="col-2">
-            <div class="row">
-              <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" style="height: 32px; width: 32px;">
-              {{mail['victim']['alliance_id'] | eve:'alliance' | async}}
+            <div class="row" >
+              <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" 
+              style="height: 32px; width: 32px;" *ngIf="mail['victim']['alliance_id']">
+              <p *ngIf="mail['victim']['alliance_id']">{{ mail['victim']['alliance_id'] | eve:'alliance' | async }}</p>
             </div>
             <div class="row">
               <img src="{{'https://image.eveonline.com/Corporation/'+ mail['victim']['corporation_id'] +'_64.png'}}"
@@ -81,7 +52,7 @@
           </div>
           <div class="col-2">
             <div class="row">
-              <b>System: </b>{{ mail['solar_system_id'] }}
+              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id']) }}
             </div>
           </div>
         </div>

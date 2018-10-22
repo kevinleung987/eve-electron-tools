@@ -9,13 +9,11 @@ export class EvePipe implements PipeTransform {
   constructor(private eveService: EveService) { }
 
   transform(value: any, valueType: any): Promise<any> {
-    if (valueType === 'alliance') {
-      console.log(value, valueType);
-      return this.eveService.alliances(value).then(result => result['name']);
-    } else if (valueType === 'corporation') {
-      return this.eveService.corporations(value).then(result => result['name']);
-    } else {
-      return null;
+    switch (valueType) {
+      case 'alliance': return this.eveService.alliances(value).then(result => result['name']);
+      case 'corporation': return this.eveService.corporations(value).then(result => result['name']);
+      case 'character': return this.eveService.characters(value).then(result => result['name']);
+      default: return null;
     }
   }
 
