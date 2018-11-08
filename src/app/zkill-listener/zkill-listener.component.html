@@ -64,6 +64,9 @@
               [<p [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
                 {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</p>]
             </div>
+            <div class="row">
+              <p><b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK</p>
+            </div>
           </div>
         </div>
       </div>
