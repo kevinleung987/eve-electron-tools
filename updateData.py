@@ -11,7 +11,7 @@ def downloadData(sourceName, fileName, columns, decompress=bz2.decompress):
     """
     :param sourceName: Name of the file to download, as it appears in the url
     :param fileName: Name of the file, as it will be stored
-    :param columns: Name of the columns to keep, rest will be pruned to save space
+    :param columns: Name of the columns to keep, use None to keep all columns
     :param decompress: Decompression function to use
     :returns: None
     """
@@ -25,5 +25,8 @@ def downloadData(sourceName, fileName, columns, decompress=bz2.decompress):
     df.to_csv(downloadsDir + fileName, index=False)
     os.remove(downloadsDir + tempFile)
 
-downloadData('invTypes.csv.bz2', 'invTypes.csv', ['typeID', 'groupID', 'typeName'])
-downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv', ['solarSystemID', 'solarSystemName', 'security'])
+
+downloadData('invTypes.csv.bz2', 'invTypes.csv',
+             ['typeID', 'groupID', 'typeName'])
+downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv',
+             ['solarSystemID', 'solarSystemName', 'security'])

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { LocalScanService } from '../services/local-scan.service';
+import {Component, OnInit} from '@angular/core';
+import {LocalScanService} from '../services/local-scan.service';
 
 @Component({
   selector: 'app-local-scan',
@@ -7,13 +7,11 @@ import { LocalScanService } from '../services/local-scan.service';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
-  constructor(public localScanService: LocalScanService) { }
+  constructor(public localScanService: LocalScanService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
-  onSubmit(input) {
-    this.localScanService.parse(input);
-  }
+  onSubmit(input) { this.localScanService.parse(input); }
 
   getDisplayCorporations() {
     const keys = Object.keys(this.localScanService.displayCorporations);
@@ -23,9 +21,7 @@ export class LocalScanComponent implements OnInit {
         output.push(this.localScanService.displayCorporations[element]);
       }
     });
-    output.sort(function (a, b) {
-      return b.count - a.count;
-    });
+    output.sort(function(a, b) { return b.count - a.count; });
     return output;
   }
 
@@ -37,9 +33,7 @@ export class LocalScanComponent implements OnInit {
         output.push(this.localScanService.displayAlliances[element]);
       }
     });
-    output.sort(function (a, b) {
-      return b.count - a.count;
-    });
+    output.sort(function(a, b) { return b.count - a.count; });
     return output;
   }
 

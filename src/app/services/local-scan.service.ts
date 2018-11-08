@@ -1,26 +1,29 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 import {
   EveCharacter,
   EveCorporation,
   EveAlliance
 } from '../models/EveModels.model';
-import { EveService } from './eve.service';
-import { from } from 'rxjs/internal/observable/from';
+import {EveService} from './eve.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class LocalScanService {
-  public characters: { [id: number]: EveCharacter };
-  public corporations: { [id: number]: EveCorporation };
-  public alliances: { [id: number]: EveAlliance };
+  public characters: {[id: number]: EveCharacter};
+  public corporations: {[id: number]: EveCorporation};
+  public alliances: {[id: number]: EveAlliance};
   public displayCorporations: {
-    [id: number]: { corporation: EveCorporation; count: number };
+    [id: number]: {
+      corporation: EveCorporation;
+      count: number
+    };
   };
   public displayAlliances: {
-    [id: number]: { alliance: EveAlliance; count: number };
+    [id: number]: {
+      alliance: EveAlliance;
+      count: number
+    };
   };
   constructor(private http: HttpClient, private eve: EveService) {
     this.characters = {};
@@ -56,7 +59,8 @@ export class LocalScanService {
     const lines = localList.split('\n');
     for (let i = 0; i < lines.length; i++) {
       // Search the character in ESI
-      const searchData: any = await this.eve.search(lines[i], 'character', true);
+      const searchData: any =
+          await this.eve.search(lines[i], 'character', true);
       // If the character exists in ESI
       if (searchData['character']) {
         const id = searchData['character'][0];
@@ -81,14 +85,16 @@ export class LocalScanService {
             this.addDisplayCorporation(corpId);
             if (corpData['alliance_id']) {
               // Get character's alliance data
-              const allianceData: any = await this.eve.alliances(corpData['alliance_id']);
+              const allianceData: any =
+                  await this.eve.alliances(corpData['alliance_id']);
               if (this.alliances[corpData['alliance_id']]) {
                 this.addDisplayAlliance(corpData['alliance_id']);
               } else {
                 this.alliances[corpData['alliance_id']] = {
                   name: allianceData['name'],
                   corporations: null,
-                  image: `http://image.eveonline.com/Alliance/${corpData['alliance_id']}_128.png`
+                  image:
+                      `http://image.eveonline.com/Alliance/${corpData['alliance_id']}_128.png`
                 };
                 this.addDisplayAlliance(corpData['alliance_id']);
               }
@@ -98,8 +104,7 @@ export class LocalScanService {
           // If the character already exists in our cache
           this.addDisplayCorporation(this.characters[id].corporation);
           this.addDisplayAlliance(
-            this.corporations[this.characters[id].corporation].alliance
-          );
+              this.corporations[this.characters[id].corporation].alliance);
         }
       }
     }

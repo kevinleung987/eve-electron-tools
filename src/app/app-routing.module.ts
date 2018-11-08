@@ -1,9 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LocalScanComponent } from './local-scan/local-scan.component';
-import { MarketComponent } from './market/market.component';
-import { HomeComponent } from './home/home.component';
-import { ZkillListenerComponent } from './zkill-listener/zkill-listener.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {LocalScanComponent} from './local-scan/local-scan.component';
+import {MarketComponent} from './market/market.component';
+import {HomeComponent} from './home/home.component';
+import {
+  ZkillListenerComponent
+} from './zkill-listener/zkill-listener.component';
 
 import {
   RouteReuseStrategy,
@@ -12,11 +14,9 @@ import {
 } from '@angular/router';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
-  handlers: { [key: string]: DetachedRouteHandle } = {};
+  handlers: {[key: string]: DetachedRouteHandle} = {};
 
-  shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return true;
-  }
+  shouldDetach(route: ActivatedRouteSnapshot): boolean { return true; }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
     this.handlers[route.routeConfig.path] = handle;
@@ -33,23 +33,19 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     return this.handlers[route.routeConfig.path];
   }
 
-  shouldReuseRoute(
-    future: ActivatedRouteSnapshot,
-    curr: ActivatedRouteSnapshot
-  ): boolean {
+  shouldReuseRoute(future: ActivatedRouteSnapshot,
+                   curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig;
   }
 }
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'local-scan', component: LocalScanComponent },
-  { path: 'market', component: MarketComponent },
-  { path: 'zkill-listener', component: ZkillListenerComponent }
+  {path: '', component: HomeComponent},
+  {path: 'local-scan', component: LocalScanComponent},
+  {path: 'market', component: MarketComponent},
+  {path: 'zkill-listener', component: ZkillListenerComponent}
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}
+@NgModule({imports: [RouterModule.forRoot(routes)], exports: [RouterModule]})
+export class AppRoutingModule {
+}
