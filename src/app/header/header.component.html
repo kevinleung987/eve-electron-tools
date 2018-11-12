@@ -21,6 +21,9 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/zkill-listener']">Zkill Listener</a>
       </li>
+      <li class="nav-item" *ngIf="electron.isElectronApp">
+        <a class="nav-link" [routerLink]="['/profile-sync']">Profile Syncer</a>
+      </li>
     </ul>
   </div>
 </nav>

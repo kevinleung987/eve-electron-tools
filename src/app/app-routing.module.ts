@@ -12,6 +12,7 @@ import {
   DetachedRouteHandle,
   ActivatedRouteSnapshot
 } from '@angular/router';
+import {ProfileSyncComponent} from './profile-sync/profile-sync.component';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
   handlers: {[key: string]: DetachedRouteHandle} = {};
@@ -43,7 +44,8 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'local-scan', component: LocalScanComponent},
   {path: 'market', component: MarketComponent},
-  {path: 'zkill-listener', component: ZkillListenerComponent}
+  {path: 'zkill-listener', component: ZkillListenerComponent},
+  {path: 'profile-sync', component: ProfileSyncComponent},
 ];
 
 @NgModule({imports: [RouterModule.forRoot(routes)], exports: [RouterModule]})

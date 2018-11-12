@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import {NgxElectronModule} from 'ngx-electron';
 import {PapaParseModule} from 'ngx-papaparse';
 
 import {AppRoutingModule, CustomReuseStrategy} from './app-routing.module';
@@ -17,6 +18,7 @@ import {
 import {RouteReuseStrategy} from '@angular/router';
 import {EveService} from './services/eve.service';
 import {EvePipe} from './common/eve.pipe';
+import { ProfileSyncComponent } from './profile-sync/profile-sync.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,16 @@ import {EvePipe} from './common/eve.pipe';
     MarketComponent,
     HomeComponent,
     ZkillListenerComponent,
-    EvePipe
+    EvePipe,
+    ProfileSyncComponent
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, PapaParseModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    PapaParseModule,
+    NgxElectronModule
+  ],
   providers: [
     EveService,
     LocalScanService,
