@@ -4,11 +4,11 @@
   "version": "0.0.1",
   "main": "./main.js",
   "scripts": {
+    "start": "ng serve",
+    "build": "ng build",
     "electron": "ng build --base-href ./ && electron .",
     "electron-build": "ng build --base-href ./ && electron-builder",
-    "postinstall": "electron-builder install-app-deps",
-    "start": "ng serve",
-    "build": "ng build"
+    "postinstall": "electron-builder install-app-deps"
   },
   "private": true,
   "build": {
