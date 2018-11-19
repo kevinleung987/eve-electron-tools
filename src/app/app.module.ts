@@ -6,19 +6,21 @@ import {PapaParseModule} from 'ngx-papaparse';
 
 import {AppRoutingModule, CustomReuseStrategy} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LocalScanComponent} from './local-scan/local-scan.component';
+import {LocalScanComponent} from './tools/local-scan/local-scan.component';
 import {HeaderComponent} from './header/header.component';
 import {LocalScanService} from './services/local-scan.service';
 import {MarketService} from './services/market.service';
-import {MarketComponent} from './market/market.component';
+import {MarketComponent} from './tools/market/market.component';
 import {HomeComponent} from './home/home.component';
 import {
   ZkillListenerComponent
-} from './zkill-listener/zkill-listener.component';
+} from './tools/zkill-listener/zkill-listener.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {EveService} from './services/eve.service';
 import {EvePipe} from './common/eve.pipe';
-import { ProfileSyncComponent } from './profile-sync/profile-sync.component';
+import {
+  ProfileSyncComponent
+} from './tools/profile-sync/profile-sync.component';
 
 @NgModule({
   declarations: [

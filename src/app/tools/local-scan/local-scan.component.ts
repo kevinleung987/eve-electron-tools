@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalScanService} from '../services/local-scan.service';
+import {LocalScanService} from '../../services/local-scan.service';
 
 @Component({
   selector: 'app-local-scan',

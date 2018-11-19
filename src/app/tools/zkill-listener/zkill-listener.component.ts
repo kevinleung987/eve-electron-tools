@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WebSocketSubject} from 'rxjs/webSocket';
-import {UniverseService} from '../services/universe.service';
+import {UniverseService} from '../../services/universe.service';
 
 @Component({
   selector: 'app-zkill-listener',

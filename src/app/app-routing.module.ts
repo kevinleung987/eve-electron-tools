@@ -1,18 +1,20 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {LocalScanComponent} from './local-scan/local-scan.component';
-import {MarketComponent} from './market/market.component';
+import {LocalScanComponent} from './tools/local-scan/local-scan.component';
+import {MarketComponent} from './tools/market/market.component';
 import {HomeComponent} from './home/home.component';
 import {
   ZkillListenerComponent
-} from './zkill-listener/zkill-listener.component';
+} from './tools/zkill-listener/zkill-listener.component';
 
 import {
   RouteReuseStrategy,
   DetachedRouteHandle,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import {ProfileSyncComponent} from './profile-sync/profile-sync.component';
+import {
+  ProfileSyncComponent
+} from './tools/profile-sync/profile-sync.component';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
   handlers: {[key: string]: DetachedRouteHandle} = {};
