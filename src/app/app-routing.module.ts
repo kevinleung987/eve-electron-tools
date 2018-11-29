@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LocalScanComponent} from './tools/local-scan/local-scan.component';
 import {MarketComponent} from './tools/market/market.component';
-import {HomeComponent} from './home/home.component';
+import {HomeComponent} from './ui/home/home.component';
 import {
   ZkillListenerComponent
 } from './tools/zkill-listener/zkill-listener.component';
