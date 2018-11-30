@@ -4,14 +4,13 @@
   "version": "0.0.1",
   "main": "./main.js",
   "scripts": {
-    "postinstall:electron": "node postinstall",
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
     "ng:serve": "ng serve",
-    "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:serve": "wait-on http-get://localhost:4200/ && electron . --serve",
     "electron": "ng build --base-href ./ && electron .",
     "electron-build": "ng build --base-href ./ && electron-builder",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "postinstall:electron": "node postinstall"
   },
   "private": true,
   "build": {
