@@ -1,8 +1,7 @@
 {
   "name": "eve-electron-tools",
-  "description": "Open-source, back-end-optional, desktop alternative for popular community tools for EVE Online.",
+  "description": "Back-end-optional, desktop alternative for popular community tools for EVE Online.",
   "version": "0.0.1",
-  "main": "./main.js",
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
