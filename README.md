@@ -37,10 +37,10 @@ EVE Electron Tools is...
 - Install dependencies by running `npm install`
 - Install Angular CLI & Electron with `npm install -g @angular/cli electron`
 - Serve the application in the browser with `npm run browser` or under Electron with `npm start`. I'm still playing around with the build-process but that can be found in the future under:
-  - `npm run build:local` - for your local machine
-  - `npm run build:windows` - for Windows
-  - `npm run build:mac` - for MacOS
-  - `npm run build:linux` - for Linux
+  - `npm run bundle:local` - for your local machine
+  - `npm run bundle:windows` - for Windows
+  - `npm run bundle:mac` - for MacOS
+  - `npm run bundle:linux` - for Linux
 
 ## Back-end Service
 
