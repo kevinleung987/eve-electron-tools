@@ -20,6 +20,14 @@ EVE Electron Tools is...
 - **Back-end Optional:** EVE-ET does not require a hosted back-end service to use most of it's functionality. Some features, like sharing D-Scans, will require the presence of a back-end server(To be developed in the future). This means you can operate the tools independent of any server and not every user or group requires the extra functionality that the back-end will provide.
 - **A Desktop Application:** By bundling this toolset to target multiple platforms, anyone can use the application freely without having to host or serve a web-app from a server somewhere. The option is available to serve EVE-ET as a web-page with reduced functionality.
 
+## Tools used
+
+- **[Angular](https://github.com/angular/angular)** - Frontend framework
+- **[Electron](https://github.com/electron/electron)** - Desktop Application framework
+- **[Bootstrap Material Design](https://github.com/FezVrasta/bootstrap-material-design)** - Material Design CSS
+- **[Angular-Electron](https://github.com/maximegris/angular-electron)** - Boilerplate to link Angular with Electron
+
+
 ## Usage
 
 - When this application is in a release-ready state, you will be able to find regular releases under the Releases tab.
