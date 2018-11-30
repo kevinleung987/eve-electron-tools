@@ -6,30 +6,22 @@
   "scripts": {
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
     "browser": "npm run postinstall:web && npm run ng:serve:web",
+    "build": "npm run postinstall:electron && ng build",
+    "build:dev": "npm run build -- -c dev",
+    "build:prod": "npm run build -- -c production",
+    "build:local": "npm run build:prod && electron .",
+    "build:linux": "npm run build:prod && npx electron-builder build --linux",
+    "build:windows": "npm run build:prod && npx electron-builder build --windows",
+    "build:mac": "npm run build:prod && npx electron-builder build --mac",
     "ng:serve": "ng serve",
-    "ng:serve:web": "npm run postinstall:web && ng serve -o",
+    "ng:serve:web": "npm run postinstall:web && ng serve",
     "electron:serve": "wait-on http-get://localhost:4200/ && electron . --serve",
     "electron": "ng build --base-href ./ && electron .",
-    "electron-build": "ng build --base-href ./ && electron-builder",
     "postinstall": "electron-builder install-app-deps",
     "postinstall:electron": "node postinstall",
     "postinstall:web": "node postinstall-web"
   },
   "private": true,
-  "build": {
-    "directories": {
-      "output": "build"
-    },
-    "files": [
-      "dist",
-      "./main.js",
-      "!node_modules"
-    ],
-    "appId": "eve.electron.tools",
-    "win": {
-      "target": "NSIS"
-    }
-  },
   "dependencies": {
     "@angular/animations": "^7.0.0",
     "@angular/common": "^7.0.0",

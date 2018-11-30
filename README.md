@@ -16,9 +16,9 @@ Back-end-optional, desktop alternative for popular community tools for EVE Onlin
 ## About
 
 EVE Electron Tools is...
-- **Open-Source:** This application is free and open-source. A lot of the popular community tools for EVE Online aren't open-source and some have been known to log your input.
-- **Back-end Optional:** EVE-ET does not require a hosted back-end service to use most of it's functionality. Some features, like sharing D-Scans, will require the presence of a back-end server(To be developed in the future). This means you can operate the tools independent of any server and not every user or group requires the extra functionality that the back-end will provide.
-- **A Desktop Application:** By bundling this toolset to target multiple platforms, anyone can use the application freely without having to host or serve a web-app from a server somewhere. The option is available to serve EVE-ET as a web-page with reduced functionality.
+- **Open-Source:** This application is free and open-source. Most of the popular community tools used by the EVE Online community are not open-source and some have even been known to log your input.
+- **Back-end Optional:** EVE-ET does not require a server to host any back-end service to use most of it's functionality. Some features, like sharing D-Scans, will require a back-end service(To be developed in the future). This means you can operate the toolset independent of any hosting requirements.
+- **A Desktop Application:** I found that most community tools for EVE are provided as web-pages, but what happens if the owner decides to stop paying serve fees? By being bundled as a Desktop Application, EVE-ET enables full control over the toolset by freeing you from relying on a server to serve you a web-page. There are also features included that rely on operating system APIs exposed through Electron. The option is available to serve EVE-ET as a web-page with reduced functionality.
 
 ## Tools used
 
@@ -36,15 +36,19 @@ EVE Electron Tools is...
 
 - Install dependencies by running `npm install`
 - Install Angular CLI & Electron with `npm install -g @angular/cli electron`
-- Serve the application in the browser with `npm run start` or under Electron with `npm run electron`. I'm still playing around with the build-process but that can be found under `npm run electron-build`
+- Serve the application in the browser with `npm run browser` or under Electron with `npm start`. I'm still playing around with the build-process but that can be found in the future under:
+  - `npm run build:local` - for your local machine
+  - `npm run build:windows` - for Windows
+  - `npm run build:mac` - for MacOS
+  - `npm run build:linux` - for Linux
 
 ## Back-end Service
 
 Development is planned for a back-end service inside the same repo that will add extra functionality to the toolkit, as well as boost performance through caching API calls.
 
-## Note about data-source dependencies
+## Note About Data Dependencies
 
-EVE data dumps (Static Data Exports or SDEs) are used to reduce the number of API calls needed for the operation of various tools. These provide static game data like item names but sometimes need updating after a game patch. A tool can be found under `updateData.py` which will take the latest Static Data Exports, prune excess columns, and place the output .csv files into a folder `downloads`. The update tool requires `pandas` and `requests`.
+EVE data dumps (Static Data Exports or SDEs) are used to reduce the number of API calls needed for the operation of various tools. These provide static game data like item names but sometimes need updating after a game patch. I've written a tool in Python 3 which can be found under `updateData.py`. The tool will take the latest SDEs, prune excess columns, and place the output .csv files into a folder `downloads`. The update tool requires `pandas` and `requests`.
 
 License
 ----
