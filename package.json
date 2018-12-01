@@ -2,6 +2,8 @@
   "name": "eve-electron-tools",
   "description": "Back-end-optional, desktop alternative for popular community tools for EVE Online.",
   "version": "0.0.1",
+  "private": true,
+  "main": "./main.js",
   "scripts": {
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
     "browser": "npm run postinstall:web && npm run ng:serve:web",
@@ -18,10 +20,9 @@
     "electron:serve": "wait-on http-get://localhost:4200/ && electron . --serve",
     "electron": "ng build --base-href ./ && electron .",
     "postinstall": "electron-builder install-app-deps",
-    "postinstall:electron": "node postinstall",
-    "postinstall:web": "node postinstall-web"
+    "postinstall:electron": "node postinstall electron-renderer",
+    "postinstall:web": "node postinstall web"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^7.1.1",
     "@angular/common": "^7.1.1",
