@@ -1,0 +1,27 @@
+sudo: required
+
+language: node_js
+node_js:
+  - "10"
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - npm install -g @angular/cli
+
+script:
+  - ng build --prod --aot
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist
+  on:
+    branch: master
