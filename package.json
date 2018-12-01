@@ -7,11 +7,10 @@
   "scripts": {
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
     "browser": "npm run postinstall:web && npm run ng:serve:web",
-    "build-all": "npm-run-all bundle:*",
+    "build-all": "npm-run-all bundle:linux bundle:windows",
     "build": "npm run postinstall:electron && ng build",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
-    "bundle:local": "npm run build:prod && electron .",
     "bundle:linux": "npm run build:prod && npx electron-builder build --linux",
     "bundle:windows": "npm run build:prod && npx electron-builder build --windows",
     "bundle:mac": "npm run build:prod && npx electron-builder build --mac",

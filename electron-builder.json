@@ -21,17 +21,26 @@
   ],
   "win": {
     "target": [
-      "portable"
+      {
+        "target": "portable"
+      },
+      {
+        "target": "zip"
+      }
     ]
   },
   "mac": {
     "target": [
-      "dmg"
+      {
+        "target": "dmg"
+      }
     ]
   },
   "linux": {
     "target": [
-      "AppImage"
+      {
+        "target": "tar.gz"
+      }
     ]
   }
 }

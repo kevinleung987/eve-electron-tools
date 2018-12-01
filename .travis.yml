@@ -1,27 +1,55 @@
-sudo: required
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.4
+      language: node_js
+      node_js: "10"
+      env:
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
-language: node_js
-node_js:
-  - "10"
-
-branches:
-  only:
-    - master
+    - os: linux
+      services: docker
+      language: generic
 
 cache:
   directories:
     - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
 
 before_script:
   - npm install -g @angular/cli
 
 script:
-  - ng build --prod --aot
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      docker run --rm \
+        --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
+        -v ${PWD}:/project \
+        -v ~/.cache/electron:/root/.cache/electron \
+        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+        electronuserland/builder:wine \
+        /bin/bash -c "npm run bundle:linux && npm run bundle:windows"
+    else
+      npm run bundle:mac
+    fi
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
 
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist
-  on:
-    branch: master
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: dist
+    on:
+      branch: master
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file_glob: true
+    file: release/eve-electron-tools*
+    overwrite: true
+    skip_cleanup: true
+    on:
+      tags: true
