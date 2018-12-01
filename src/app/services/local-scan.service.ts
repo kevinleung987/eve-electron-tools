@@ -1,18 +1,18 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import {
   EveCharacter,
   EveCorporation,
   EveAlliance
 } from '../models/EveModels.model';
-import {EveService} from './eve.service';
+import { EveService } from './eve.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class LocalScanService {
-  public characters: {[id: number]: EveCharacter};
-  public corporations: {[id: number]: EveCorporation};
-  public alliances: {[id: number]: EveAlliance};
+  public characters: { [id: number]: EveCharacter };
+  public corporations: { [id: number]: EveCorporation };
+  public alliances: { [id: number]: EveAlliance };
   public displayCorporations: {
     [id: number]: {
       corporation: EveCorporation;
@@ -33,80 +33,95 @@ export class LocalScanService {
     this.displayAlliances = {};
   }
 
-  addDisplayCorporation(corpId: number) {
-    if (this.displayCorporations[corpId]) {
-      this.displayCorporations[corpId].count++;
-    } else {
-      this.displayCorporations[corpId] = {
-        corporation: this.corporations[corpId],
-        count: 1
-      };
-    }
-  }
-  addDisplayAlliance(allianceId: number) {
-    if (this.displayAlliances[allianceId]) {
-      this.displayAlliances[allianceId].count++;
-    } else {
-      this.displayAlliances[allianceId] = {
-        alliance: this.alliances[allianceId],
-        count: 1
-      };
-    }
-  }
-
-  async parse(localList) {
-    console.log('Running Parse');
-    const lines = localList.split('\n');
-    for (let i = 0; i < lines.length; i++) {
-      // Search the character in ESI
-      const searchData: any =
-          await this.eve.search(lines[i], 'character', true);
-      // If the character exists in ESI
-      if (searchData['character']) {
-        const id = searchData['character'][0];
-        if (!this.characters[id]) {
-          // Find the character's id and corporation
-          const charData: any = await this.eve.characters(id);
-          this.characters[id] = {
-            name: lines[i],
-            corporation: charData['corporation_id']
-          };
-          const corpId = charData['corporation_id'];
-          if (this.corporations[corpId]) {
-            this.addDisplayCorporation(corpId);
-          } else {
-            // Get character's corporation data
-            const corpData: any = await this.eve.corporations(corpId);
-            this.corporations[corpId] = {
-              name: corpData['name'],
-              alliance: corpData['alliance_id'] || null,
-              image: `http://image.eveonline.com/Corporation/${corpId}_128.png`
-            };
-            this.addDisplayCorporation(corpId);
-            if (corpData['alliance_id']) {
-              // Get character's alliance data
-              const allianceData: any =
-                  await this.eve.alliances(corpData['alliance_id']);
-              if (this.alliances[corpData['alliance_id']]) {
-                this.addDisplayAlliance(corpData['alliance_id']);
-              } else {
-                this.alliances[corpData['alliance_id']] = {
-                  name: allianceData['name'],
-                  corporations: null,
-                  image:
-                      `http://image.eveonline.com/Alliance/${corpData['alliance_id']}_128.png`
-                };
-                this.addDisplayAlliance(corpData['alliance_id']);
-              }
-            }
-          }
+  async processLine(line: string): Promise<any> {
+    const result = {
+      corporation: null,
+      alliance: null
+    };
+    // Search the character in ESI
+    const searchData: any = await this.eve.search(line, 'character', true);
+    // If the character exists in ESI
+    if (searchData['character']) {
+      const id = searchData['character'][0];
+      if (this.characters[id]) { // Character exists in cache
+        result.corporation = this.characters[id].corporation;
+        result.alliance = this.corporations[this.characters[id].corporation].alliance;
+      } else {
+        // Find the character's id and corporation
+        const charData: any = await this.eve.characters(id);
+        this.characters[id] = {
+          name: line,
+          corporation: charData['corporation_id']
+        };
+        const corpId = charData['corporation_id'];
+        if (this.corporations[corpId]) { // Corporation exists in cache
+          result.corporation = corpId;
         } else {
-          // If the character already exists in our cache
-          this.addDisplayCorporation(this.characters[id].corporation);
-          this.addDisplayAlliance(
-              this.corporations[this.characters[id].corporation].alliance);
+          // Get character's corporation data
+          const corpData: any = await this.eve.corporations(corpId);
+          this.corporations[corpId] = {
+            name: corpData['name'],
+            alliance: corpData['alliance_id'] || null,
+            image: `http://image.eveonline.com/Corporation/${corpId}_128.png`
+          };
+          result.corporation = corpId;
+          if (corpData['alliance_id']) { // Corporation has alliance
+            const allianceId: number = corpData['alliance_id'];
+            // Get character's alliance data
+            if (!this.alliances[allianceId]) { // Alliance exists in cache
+              const allianceData: any =
+                await this.eve.alliances(allianceId);
+              this.alliances[allianceId] = {
+                name: allianceData['name'],
+                corporations: null,
+                image:
+                  `http://image.eveonline.com/Alliance/${allianceId}_128.png`
+              };
+            }
+            result.alliance = allianceId;
+          }
         }
       }
     }
+    return Promise.resolve(result);
+  }
+
+  async parse(localList) {
+    const data = [];
+    const lines = localList.split('\n');
+    // Process each line to get corp and alliance info
+    for (let i = 0; i < lines.length; i++) {
+      data.push(this.processLine(lines[i]));
+    }
+    Promise.all(data).then((results) => {
+      console.log(results);
+      // Temporary frequency tables
+      const parsedCorporations = {};
+      const parsedAlliances = {};
+      // Process each item into the frequency tables
+      results.forEach((item) => {
+        const corp = item.corporation;
+        const alliance = item.alliance;
+        if (corp && parsedCorporations[corp]) {
+          parsedCorporations[corp].count++;
+        } else if (corp) {
+          parsedCorporations[corp] = {
+            corporation: this.corporations[corp],
+            count: 1
+          };
+        }
+        if (alliance && parsedAlliances[alliance]) {
+          parsedAlliances[alliance].count++;
+        } else if (alliance) {
+          parsedAlliances[alliance] = {
+            alliance: this.alliances[alliance],
+            count: 1
+          };
+        }
+      });
+      // Show the end-result
+      this.displayCorporations = parsedCorporations;
+      this.displayAlliances = parsedAlliances;
+    });
   }
 }
