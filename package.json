@@ -1,6 +1,6 @@
 {
   "name": "eve-electron-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Back-end-optional, desktop alternative for popular community tools for EVE Online.",
   "main": "./main.js",
