@@ -1,8 +1,8 @@
 {
   "name": "eve-electron-tools",
-  "description": "Back-end-optional, desktop alternative for popular community tools for EVE Online.",
   "version": "0.0.1",
   "private": true,
+  "description": "Back-end-optional, desktop alternative for popular community tools for EVE Online.",
   "main": "./main.js",
   "scripts": {
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
@@ -23,6 +23,7 @@
     "postinstall:web": "node postinstall web"
   },
   "dependencies": {
+    "@angular-devkit/build-angular": "^0.11.0",
     "@angular/animations": "^7.1.1",
     "@angular/common": "^7.1.1",
     "@angular/compiler": "^7.1.1",
@@ -35,13 +36,13 @@
     "bootstrap-material-design": "^4.1.1",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
+    "ngx-electron": "^2.0.0",
     "ngx-papaparse": "^3.0.0",
     "popper.js": "^1.14.6",
     "rxjs": "^6.3.3",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.11.0",
     "@angular/cli": "^7.1.0",
     "@angular/compiler-cli": "^7.1.1",
     "@angular/language-service": "^7.1.1",
@@ -49,7 +50,6 @@
     "codelyzer": "^4.5.0",
     "electron": "^3.0.10",
     "electron-builder": "^20.38.2",
-    "ngx-electron": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "ts-node": "~5.0.1",
     "tslint": "^5.11.0",
