@@ -1,5 +1,10 @@
 <div class="container">
   <div class="row">
+    <h1 class="mx-auto">
+      Local Scan
+    </h1>
+  </div>
+  <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Local Scan</label>
       <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'"></textarea>
@@ -7,7 +12,7 @@
       <button class="btn btn-raised btn-success btn-block" (click)="resetView()">Reset</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
-      <label>Corporations</label>
+      <label>Corporations: {{ getDisplayCorporations().length }}</label>
       <div class="local-area container">
         <div class="row display-item" *ngFor="let corp of getDisplayCorporations()">
           <div class="col-3">
@@ -23,7 +28,7 @@
       </div>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
-      <label>Alliances</label>
+      <label>Alliances: {{ getDisplayAlliances().length }}</label>
       <div class="local-area container">
         <div class="row display-item" *ngFor="let item of getDisplayAlliances()">
           <div class="col-3">

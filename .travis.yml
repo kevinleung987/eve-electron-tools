@@ -7,11 +7,14 @@ matrix:
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+        - GITHUB_PAGES=FALSE
 
     - os: linux
       services: docker
       language: node_js
       node_js: "10"
+      env:
+        - GITHUB_PAGES=TRUE
 
 script:
   - |
@@ -27,6 +30,9 @@ script:
       npm run bundle:mac
     fi
 
+before_deploy:
+  - ng build --base-href /eve-electron-tools && wait
+
 deploy:
   - provider: pages
     skip_cleanup: true
@@ -34,6 +40,7 @@ deploy:
     local_dir: dist
     on:
       branch: master
+      condition: $GITHUB_PAGES=TRUE
   - provider: releases
     api_key: $GITHUB_TOKEN
     file_glob: true

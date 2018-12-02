@@ -33,18 +33,23 @@
               style="padding-right: 1em;">
             <img src="{{'https://image.eveonline.com/Character/' + mail['victim']['character_id'] + '_64.jpg'}}" style="height: 64px; width: 64px;">
           </div>
-          <div class="col-3">
+          <div class="col-2">
             <div class="row">
-              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
+              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
+              [<span [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
+                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</span>]
             </div>
             <div class="row">
-              <b>Name: </b>{{ mail['victim']['character_id'] | eve:'character' | async}}
+              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
             </div>
             <div class="row">
               <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }}
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-2">
+            <div class="row">
+              <b>Name: </b>{{ mail['victim']['character_id'] | eve:'character' | async}}
+            </div>
             <div class="row" *ngIf="mail['victim']['alliance_id']">
               <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" style="height: 32px; width: 32px;">
               <p>{{ mail['victim']['alliance_id'] | eve:'alliance' | async }}</p>
@@ -58,12 +63,7 @@
               {{mail['victim']['corporation_id'] | eve:'corporation' | async}}
             </div>
           </div>
-          <div class="col-3">
-            <div class="row">
-              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
-              [<p [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
-                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</p>]
-            </div>
+          <div class="col-2">
             <div class="row">
               <p><b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK</p>
             </div>

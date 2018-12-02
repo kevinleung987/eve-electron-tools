@@ -8,9 +8,15 @@ serve = args.some(val => val === '--serve');
 
 function createWindow() {
 
+  const { screen } = require("electron");
+  const electronScreen = screen;
+  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
   win = new BrowserWindow({
-    width: 1600,
-    height: 900
+    x: 0,
+    y: 0,
+    width: size.width,
+    height: size.height
   });
 
   if (serve) { // load from web server
