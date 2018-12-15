@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
-import { ElectronService } from './electron.service';
 import { environment } from 'src/environments/environment';
-import { Subject } from 'rxjs';
+
+import { ElectronService } from './electron.service';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
   private path: string;
   private config: {};
-  public configChanged: Subject<{}>;
   constructor(private electron: ElectronService) {
-    this.configChanged = new Subject();
     if (this.electron.isElectron) {
       const settingsFile = environment.settingsFile;
-      this.path = this.electron.remote.require('path').join(this.electron.remote.app.getPath('userData'), settingsFile);
-      console.log(this.path);
+      this.path = this.electron.path.join(this.electron.remote.app.getPath('userData'), settingsFile);
+      console.log('Config path:', this.path);
       this.readSettingsFile();
-      this.configChanged.next(this.config);
+      this.electron.updateView('Initialize config.');
     }
   }
 
@@ -28,7 +26,7 @@ export class ConfigService {
     this.config[key] = value;
     this.electron.fs.writeFileSync(this.path, JSON.stringify(this.config));
     console.log('SET:', key, this.config[key]);
-    this.configChanged.next(this.config);
+    this.electron.updateView('Set config value.');
   }
 
   getConfig() {
@@ -42,7 +40,7 @@ export class ConfigService {
     this.config = JSON.parse(config);
     this.electron.fs.writeFileSync(this.path, JSON.stringify(this.config));
     console.log('SET CONFIG:', this.config);
-    this.configChanged.next(this.config);
+    this.electron.updateView('Overwrite config.');
   }
 
   readSettingsFile() {

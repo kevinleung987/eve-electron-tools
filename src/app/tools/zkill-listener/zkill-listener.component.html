@@ -48,11 +48,11 @@
           </div>
           <div class="col-2">
             <div class="row">
-              <b>Name: </b>{{ mail['victim']['character_id'] | eve:'character' | async}}
+              <b>Name: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }}
             </div>
             <div class="row" *ngIf="mail['victim']['alliance_id']">
               <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" style="height: 32px; width: 32px;">
-              <p>{{ mail['victim']['alliance_id'] | eve:'alliance' | async }}</p>
+              <p>{{ (mail['victim']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
             </div>
             <div class="row" *ngIf="!mail['victim']['alliance_id']">
               <p>No Alliance</p>
@@ -60,7 +60,7 @@
             <div class="row">
               <img src="{{'https://image.eveonline.com/Corporation/'+ mail['victim']['corporation_id'] +'_64.png'}}"
                 style="height: 32px; width: 32px;">
-              {{mail['victim']['corporation_id'] | eve:'corporation' | async}}
+              {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }}
             </div>
           </div>
           <div class="col-2">

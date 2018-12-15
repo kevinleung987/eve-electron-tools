@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ElectronService } from 'src/app/services/electron.service';
 import { ConfigService } from 'src/app/services/config.service';
+import { ElectronService } from 'src/app/services/electron.service';
 
 @Component({
   selector: 'app-profile-sync',
@@ -22,7 +22,7 @@ export class ProfileSyncComponent implements OnInit {
 
   selectFolder() {
     this.electron.remote.dialog.showOpenDialog({ properties: ['openDirectory'] }, (result) => {
-      if (result.length > 0) {
+      if (result && result.length > 0) {
         console.log(result);
         this.profilesPath = result[0];
         this.config.set('profilesPath', this.profilesPath);
@@ -48,6 +48,7 @@ export class ProfileSyncComponent implements OnInit {
       });
       this.accounts = accounts;
       this.characters = characters;
+      this.electron.updateView('Parse profile directory.');
       console.log(this.accounts, this.characters);
     });
   }

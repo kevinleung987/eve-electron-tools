@@ -4,10 +4,10 @@
       Profile Syncer
     </h1>
   </div>
-  <div class="row current-directory" (click)="openProfilesFolder()">
+  <div class="row">
     <button type="button" class="btn btn-raised btn-success mx-auto" (click)="selectFolder()">Select Folder</button>
   </div>
-  <div class="row">
+  <div class="row current-directory" (click)="openProfilesFolder()">
     <b class="mx-auto">Current Profile Directory: {{profilesPath || 'No folder selected.'}}</b>
   </div>
   <div *ngIf="profilesPath">
@@ -30,8 +30,15 @@
       <div class="col-3" *ngFor="let character of characters">
         <div class="card">
           <div class="card-body">
-            <img src="{{'https://image.eveonline.com/Character/' + character + '_64.jpg'}}" style="height: 64px; width: 64px;">
-            {{ character | eve:'character' | async}}
+            <div class="row">
+              <div class="col-6">
+                <img src="{{'https://image.eveonline.com/Character/' + character + '_64.jpg'}}" style="height: 64px; width: 64px;">
+              </div>
+              <div class="col-6">
+                <p>{{ character }}</p>
+                <p>{{ (character | eve:'character' | async)?.name }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
