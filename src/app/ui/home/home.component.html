@@ -1,10 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="col-12">
-      <h1>EVE Electron Tools</h1>
+    <h1>EVE Electron Tools</h1>
+
+  </div>
+  <div class="row">
+    <p>Check out the tools available so far in the nav-bar above.</p>
+  </div>
+  <div class="row">
+    You are <span *ngIf="!electron.isElectron"> NOT </span>running under Electron.
+  </div>
+  <div *ngIf="electron.isElectron">
+    <div class="row">
+      <textarea #configText rows="20" [innerText]="config.getConfig()"></textarea>
     </div>
-    <div class="col-12">
-      <p>Check out the tools available so far in the top nav-bar.</p>
+    <div class="row">
+      <button type="button" class="btn btn-raised btn-primary" (click)="writeConfig(configText.value)">Write
+        Config</button>
+      <button type="button" class="btn btn-raised btn-success" (click)="config.readSettingsFile()">Read Config</button>
     </div>
   </div>
 </div>
