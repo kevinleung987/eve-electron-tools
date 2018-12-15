@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxElectronModule } from 'ngx-electron';
 import { PapaParseModule } from 'ngx-papaparse';
 
 import { AppRoutingModule, CustomReuseStrategy } from './app-routing.module';
@@ -39,15 +38,9 @@ import { ElectronService } from './services/electron.service';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    PapaParseModule,
-    NgxElectronModule
+    PapaParseModule
   ],
   providers: [
-    EveService,
-    LocalScanService,
-    MarketService,
-    ConfigService,
-    ElectronService,
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
   ],
   bootstrap: [AppComponent]

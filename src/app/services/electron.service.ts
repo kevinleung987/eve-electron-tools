@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
-import { ElectronService as ngxElectronService } from 'ngx-electron';
-import { remote, fs } from 'electron';
+import { ipcRenderer, webFrame, remote } from 'electron';
+import * as fs from 'fs';
 
 @Injectable({ providedIn: 'root' })
 export class ElectronService {
+  // Whether running under Electron or Browser
   isElectron: boolean;
+
+  // Electron
+  ipcRenderer: typeof ipcRenderer;
+  webFrame: typeof webFrame;
+  remote: typeof remote;
+  // NodeJS
   fs: typeof fs;
-  constructor(private ngxElectron: ngxElectronService) {
-    this.isElectron = this.ngxElectron.isElectronApp;
+
+  constructor() {
+    this.isElectron = window && window.process && window.process.type;
+
     if (this.isElectron) {
-      this.fs = this.ngxElectron.remote.require('fs');
-      fs.readFile('F:/dev/eve-electron-tools/README.md', 'utf8', (err, data) => {
-        console.log(data);
-      });
+      // Setup Electron variables
+      this.ipcRenderer = window.require('electron').ipcRenderer;
+      this.webFrame = window.require('electron').webFrame;
+      this.remote = window.require('electron').remote;
+      // Setup NodeJS variables
+      this.fs = this.remote.require('fs');
     }
   }
 }

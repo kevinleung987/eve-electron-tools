@@ -33,7 +33,7 @@ script:
     fi
 
 before_deploy:
-  ng build --prod --base-href="/eve-electron-tools" --deploy-url "/eve-electron-tools"
+  ng build --prod --base-href="eve-electron-tools/" --deploy-url "eve-electron-tools/"
 
 deploy:
   - provider: pages
