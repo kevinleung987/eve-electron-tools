@@ -21,6 +21,8 @@ import { EvePipe } from './common/eve.pipe';
 import {
   ProfileSyncComponent
 } from './tools/profile-sync/profile-sync.component';
+import { ConfigService } from './services/config.service';
+import { ElectronService } from './services/electron.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import {
     EveService,
     LocalScanService,
     MarketService,
+    ConfigService,
+    ElectronService,
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
   ],
   bootstrap: [AppComponent]

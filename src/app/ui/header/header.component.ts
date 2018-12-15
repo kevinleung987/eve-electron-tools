@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ElectronService} from 'ngx-electron';
+import { Component, OnInit } from '@angular/core';
+import { ElectronService } from 'src/app/services/electron.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +7,7 @@ import {ElectronService} from 'ngx-electron';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(public electron: ElectronService) {}
+  constructor(public electron: ElectronService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

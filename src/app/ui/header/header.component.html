@@ -8,21 +8,21 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/']">Home
+        <a class="nav-link" [routerLink]="['/']" skipLocationChange>Home
           <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/local-scan']">Local Scan</a>
+        <a class="nav-link" [routerLink]="['/local-scan']" skipLocationChange>Local Scan</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/market']">Market</a>
+        <a class="nav-link" [routerLink]="['/market']" skipLocationChange>Market</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/zkill-listener']">Zkill Listener</a>
+        <a class="nav-link" [routerLink]="['/zkill-listener']" skipLocationChange>Zkill Listener</a>
       </li>
-      <li class="nav-item" *ngIf="electron.isElectronApp">
-        <a class="nav-link" [routerLink]="['/profile-sync']">Profile Syncer</a>
+      <li class="nav-item" *ngIf="electron.isElectron">
+        <a class="nav-link" [routerLink]="['/profile-sync']" skipLocationChange>Profile Syncer</a>
       </li>
     </ul>
   </div>

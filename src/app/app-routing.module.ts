@@ -50,6 +50,6 @@ const routes: Routes = [
   { path: 'profile-sync', component: ProfileSyncComponent },
 ];
 
-@NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule] })
+@NgModule({ imports: [RouterModule.forRoot(routes, { useHash: true })], exports: [RouterModule] })
 export class AppRoutingModule {
 }
