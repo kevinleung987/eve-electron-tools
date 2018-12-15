@@ -36,6 +36,9 @@ export class ConfigService {
   }
 
   setConfig(config) {
+    if (config.length === 0) {
+      config = '{}';
+    }
     this.config = JSON.parse(config);
     this.electron.fs.writeFileSync(this.path, JSON.stringify(this.config));
     console.log('SET CONFIG:', this.config);

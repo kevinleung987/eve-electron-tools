@@ -1,6 +1,6 @@
 # EVE Electron Tools
 
-Electron-based toolset for EVE Online. Built using Electron, Angular, and Bootstrap. Check out the latest Browser build [here](https://kevinleung987.github.io/eve-electron-tools/).
+Electron-powered toolset for EVE Online. Built using Electron, Angular, and Bootstrap. Check out the latest Browser build [here](https://kevinleung987.github.io/eve-electron-tools/).
 
 ## About
 

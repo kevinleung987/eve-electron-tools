@@ -6,10 +6,10 @@
   <div class="row">
     <p>Check out the tools available so far in the nav-bar above.</p>
   </div>
-  <div class="row">
-    You are <span *ngIf="!electron.isElectron"> NOT </span>running under Electron.
+  <div class="row" *ngIf="!electron.isElectron;else in_electron">
+    <p>You are running under Electron.</p>
   </div>
-  <div *ngIf="electron.isElectron">
+  <ng-template #in_electron>
     <div class="row">
       <textarea #configText rows="20" [innerText]="config.getConfig()"></textarea>
     </div>
@@ -18,5 +18,5 @@
         Config</button>
       <button type="button" class="btn btn-raised btn-success" (click)="config.readSettingsFile()">Read Config</button>
     </div>
-  </div>
+  </ng-template>
 </div>

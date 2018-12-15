@@ -2,7 +2,7 @@
   "name": "eve-electron-tools",
   "version": "0.0.2",
   "private": true,
-  "description": "Back-end-optional, desktop alternative for popular community tools for EVE Online.",
+  "description": "Electron-powered toolset for EVE Online. Built using Electron, Angular, and Bootstrap.",
   "main": "./main.js",
   "scripts": {
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
