@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {WebSocketSubject} from 'rxjs/webSocket';
-import {UniverseService} from '../../services/universe.service';
+import { Component, OnInit } from '@angular/core';
+import { WebSocketSubject } from 'rxjs/webSocket';
+import { UniverseService } from '../../services/universe.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -103,36 +103,36 @@ export class ZkillListenerComponent implements OnInit {
         corporation_id: 685495596,
         damage_taken: 3654,
         items: [
-          {flag: 11, item_type_id: 22291, quantity_dropped: 1, singleton: 0},
-          {flag: 93, item_type_id: 31788, quantity_destroyed: 1, singleton: 0},
-          {flag: 5, item_type_id: 24473, quantity_dropped: 200, singleton: 0},
-          {flag: 30, item_type_id: 24473, quantity_dropped: 41, singleton: 0},
-          {flag: 5, item_type_id: 45998, quantity_destroyed: 1, singleton: 0},
-          {flag: 28, item_type_id: 10631, quantity_destroyed: 1, singleton: 0},
-          {flag: 22, item_type_id: 6003, quantity_destroyed: 1, singleton: 0},
-          {flag: 5, item_type_id: 28682, quantity_destroyed: 1, singleton: 0},
-          {flag: 94, item_type_id: 31788, quantity_destroyed: 1, singleton: 0},
-          {flag: 29, item_type_id: 24473, quantity_destroyed: 41, singleton: 0},
-          {flag: 5, item_type_id: 24471, quantity_destroyed: 400, singleton: 0},
-          {flag: 21, item_type_id: 4027, quantity_dropped: 1, singleton: 0},
-          {flag: 27, item_type_id: 24473, quantity_destroyed: 41, singleton: 0},
-          {flag: 27, item_type_id: 10631, quantity_destroyed: 1, singleton: 0},
-          {flag: 92, item_type_id: 26929, quantity_destroyed: 1, singleton: 0},
-          {flag: 30, item_type_id: 10631, quantity_destroyed: 1, singleton: 0},
-          {flag: 28, item_type_id: 24473, quantity_destroyed: 41, singleton: 0},
-          {flag: 5, item_type_id: 27333, quantity_destroyed: 600, singleton: 0},
-          {flag: 5, item_type_id: 28668, quantity_dropped: 50, singleton: 0},
-          {flag: 29, item_type_id: 10631, quantity_destroyed: 1, singleton: 0},
-          {flag: 5, item_type_id: 27321, quantity_dropped: 600, singleton: 0},
-          {flag: 20, item_type_id: 3831, quantity_dropped: 1, singleton: 0},
-          {flag: 5, item_type_id: 27327, quantity_destroyed: 600, singleton: 0},
-          {flag: 5, item_type_id: 24475, quantity_dropped: 400, singleton: 0},
-          {flag: 12, item_type_id: 22291, quantity_dropped: 1, singleton: 0},
-          {flag: 5, item_type_id: 27315, quantity_dropped: 600, singleton: 0},
-          {flag: 19, item_type_id: 448, quantity_dropped: 1, singleton: 0},
-          {flag: 5, item_type_id: 2817, quantity_dropped: 600, singleton: 0}
+          { flag: 11, item_type_id: 22291, quantity_dropped: 1, singleton: 0 },
+          { flag: 93, item_type_id: 31788, quantity_destroyed: 1, singleton: 0 },
+          { flag: 5, item_type_id: 24473, quantity_dropped: 200, singleton: 0 },
+          { flag: 30, item_type_id: 24473, quantity_dropped: 41, singleton: 0 },
+          { flag: 5, item_type_id: 45998, quantity_destroyed: 1, singleton: 0 },
+          { flag: 28, item_type_id: 10631, quantity_destroyed: 1, singleton: 0 },
+          { flag: 22, item_type_id: 6003, quantity_destroyed: 1, singleton: 0 },
+          { flag: 5, item_type_id: 28682, quantity_destroyed: 1, singleton: 0 },
+          { flag: 94, item_type_id: 31788, quantity_destroyed: 1, singleton: 0 },
+          { flag: 29, item_type_id: 24473, quantity_destroyed: 41, singleton: 0 },
+          { flag: 5, item_type_id: 24471, quantity_destroyed: 400, singleton: 0 },
+          { flag: 21, item_type_id: 4027, quantity_dropped: 1, singleton: 0 },
+          { flag: 27, item_type_id: 24473, quantity_destroyed: 41, singleton: 0 },
+          { flag: 27, item_type_id: 10631, quantity_destroyed: 1, singleton: 0 },
+          { flag: 92, item_type_id: 26929, quantity_destroyed: 1, singleton: 0 },
+          { flag: 30, item_type_id: 10631, quantity_destroyed: 1, singleton: 0 },
+          { flag: 28, item_type_id: 24473, quantity_destroyed: 41, singleton: 0 },
+          { flag: 5, item_type_id: 27333, quantity_destroyed: 600, singleton: 0 },
+          { flag: 5, item_type_id: 28668, quantity_dropped: 50, singleton: 0 },
+          { flag: 29, item_type_id: 10631, quantity_destroyed: 1, singleton: 0 },
+          { flag: 5, item_type_id: 27321, quantity_dropped: 600, singleton: 0 },
+          { flag: 20, item_type_id: 3831, quantity_dropped: 1, singleton: 0 },
+          { flag: 5, item_type_id: 27327, quantity_destroyed: 600, singleton: 0 },
+          { flag: 5, item_type_id: 24475, quantity_dropped: 400, singleton: 0 },
+          { flag: 12, item_type_id: 22291, quantity_dropped: 1, singleton: 0 },
+          { flag: 5, item_type_id: 27315, quantity_dropped: 600, singleton: 0 },
+          { flag: 19, item_type_id: 448, quantity_dropped: 1, singleton: 0 },
+          { flag: 5, item_type_id: 2817, quantity_dropped: 600, singleton: 0 }
         ],
-        position: {x: -354341337679.15, y: 2626453461078.7, z: 468978037092.21},
+        position: { x: -354341337679.15, y: 2626453461078.7, z: 468978037092.21 },
         ship_type_id: 602
       },
       zkb: {
@@ -145,32 +145,32 @@ export class ZkillListenerComponent implements OnInit {
         solo: false,
         awox: false,
         esi:
-            'https://esi.evetech.net/latest/killmails/72883408/ce0abbe614ec6e5d1020964eebc6974157df3b16/',
+          'https://esi.evetech.net/latest/killmails/72883408/ce0abbe614ec6e5d1020964eebc6974157df3b16/',
         url: 'https://zkillboard.com/kill/72883408/'
       }
     });
     console.log(this.mails[0]);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   start() {
     this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
-    this.socket.next({action: 'sub', channel: 'killstream'});
+    this.socket.next({ action: 'sub', channel: 'killstream' });
     console.log('Started listening to WebSocket.');
     this.listening = true;
     this.socket.subscribe(
-        message => {
-          this.mails.unshift(message);
-          console.log(message);
-          if (this.mails.length > this.length) {
-            this.mails.shift();
-          }
-        },
-        err => {
-          console.error(err);
-          this.listening = false;
-        });
+      message => {
+        this.mails.unshift(message);
+        console.log(message);
+        if (this.mails.length > this.length) {
+          this.mails.shift();
+        }
+      },
+      err => {
+        console.error(err);
+        this.listening = false;
+      });
   }
 
   stop() {

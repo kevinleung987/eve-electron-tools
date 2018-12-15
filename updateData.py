@@ -17,10 +17,12 @@ def downloadData(sourceName, fileName, columns, decompress=bz2.decompress):
     """
     sourceFile = sourceName
     tempFile = fileName + '_TEMP'
+    # Ensure downloads directory exists
     os.makedirs(os.path.dirname(downloadsDir + sourceFile), exist_ok=True)
+    # Download the file
     r = requests.get(baseUrl + sourceFile, allow_redirects=True)
     open(downloadsDir + tempFile, 'wb').write(decompress(r.content))
-
+    # Parse the csv file and extract the wanted columns
     df = pandas.read_csv(downloadsDir + tempFile, usecols=columns)
     df.to_csv(downloadsDir + fileName, index=False)
     os.remove(downloadsDir + tempFile)

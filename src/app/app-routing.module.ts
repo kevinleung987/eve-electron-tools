@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {LocalScanComponent} from './tools/local-scan/local-scan.component';
-import {MarketComponent} from './tools/market/market.component';
-import {HomeComponent} from './ui/home/home.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { LocalScanComponent } from './tools/local-scan/local-scan.component';
+import { MarketComponent } from './tools/market/market.component';
+import { HomeComponent } from './ui/home/home.component';
 import {
   ZkillListenerComponent
 } from './tools/zkill-listener/zkill-listener.component';
@@ -17,7 +17,7 @@ import {
 } from './tools/profile-sync/profile-sync.component';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
-  handlers: {[key: string]: DetachedRouteHandle} = {};
+  handlers: { [key: string]: DetachedRouteHandle } = {};
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean { return true; }
 
@@ -37,19 +37,19 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot,
-                   curr: ActivatedRouteSnapshot): boolean {
+    curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig;
   }
 }
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'local-scan', component: LocalScanComponent},
-  {path: 'market', component: MarketComponent},
-  {path: 'zkill-listener', component: ZkillListenerComponent},
-  {path: 'profile-sync', component: ProfileSyncComponent},
+  { path: '', component: HomeComponent },
+  { path: 'local-scan', component: LocalScanComponent },
+  { path: 'market', component: MarketComponent },
+  { path: 'zkill-listener', component: ZkillListenerComponent },
+  { path: 'profile-sync', component: ProfileSyncComponent },
 ];
 
-@NgModule({imports: [RouterModule.forRoot(routes)], exports: [RouterModule]})
+@NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule] })
 export class AppRoutingModule {
 }

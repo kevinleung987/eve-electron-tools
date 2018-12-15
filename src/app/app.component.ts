@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {UniverseService} from './services/universe.service';
+import { Component } from '@angular/core';
+import { UniverseService } from './services/universe.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +7,5 @@ import {UniverseService} from './services/universe.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public universe: UniverseService) {}
+  constructor(public universe: UniverseService) { }
 }
