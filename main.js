@@ -5,6 +5,8 @@ const url = require("url");
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
+// Security warnings from hot-reload
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 function createWindow() {
 
