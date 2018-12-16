@@ -15,9 +15,6 @@ export class ProfileSyncComponent implements OnInit {
 
   ngOnInit() {
     this.profilesPath = this.config.get('profilesPath');
-    if (this.profilesPath) {
-      this.parseProfiles();
-    }
   }
 
   selectFolder() {
@@ -36,20 +33,19 @@ export class ProfileSyncComponent implements OnInit {
   }
 
   parseProfiles() {
-    this.electron.fs.readdir(this.profilesPath, (error, result) => {
-      const accounts = [];
-      const characters = [];
-      result.forEach((file) => {
-        if (/core_user_[0-9]*.dat/.test(file)) {
-          accounts.push(file.substring(10, file.length - 4));
-        } else if (/core_char_[0-9]*.dat/.test(file)) {
-          characters.push(file.substring(10, file.length - 4));
-        }
-      });
-      this.accounts = accounts;
-      this.characters = characters;
-      this.electron.updateView('Parse profile directory.');
-      console.log(this.accounts, this.characters);
+    // Unfortunately needs to be synchronous to minimze UI defects.
+    const result = this.electron.fs.readdirSync(this.profilesPath);
+    const accounts = [];
+    const characters = [];
+    result.forEach((file) => {
+      if (/core_user_[0-9]*.dat/.test(file)) {
+        accounts.push(file.substring(10, file.length - 4));
+      } else if (/core_char_[0-9]*.dat/.test(file)) {
+        characters.push(file.substring(10, file.length - 4));
+      }
     });
+    this.accounts = accounts;
+    this.characters = characters;
+    console.log(this.accounts, this.characters);
   }
 }

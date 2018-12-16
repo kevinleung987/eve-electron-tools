@@ -6,6 +6,7 @@
   </div>
   <div class="row">
     <button type="button" class="btn btn-raised btn-success mx-auto" (click)="selectFolder()">Select Folder</button>
+    <button type="button" class="btn btn-raised btn-primary mx-auto" (click)="parseProfiles()">Scan Profiles</button>
   </div>
   <div class="row current-directory" (click)="openProfilesFolder()">
     <b class="mx-auto">Current Profile Directory: {{profilesPath || 'No folder selected.'}}</b>
