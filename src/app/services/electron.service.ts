@@ -34,9 +34,7 @@ export class ElectronService {
 
   /**
    * Broadcasts that an update has occured in the Electron Main process
-   * and that Angular needs to update the view. This is necessary because any
-   * changes in state that occur outside of Angular's zone do not automatically
-   * trigger an update.
+   * which requires a view update from Angular.
    */
   updateView(reason: string = null) {
     this.updateOccured.next(reason);

@@ -29,9 +29,8 @@
       <div class="card-body">
         <div class="row">
           <div class="col-2">
-            <img src="{{'https://imageserver.eveonline.com/Render/' + mail['victim']['ship_type_id'] + '_64.png'}}"
-              style="padding-right: 1em;">
-            <img src="{{'https://image.eveonline.com/Character/' + mail['victim']['character_id'] + '_64.jpg'}}" style="height: 64px; width: 64px;">
+            <img src="{{mail['victim']['ship_type_id'] | image:'ship'}}" style="padding-right: 1em;">
+            <img src="{{mail['victim']['character_id'] | image:'character'}}" style="height: 64px; width: 64px;">
           </div>
           <div class="col-2">
             <div class="row">
@@ -51,15 +50,14 @@
               <b>Name: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }}
             </div>
             <div class="row" *ngIf="mail['victim']['alliance_id']">
-              <img src="{{'https://image.eveonline.com/Alliance/' + mail['victim']['alliance_id'] + '_64.png'}}" style="height: 32px; width: 32px;">
+              <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}" style="height: 32px; width: 32px;">
               <p>{{ (mail['victim']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
             </div>
             <div class="row" *ngIf="!mail['victim']['alliance_id']">
               <p>No Alliance</p>
             </div>
             <div class="row">
-              <img src="{{'https://image.eveonline.com/Corporation/'+ mail['victim']['corporation_id'] +'_64.png'}}"
-                style="height: 32px; width: 32px;">
+              <img src="{{mail['victim']['corporation_id'] | image:'corporation'}}" style="height: 32px; width: 32px;">
               {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }}
             </div>
           </div>

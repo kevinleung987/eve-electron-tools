@@ -5,39 +5,40 @@
     </h1>
   </div>
   <div class="row">
-    <button type="button" class="btn btn-raised btn-success mx-auto" (click)="selectFolder()">Select Folder</button>
-    <button type="button" class="btn btn-raised btn-primary mx-auto" (click)="parseProfiles()">Scan Profiles</button>
+    <button type="button" class="btn btn-raised btn-primary mx-auto" (click)="selectFolder()">Select Folder</button>
+    <button type="button" class="btn btn-raised btn-info mx-auto" (click)="parseProfiles()">Scan Profiles</button>
   </div>
   <div class="row current-directory" (click)="openProfilesFolder()">
-    <b class="mx-auto">Current Profile Directory: {{profilesPath || 'No folder selected.'}}</b>
+    <b class="mx-auto">Current Profile Directory: {{ profilesPath || 'No folder selected.' }}</b>
   </div>
   <div *ngIf="profilesPath">
     <div class="row">
-      <h4 class="mx-auto section-header">Accounts({{accounts.length}})</h4>
+      <h4 class="mx-auto section-header">Accounts({{ accounts.length }})</h4>
     </div>
     <div class="row">
       <div class="col-3" *ngFor="let account of accounts">
-        <div class="card">
+        <div class="card" [class.bg-success]="account['primary']" [class.bg-secondary]="account['secondary']" (click)="select(account, true)">
           <div class="card-body">
-            {{account}}
+            {{ account['id'] }}
           </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <h4 class="mx-auto section-header">Characters({{characters.length}})</h4>
+      <h4 class="mx-auto section-header">Characters({{ characters.length }})</h4>
     </div>
     <div class="row">
       <div class="col-3" *ngFor="let character of characters">
-        <div class="card">
+        <div class="card" [class.bg-success]="character['primary']" [class.bg-secondary]="character['secondary']"
+          (click)="select(character, false)">
           <div class="card-body">
             <div class="row">
               <div class="col-6">
-                <img src="{{'https://image.eveonline.com/Character/' + character + '_64.jpg'}}" style="height: 64px; width: 64px;">
+                <img src="{{character['id'] | image:'character'}}" style="height: 64px; width: 64px;">
               </div>
               <div class="col-6">
-                <p>{{ character }}</p>
-                <p>{{ (character | eve:'character' | async)?.name }}</p>
+                <p>{{ character['id'] }}</p>
+                <p>{{ (character['id'] | eve:'character' | async)?.name }}</p>
               </div>
             </div>
           </div>

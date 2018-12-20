@@ -39,13 +39,37 @@ export class ProfileSyncComponent implements OnInit {
     const characters = [];
     result.forEach((file) => {
       if (/core_user_[0-9]*.dat/.test(file)) {
-        accounts.push(file.substring(10, file.length - 4));
+        const account = {
+          id: file.substring(10, file.length - 4),
+          primary: false,
+          secondary: false
+        };
+        accounts.push(account);
       } else if (/core_char_[0-9]*.dat/.test(file)) {
-        characters.push(file.substring(10, file.length - 4));
+        const character = {
+          id: file.substring(10, file.length - 4),
+          primary: false,
+          secondary: false
+        };
+        characters.push(character);
       }
     });
     this.accounts = accounts;
     this.characters = characters;
     console.log(this.accounts, this.characters);
+  }
+
+  select(item, isAccount: boolean) {
+    if (isAccount) {
+      this.accounts.forEach(account => {
+        account['primary'] = false;
+      });
+    } else {
+      this.characters.forEach(character => {
+        character['primary'] = false;
+      });
+    }
+
+    item['primary'] = true;
   }
 }

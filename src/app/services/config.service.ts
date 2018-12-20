@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { ElectronService } from './electron.service';
-
+/**
+ * Manages maintenence of the Config file for EVE-ET, configuration settings
+ * are represented as key-value pairs.
+ */
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
   private path: string;
@@ -17,12 +20,12 @@ export class ConfigService {
     }
   }
 
-  get(key) {
+  get(key: string) {
     console.log('GET:', key, this.config[key]);
     return this.config[key];
   }
 
-  set(key, value) {
+  set(key: string, value: string) {
     this.config[key] = value;
     this.electron.fs.writeFileSync(this.path, JSON.stringify(this.config));
     console.log('SET:', key, this.config[key]);
@@ -33,7 +36,7 @@ export class ConfigService {
     return JSON.stringify(this.config);
   }
 
-  setConfig(config) {
+  setConfig(config: string) {
     if (config.length === 0) {
       config = '{}';
     }

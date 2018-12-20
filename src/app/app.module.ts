@@ -1,27 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouteReuseStrategy } from '@angular/router';
 import { PapaParseModule } from 'ngx-papaparse';
 
 import { AppRoutingModule, CustomReuseStrategy } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LocalScanComponent } from './tools/local-scan/local-scan.component';
-import { HeaderComponent } from './ui/header/header.component';
-import { LocalScanService } from './services/local-scan.service';
-import { MarketService } from './services/market.service';
-import { MarketComponent } from './tools/market/market.component';
-import { HomeComponent } from './ui/home/home.component';
-import {
-  ZkillListenerComponent
-} from './tools/zkill-listener/zkill-listener.component';
-import { RouteReuseStrategy } from '@angular/router';
-import { EveService } from './services/eve.service';
 import { EvePipe } from './common/eve.pipe';
-import {
-  ProfileSyncComponent
-} from './tools/profile-sync/profile-sync.component';
-import { ConfigService } from './services/config.service';
-import { ElectronService } from './services/electron.service';
+import { ImagePipe } from './common/image.pipe';
+import { LocalScanComponent } from './tools/local-scan/local-scan.component';
+import { MarketComponent } from './tools/market/market.component';
+import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.component';
+import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
+import { HeaderComponent } from './ui/header/header.component';
+import { HomeComponent } from './ui/home/home.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +24,7 @@ import { ElectronService } from './services/electron.service';
     HomeComponent,
     ZkillListenerComponent,
     EvePipe,
+    ImagePipe,
     ProfileSyncComponent
   ],
   imports: [
