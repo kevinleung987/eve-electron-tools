@@ -1,8 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { PapaParseModule } from 'ngx-papaparse';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule, CustomReuseStrategy } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,7 @@ import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.componen
 import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
 import { HeaderComponent } from './ui/header/header.component';
 import { HomeComponent } from './ui/home/home.component';
+import { MyErrorHandler } from './services/error.service';
 
 @NgModule({
   declarations: [
@@ -29,12 +32,19 @@ import { HomeComponent } from './ui/home/home.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    PapaParseModule
+    PapaParseModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true
+    })
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+    { provide: ErrorHandler, useClass: MyErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

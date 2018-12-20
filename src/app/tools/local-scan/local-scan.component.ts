@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalScanService } from '../../services/local-scan.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-local-scan',
@@ -7,11 +8,18 @@ import { LocalScanService } from '../../services/local-scan.service';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
-  constructor(public localScanService: LocalScanService) { }
+  constructor(private alert: AlertService, public localScanService: LocalScanService) { }
 
   ngOnInit() { }
 
-  onSubmit(input) { this.localScanService.parse(input); }
+  onSubmit(input) {
+    if (input == null || input.length === 0) {
+      this.alert.warning('Please enter EVE character names into the Local Scan window.');
+      return;
+    }
+    this.localScanService.parse(input);
+    this.alert.success('Started Local Scan...');
+  }
 
   getDisplayCorporations() {
     const keys = Object.keys(this.localScanService.displayCorporations);
@@ -40,5 +48,6 @@ export class LocalScanComponent implements OnInit {
   resetView() {
     this.localScanService.displayCorporations = {};
     this.localScanService.displayAlliances = {};
+    this.alert.info('Results cleared.');
   }
 }

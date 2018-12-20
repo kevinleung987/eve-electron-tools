@@ -47,7 +47,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css"
+              "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.min.js",

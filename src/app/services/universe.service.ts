@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Papa } from 'ngx-papaparse';
-import { Subscription, Observable, forkJoin } from 'rxjs';
 import { PapaParseResult } from 'ngx-papaparse/lib/interfaces/papa-parse-result';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {

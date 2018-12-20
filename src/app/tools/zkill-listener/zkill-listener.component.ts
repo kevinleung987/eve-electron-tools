@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { UniverseService } from '../../services/universe.service';
 import { ElectronService } from 'src/app/services/electron.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -9,12 +10,12 @@ import { ElectronService } from 'src/app/services/electron.service';
   styleUrls: ['./zkill-listener.component.scss']
 })
 export class ZkillListenerComponent implements OnInit {
-  private length = 10;
+  private length = 5;
   private socket: WebSocketSubject<{}>;
   public listening = false;
   public mails = [];
 
-  constructor(private electron: ElectronService, public universe: UniverseService) {
+  constructor(private electron: ElectronService, private alert: AlertService, public universe: UniverseService) {
     this.mails.push({
       attackers: [
         {
@@ -169,7 +170,7 @@ export class ZkillListenerComponent implements OnInit {
   start() {
     this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
     this.socket.next({ action: 'sub', channel: 'killstream' });
-    console.log('Started listening to WebSocket.');
+
     this.listening = true;
     this.socket.subscribe(
       message => {
@@ -181,22 +182,26 @@ export class ZkillListenerComponent implements OnInit {
         this.mails.unshift(message);
         console.log(message);
         if (this.mails.length > this.length) {
-          this.mails.shift();
+          this.mails.pop();
         }
       },
       err => {
         console.error(err);
         this.listening = false;
       });
+    this.alert.success('Started listening to Zkillboard.');
   }
 
   stop() {
     this.socket.unsubscribe();
-    console.log('Stopped listening to WebSocket.');
+    this.alert.info('Stopped listening to Zkillboard.');
     this.listening = false;
   }
 
-  clear() { this.mails = []; }
+  clear() {
+    this.mails = [];
+    this.alert.success('Cleared killmails.');
+  }
 
   openLink(url: string) {
     this.electron.openUrl(url);

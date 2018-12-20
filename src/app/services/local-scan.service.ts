@@ -91,7 +91,10 @@ export class LocalScanService {
     const lines = localList.split('\n');
     // Process each line to get corp and alliance info
     for (let i = 0; i < lines.length; i++) {
-      data.push(this.processLine(lines[i]));
+      const line = lines[i];
+      if (line.replace(/\s/g, '').length) {
+        data.push(this.processLine(lines[i].trim()));
+      }
     }
     Promise.all(data).then((results) => {
       console.log(results);
