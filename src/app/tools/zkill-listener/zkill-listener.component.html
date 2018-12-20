@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="row" *ngFor="let mail of mails">
-    <div class="card mail-info" style="width:100%;">
+    <div class="card mail-info" style="width:100%;" (click)="openLink(mail['zkb']['url'])">
       <div class="card-body">
         <div class="row">
           <div class="col-1">

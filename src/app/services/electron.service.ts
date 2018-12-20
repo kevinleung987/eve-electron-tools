@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ipcRenderer, remote, webFrame } from 'electron';
+import { ipcRenderer, remote, webFrame, shell } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Subject } from 'rxjs';
@@ -14,6 +14,7 @@ export class ElectronService {
   ipcRenderer: typeof ipcRenderer;
   webFrame: typeof webFrame;
   remote: typeof remote;
+  shell: typeof shell;
   // NodeJS APIs
   fs: typeof fs;
   path: typeof path;
@@ -26,6 +27,7 @@ export class ElectronService {
       this.ipcRenderer = window.require('electron').ipcRenderer;
       this.webFrame = window.require('electron').webFrame;
       this.remote = window.require('electron').remote;
+      this.shell = window.require('electron').shell;
       // Setup NodeJS APIs
       this.fs = window.require('fs');
       this.path = window.require('path');
@@ -38,5 +40,13 @@ export class ElectronService {
    */
   updateView(reason: string = null) {
     this.updateOccured.next(reason);
+  }
+
+  openUrl(url: string) {
+    if (this.isElectron) {
+      this.shell.openExternal(url);
+    } else {
+      window.open(url, '_blank');
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { UniverseService } from '../../services/universe.service';
+import { ElectronService } from 'src/app/services/electron.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -13,7 +14,7 @@ export class ZkillListenerComponent implements OnInit {
   public listening = false;
   public mails = [];
 
-  constructor(public universe: UniverseService) {
+  constructor(private electron: ElectronService, public universe: UniverseService) {
     this.mails.push({
       attackers: [
         {
@@ -196,4 +197,8 @@ export class ZkillListenerComponent implements OnInit {
   }
 
   clear() { this.mails = []; }
+
+  openLink(url: string) {
+    this.electron.openUrl(url);
+  }
 }
