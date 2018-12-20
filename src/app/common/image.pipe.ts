@@ -5,6 +5,9 @@ export class ImagePipe implements PipeTransform {
   constructor() { }
 
   transform(value: any, valueType: any): string {
+    if (value == null) {
+      value = 1;
+    }
     switch (valueType) {
       case 'character':
         return `https://image.eveonline.com/Character/${value}_64.jpg`;

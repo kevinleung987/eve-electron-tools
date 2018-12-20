@@ -7,6 +7,9 @@ export class EvePipe implements PipeTransform {
   constructor(private eveService: EveService, private electron: ElectronService) { }
 
   transform(value: any, valueType: any): Promise<any> {
+    if (value == null) {
+      return Promise.resolve({ name: 'None' });
+    }
     switch (valueType) {
       case 'alliance':
         return this.eveService.alliances(value);

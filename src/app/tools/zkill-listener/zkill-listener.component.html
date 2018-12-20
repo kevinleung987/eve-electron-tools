@@ -42,14 +42,14 @@
               <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }}
             </div>
             <div class="row" *ngIf="mail['victim']['alliance_id']">
-              <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}" style="height: 32px; width: 32px;">
+              <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}" class="image-icon">
               <p>{{ (mail['victim']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
             </div>
             <div class="row" *ngIf="!mail['victim']['alliance_id']">
               <p>No Alliance</p>
             </div>
             <div class="row">
-              <img src="{{mail['victim']['corporation_id'] | image:'corporation'}}" style="height: 32px; width: 32px;">
+              <img src="{{mail['victim']['corporation_id'] | image:'corporation'}}" class="image-icon">
               {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }}
             </div>
           </div>
@@ -61,20 +61,20 @@
           </div>
           <div class="col-3">
             <div class="row">
-              <b>Defender: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }}
+              <b>Attacker: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }}
             </div>
             <div class="row">
               <b>Ship: </b>{{ universe.getTypeName(mail['final_blow']['ship_type_id']) }}
             </div>
             <div class="row" *ngIf="mail['final_blow']['alliance_id']">
-              <img src="{{mail['final_blow']['alliance_id'] | image:'alliance'}}" style="height: 32px; width: 32px;">
+              <img src="{{mail['final_blow']['alliance_id'] | image:'alliance'}}" class="image-icon">
               <p>{{ (mail['final_blow']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
             </div>
             <div class="row" *ngIf="!mail['final_blow']['alliance_id']">
               <p>No Alliance</p>
             </div>
             <div class="row">
-              <img src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}" style="height: 32px; width: 32px;">
+              <img src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}" class="image-icon">
               {{ (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name }}
             </div>
           </div>

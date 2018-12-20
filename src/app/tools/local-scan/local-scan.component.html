@@ -16,7 +16,7 @@ Grath Telkin
 Shadoo
 Elise Randolph
       </textarea>
-      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)">Scan</button>
+      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="localScanService.busy">Scan</button>
       <button class="btn btn-raised btn-danger btn-block" (click)="resetView()">Reset</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">

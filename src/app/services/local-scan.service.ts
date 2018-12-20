@@ -25,6 +25,7 @@ export class LocalScanService {
       count: number
     };
   };
+  public busy = false;
   constructor(private http: HttpClient, private eve: EveService) {
     this.characters = {};
     this.corporations = {};
@@ -87,6 +88,7 @@ export class LocalScanService {
   }
 
   async parse(localList) {
+    this.busy = true;
     const data = [];
     const lines = localList.split('\n');
     // Process each line to get corp and alliance info
@@ -125,6 +127,7 @@ export class LocalScanService {
       // Show the end-result
       this.displayCorporations = parsedCorporations;
       this.displayAlliances = parsedAlliances;
+      this.busy = false;
     });
   }
 }
