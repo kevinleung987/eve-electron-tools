@@ -28,26 +28,18 @@
     <div class="card mail-info" style="width:100%;">
       <div class="card-body">
         <div class="row">
-          <div class="col-2">
-            <img src="{{mail['victim']['ship_type_id'] | image:'ship'}}" style="padding-right: 1em;">
-            <img src="{{mail['victim']['character_id'] | image:'character'}}" style="height: 64px; width: 64px;">
+          <div class="col-1">
+            <img class="image" src="{{mail['victim']['character_id'] | image:'character'}}">
           </div>
-          <div class="col-2">
+          <div class="col-1">
+            <img class="image" src="{{mail['victim']['ship_type_id'] | image:'ship'}}">
+          </div>
+          <div class="col-3">
             <div class="row">
-              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
-              [<span [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
-                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</span>]
-            </div>
-            <div class="row">
-              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
+              <b>Defender: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }}
             </div>
             <div class="row">
               <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }}
-            </div>
-          </div>
-          <div class="col-2">
-            <div class="row">
-              <b>Name: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }}
             </div>
             <div class="row" *ngIf="mail['victim']['alliance_id']">
               <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}" style="height: 32px; width: 32px;">
@@ -61,9 +53,42 @@
               {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }}
             </div>
           </div>
+          <div class="col-1">
+            <img class="image" src="{{mail['final_blow']['character_id'] | image:'character'}}">
+          </div>
+          <div class="col-1">
+            <img class="image" src="{{mail['final_blow']['ship_type_id'] | image:'ship'}}">
+          </div>
+          <div class="col-3">
+            <div class="row">
+              <b>Defender: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }}
+            </div>
+            <div class="row">
+              <b>Ship: </b>{{ universe.getTypeName(mail['final_blow']['ship_type_id']) }}
+            </div>
+            <div class="row" *ngIf="mail['final_blow']['alliance_id']">
+              <img src="{{mail['final_blow']['alliance_id'] | image:'alliance'}}" style="height: 32px; width: 32px;">
+              <p>{{ (mail['final_blow']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
+            </div>
+            <div class="row" *ngIf="!mail['final_blow']['alliance_id']">
+              <p>No Alliance</p>
+            </div>
+            <div class="row">
+              <img src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}" style="height: 32px; width: 32px;">
+              {{ (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name }}
+            </div>
+          </div>
           <div class="col-2">
             <div class="row">
-              <p><b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK</p>
+              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
+            </div>
+            <div class="row">
+              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
+              [<span [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
+                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</span>]
+            </div>
+            <div class="row">
+              <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK
             </div>
           </div>
         </div>

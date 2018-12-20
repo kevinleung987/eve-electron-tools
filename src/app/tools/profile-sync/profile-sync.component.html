@@ -17,8 +17,8 @@
     </div>
     <div class="row">
       <div class="col-3" *ngFor="let account of accounts">
-        <div class="card" [class.bg-success]="account['selected'] === 'primary'" [class.bg-secondary]="account['selected'] === 'secondary'"
-          (click)="select(account, 'primary')" (contextmenu)="select(account, 'secondary')">
+        <div class="card" [class.bg-success]="account['selected'] === s.Primary" [class.bg-secondary]="account['selected'] === s.Secondary"
+          (click)="select(account, s.Primary)" (contextmenu)="select(account, s.Secondary)">
           <div class="card-body">
             {{ account['id'] }}
           </div>
@@ -30,8 +30,8 @@
     </div>
     <div class="row">
       <div class="col-3" *ngFor="let character of characters">
-        <div class="card" [class.bg-success]="character['selected'] === 'primary'" [class.bg-secondary]="character['selected'] === 'secondary'"
-          (click)="select(character, 'primary')" (contextmenu)="select(character, 'secondary')">
+        <div class="card" [class.bg-success]="character['selected'] === s.Primary" [class.bg-secondary]="character['selected'] === s.Secondary"
+          (click)="select(character, s.Primary)" (contextmenu)="select(character, s.Secondary)">
           <div class="card-body">
             <div class="row">
               <div class="col-6">

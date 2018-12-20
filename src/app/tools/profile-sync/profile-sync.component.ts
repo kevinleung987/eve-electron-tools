@@ -11,6 +11,7 @@ export class ProfileSyncComponent implements OnInit {
   profilesPath: string;
   accounts: string[] = [];
   characters: string[] = [];
+  s = Selected;
   constructor(private electron: ElectronService, private config: ConfigService) { }
 
   ngOnInit() {
@@ -41,13 +42,13 @@ export class ProfileSyncComponent implements OnInit {
       if (/core_user_[0-9]*.dat/.test(file)) {
         const account = {
           id: file.substring(10, file.length - 4),
-          selected: null
+          selected: Selected.None
         };
         accounts.push(account);
       } else if (/core_char_[0-9]*.dat/.test(file)) {
         const character = {
           id: file.substring(10, file.length - 4),
-          selected: null
+          selected: Selected.None
         };
         characters.push(character);
       }
@@ -57,15 +58,21 @@ export class ProfileSyncComponent implements OnInit {
     console.log(this.accounts, this.characters);
   }
 
-  select(item, key: string) {
+  select(item, key: Selected) {
     const collection = this.accounts.includes(item) ? this.accounts : this.characters;
-    if (key === 'primary') {
+    if (key === Selected.Primary) {
       collection.forEach((result: any) => {
-        if (result['selected'] === 'primary' && result !== item) {
+        if (result['selected'] === Selected.Primary && result !== item) {
           result['selected'] = null;
         }
       });
     }
     item['selected'] = item['selected'] === key ? null : key;
   }
+}
+
+enum Selected {
+  Primary,
+  Secondary,
+  None
 }

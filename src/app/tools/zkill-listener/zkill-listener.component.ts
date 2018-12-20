@@ -94,6 +94,17 @@ export class ZkillListenerComponent implements OnInit {
           weapon_type_id: 2889
         }
       ],
+      final_blow: {
+        alliance_id: 99001634,
+        character_id: 92574496,
+        corporation_id: 342600165,
+        damage_done: 572,
+        faction_id: 500004,
+        final_blow: true,
+        security_status: -9.4,
+        ship_type_id: 37480,
+        weapon_type_id: 24473
+      },
       killmail_id: 72883408,
       killmail_time: '2018-10-12T21:21:43Z',
       solar_system_id: 30045337,
@@ -161,6 +172,11 @@ export class ZkillListenerComponent implements OnInit {
     this.listening = true;
     this.socket.subscribe(
       message => {
+        message['attackers'].forEach(element => {
+          if (element['final_blow']) {
+            message['final_blow'] = element;
+          }
+        });
         this.mails.unshift(message);
         console.log(message);
         if (this.mails.length > this.length) {

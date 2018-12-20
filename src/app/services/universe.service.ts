@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Papa } from 'ngx-papaparse';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, forkJoin } from 'rxjs';
 import { PapaParseResult } from 'ngx-papaparse/lib/interfaces/papa-parse-result';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
-  private loaded = false;
   private typeData = {};
   private systemData = {};
+  private invTypes: Subscription;
+  private mapSolarSystems: Subscription;
   constructor(private http: HttpClient, private papa: Papa) {
     // Setup typeData
-    const invTypes =
+    this.invTypes =
       this.initializeData('invTypes.csv', 'typeID', this.typeData)
         .add(() => {
           // Hash-map validation function call-back
@@ -22,7 +23,7 @@ export class UniverseService {
             throw new Error('typeData could not be parsed.');
           }
         });
-    const mapSolarSystems =
+    this.mapSolarSystems =
       this.initializeData('mapSolarSystems.csv', 'solarSystemID',
         this.systemData)
         .add(() => {
@@ -33,10 +34,9 @@ export class UniverseService {
             throw new Error('systemData could not be parsed.');
           }
         });
-    this.loaded = true;
   }
 
-  initializeData(fileName, key, store): Subscription {
+  initializeData(fileName: string, key: string, store: any): Subscription {
     return this.http.get('./assets/' + fileName, { responseType: 'text' })
       .pipe(map((data: any) => data))
       .subscribe((data: any) => {
@@ -55,15 +55,15 @@ export class UniverseService {
   }
 
   getTypeName(id: number): string {
-    return this.loaded && this.typeData[id]['typeName'];
+    return this.invTypes.closed ? this.typeData[id]['typeName'] : null;
   }
 
   getSystemName(id: number): string {
-    return this.loaded && this.systemData[id]['solarSystemName'];
+    return this.mapSolarSystems.closed ? this.systemData[id]['solarSystemName'] : null;
   }
 
   getSystemSecurity(id: number): string {
-    return this.loaded && this.systemData[id]['security'];
+    return this.mapSolarSystems.closed ? this.systemData[id]['security'] : null;
   }
 
   getSecurityColor(sec: number): string {
