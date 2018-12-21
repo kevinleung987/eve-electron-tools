@@ -5,8 +5,8 @@ Electron-powered toolset for EVE Online. Built using Electron, Angular, and Boot
 ## About
 
 **EVE Electron Tools** is...
-- **Open-Source:** This application is free and open-source. Most of the popular community tools used by the EVE Online community are not open-source and some have even been known to log your input.
-- **Electron-based:** I found that most community tools for EVE Online are served as a web-page, but what happens if the owner decides to stop paying server fees? By being Electron-based, EVE-NT can be served as a web-page, or compiled into a cross-platform desktop application, giving you full control over the toolset. Electron also exposes several operating system APIs that enable features that aren't possible in a browser-based application.
+- **Open-Source:** This application is free and open-source. A lot of popular community tools used by the EVE Online community are not open-source and some have even been known to log your input.
+- **Electron-Powered:** I found that most community tools for EVE Online are served as a web-page, but what happens if the owner decides to stop paying server fees? EVE-NT comes delivered as a cross-platform desktop application, but it can also be served as a web-page with reduced functionality. Electron exposes several operating system APIs that enable features that aren't possible in the browser-based deployment.
 
 ![](preview.jpg?raw=true)
 
@@ -16,7 +16,7 @@ Electron-powered toolset for EVE Online. Built using Electron, Angular, and Boot
 - **Market Browser:** Quickly look up prices for items without having to login to the game.
 - **zKill Listener:** Listens for killmails on the zKillboard Live Feed as they come in, you can filter by alliance, corporation, location, ship-type and enable sound notifications.
 - **Profile Syncer:** Sync your EVE settings between accounts or characters with the click of a button. Very useful for anyone managing multiple accounts.
-- **VNI Helper:** Multiple tools that enable safer and easier AFK Ratting. Watches Intel channel for mentions of systems close to you. You can also enable alerts for faction and capital spawns.
+- **VNI Companion:** Multiple tools that enable safer and easier AFK Ratting. Watches Intel channel for mentions of systems close to you. You can also enable alerts for faction and capital spawns.
 
 ## Usage
 
@@ -27,19 +27,19 @@ Electron-powered toolset for EVE Online. Built using Electron, Angular, and Boot
 
 - Node v10+ required.
 - Install dependencies by running `npm install`
-- Install Angular CLI & Electron with `npm install -g @angular/cli electron`
-- Serve the application in the browser with `npm run browser` or under Electron with `npm start`. I'm still playing around with the build-process but that can be found in the future under:
-  - `npm run bundle:local` - for your local machine
+- Install Angular CLI & Electron globally with `npm install -g @angular/cli electron`
+- Serve the application in the browser with `npm run browser` or under Electron with hot-reloading enabled using `npm start`. The Electron application can be built & bundled by running:
   - `npm run bundle:windows` - for Windows
   - `npm run bundle:mac` - for MacOS
   - `npm run bundle:linux` - for Linux
 
 ## Tools Used
 
-- **[Angular](https://github.com/angular/angular)** - Frontend framework
+- **[Angular](https://github.com/angular/angular)** - Front-end framework
 - **[Electron](https://github.com/electron/electron)** - Desktop Application framework
-- **[Bootstrap Material Design](https://github.com/FezVrasta/bootstrap-material-design)** - Material Design CSS
-- **[Angular-Electron](https://github.com/maximegris/angular-electron)** - Boilerplate to link Angular with Electron
+- **[Bootstrap Material Design](https://github.com/FezVrasta/bootstrap-material-design)** - Material Design-flavoured Bootstrap
+- **[Electron-Builder](https://github.com/electron-userland/electron-builder)** - Cross-platform Electron builds
+- **[Travis](https://travis-ci.com/)** - Build automation
 
 ## Note About Data Dependencies
 

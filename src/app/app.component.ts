@@ -1,7 +1,8 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { UniverseService } from './services/universe.service';
+import { ChangeDetectorRef, Component } from '@angular/core';
+
 import { ConfigService } from './services/config.service';
 import { ElectronService } from './services/electron.service';
+import { UniverseService } from './services/universe.service';
 
 @Component({
   selector: 'app-root',

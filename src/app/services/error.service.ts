@@ -1,5 +1,4 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { AlertService } from './alert.service';
 
 @Injectable()
