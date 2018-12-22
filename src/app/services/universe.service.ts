@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Papa } from 'ngx-papaparse';
 import { PapaParseResult } from 'ngx-papaparse/lib/interfaces/papa-parse-result';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, merge } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
@@ -11,13 +11,15 @@ export class UniverseService {
   private typeData = {};
   private systemData = {};
   private regionData = {};
-  private invTypes: Subscription;
-  private mapSolarSystems: Subscription;
-  private mapRegions: Subscription;
+  private typeNames = {};
+  private s_typeData: Subscription;
+  private s_systemData: Subscription;
+  private s_regionData: Subscription;
+  private s_typeNames: Subscription;
 
   constructor(private http: HttpClient, private papa: Papa) {
     // Setup typeData
-    this.invTypes =
+    this.s_typeData =
       this.initializeData('invTypes.csv', 'typeID', this.typeData)
         .add(() => {
           // Hash-map validation function call-back
@@ -27,7 +29,7 @@ export class UniverseService {
             throw new Error('typeData could not be parsed.');
           }
         });
-    this.mapSolarSystems =
+    this.s_systemData =
       this.initializeData('mapSolarSystems.csv', 'solarSystemID',
         this.systemData)
         .add(() => {
@@ -38,7 +40,7 @@ export class UniverseService {
             throw new Error('systemData could not be parsed.');
           }
         });
-    this.mapRegions =
+    this.s_regionData =
       this.initializeData('mapRegions.csv', 'regionID',
         this.regionData)
         .add(() => {
@@ -49,6 +51,16 @@ export class UniverseService {
             throw new Error('regionData could not be parsed.');
           }
         });
+    this.s_typeNames = this.initializeData('invTypes.csv', 'typeName',
+      this.typeNames)
+      .add(() => {
+        // Hash-map validation function call-back
+        if (this.getTypeId('Tritanium') === 34) {
+          console.log('regionData initialized.');
+        } else {
+          throw new Error('regionData could not be parsed.');
+        }
+      });
   }
 
   initializeData(fileName: string, key: string, store: any): Subscription {
@@ -70,23 +82,27 @@ export class UniverseService {
   }
 
   getTypeName(id: number): string {
-    return this.invTypes.closed && id ? this.typeData[id]['typeName'] : null;
+    return this.s_typeData.closed && id ? this.typeData[id]['typeName'] : null;
+  }
+
+  getTypeId(name: string): number {
+    return this.s_typeNames && name ? Number(this.typeNames[name]['typeID']) : null;
   }
 
   getSystemName(id: number): string {
-    return this.mapSolarSystems.closed && id ? this.systemData[id]['solarSystemName'] : null;
+    return this.s_systemData.closed && id ? this.systemData[id]['solarSystemName'] : null;
   }
 
   getSystemSecurity(id: number): number {
-    return this.mapSolarSystems.closed && id ? this.systemData[id]['security'] : null;
+    return this.s_systemData.closed && id ? this.systemData[id]['security'] : null;
   }
 
   getSystemRegion(id: number): number {
-    return this.mapSolarSystems.closed && id ? this.systemData[id]['regionID'] : null;
+    return this.s_systemData.closed && id ? this.systemData[id]['regionID'] : null;
   }
 
   getRegionName(id: number): string {
-    return this.mapRegions.closed && id ? this.regionData[id]['regionName'] : null;
+    return this.s_regionData.closed && id ? this.regionData[id]['regionName'] : null;
   }
 
   getSystemRegionName(id: number): string {

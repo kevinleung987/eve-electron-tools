@@ -17,15 +17,19 @@ import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.componen
 import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
 import { HeaderComponent } from './ui/header/header.component';
 import { HomeComponent } from './ui/home/home.component';
+import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
+import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LocalScanComponent,
     HeaderComponent,
-    MarketComponent,
     HomeComponent,
+    LocalScanComponent,
+    DirectionalScanComponent,
+    MarketComponent,
     ZkillListenerComponent,
+    VNICompanionComponent,
     EvePipe,
     ImagePipe,
     ProfileSyncComponent

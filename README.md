@@ -1,6 +1,6 @@
 # EVE Electron Tools
 
-Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built using Electron, Angular, and Bootstrap. Check out the latest Browser build [here](https://kevinleung987.github.io/eve-electron-tools/).
+Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built using Electron, Angular, and Bootstrap. Check out the latest Browser build [here](https://kevinleung987.github.io/eve-electron-tools/). Releases for the Desktop build can be found [here](https://github.com/kevinleung987/eve-electron-tools/releases)
 
 ## About
 
@@ -11,12 +11,12 @@ Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built usi
 ![](preview.jpg?raw=true)
 
 ## Features
-
+Some features require Electron and so are only available in the Desktop build.
 - **Parsing Tools(Local Scan/D-Scan):** Copy from the Local window or D-Scan and paste it into the parser to get a composition breakdown. Works exactly like the popular D-Scan websites except your results don't get logged by other people.
 - **Market Browser:** Quickly look up prices for items without having to login to the game.
 - **zKill Listener:** Listens for killmails on the zKillboard Live Feed as they come in, you can filter by alliance, corporation, location, ship-type and enable sound notifications.
-- **Profile Syncer:** Sync your EVE settings between accounts or characters with the click of a button. Very useful for anyone managing multiple accounts.
-- **VNI Companion:** Multiple tools that enable safer and easier AFK Ratting. Watches Intel channel for mentions of systems close to you. You can also enable alerts for faction and capital spawns.
+- **Profile Sync(Desktop-Only):** Sync your EVE settings between accounts or characters with the click of a button. Very useful for anyone managing multiple accounts.
+- **VNI Companion(Desktop-Only):** Multiple tools that enable safer and easier AFK Ratting. Watches Intel channel for mentions of systems close to you. You can also enable alerts for faction and capital spawns.
 
 ## Usage
 

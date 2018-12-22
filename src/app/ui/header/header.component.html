@@ -16,13 +16,19 @@
         <a class="nav-link" [routerLink]="['/local-scan']">Local Scan</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/d-scan']">D-Scan</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" [routerLink]="['/market']">Market</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/zkill-listener']">Zkill Listener</a>
       </li>
       <li class="nav-item" *ngIf="electron.isElectron">
-        <a class="nav-link" [routerLink]="['/profile-sync']">Profile Syncer</a>
+        <a class="nav-link" [routerLink]="['/profile-sync']">Profile Sync</a>
+      </li>
+      <li class="nav-item" *ngIf="electron.isElectron">
+        <a class="nav-link" [routerLink]="['/vni-companion']">VNI Companion</a>
       </li>
     </ul>
   </div>

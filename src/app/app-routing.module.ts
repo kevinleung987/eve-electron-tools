@@ -6,6 +6,8 @@ import { MarketComponent } from './tools/market/market.component';
 import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.component';
 import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
 import { HomeComponent } from './ui/home/home.component';
+import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
+import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
   handlers: { [key: string]: DetachedRouteHandle } = {};
@@ -36,9 +38,11 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'local-scan', component: LocalScanComponent },
+  { path: 'd-scan', component: DirectionalScanComponent },
   { path: 'market', component: MarketComponent },
   { path: 'zkill-listener', component: ZkillListenerComponent },
   { path: 'profile-sync', component: ProfileSyncComponent },
+  { path: 'vni-companion', component: VNICompanionComponent },
 ];
 
 @NgModule({ imports: [RouterModule.forRoot(routes, { useHash: true })], exports: [RouterModule] })

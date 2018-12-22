@@ -7,8 +7,10 @@ export class EveService {
 
   search(subject: string, category: string, strict: boolean): Promise<any> {
     return this.http.get(`https://esi.evetech.net/latest/search/?` +
-      `categories=${category}` + `&datasource=tranquility` +
-      `&language=en-us` + `&search=${subject}` +
+      `categories=${category}` +
+      `&datasource=tranquility` +
+      `&language=en-us` +
+      `&search=${subject}` +
       `&strict=${strict}`)
       .toPromise();
   }
