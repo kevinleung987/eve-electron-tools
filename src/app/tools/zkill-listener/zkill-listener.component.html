@@ -1,8 +1,11 @@
 <div class="container">
   <div class="row">
     <h1 class="mx-auto">
-      Zkill Listener
+      zKill Listener
     </h1>
+  </div>
+  <div class="row">
+    <p class="mx-auto">Left-click to view the mail on zKillboard. Right-click to delete the mail.</p>
   </div>
   <div class="row">
     <div class="col-2">
@@ -24,26 +27,25 @@
 
     </div>
   </div>
-  <div class="row" *ngFor="let mail of mails">
-    <div class="card mail-info" style="width:100%;" (click)="openLink(mail['zkb']['url'])">
+  <div class="row" *ngFor="let mail of mails; let i = index">
+    <div class="card mail-info" style="width:100%;" (click)="openLink(mail['zkb']['url'])" (contextmenu)="mails.pop(i)">
       <div class="card-body">
         <div class="row">
           <div class="col-2">
-            <div class="row">
+            <div class="row detail-row">
               <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
             </div>
-            <div class="row">
+            <div class="row detail-row">
               <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
-              [<span [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
-                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</span>]
+              <span>[<strong [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
+                  | slice:0:4)}}</strong>]</span>
             </div>
-            <div class="row">
+            <div class="row detail-row">
               <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }}
             </div>
-            <div class="row">
+            <div class="row detail-row">
               <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK
             </div>
-
           </div>
           <div class="col-1">
             <img class="image" src="{{mail['victim']['character_id'] | image:'character'}}">
@@ -79,6 +81,7 @@
           <div class="col-3">
             <div class="row">
               <b>Attacker: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }}
+              ({{ mail['zkb']['npc'] ? 'NPC' : mail['attackers'].length }})
             </div>
             <div class="row">
               <b>Ship: </b>{{ universe.getTypeName(mail['final_blow']['ship_type_id']) }}
