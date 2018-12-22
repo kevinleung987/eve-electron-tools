@@ -31,4 +31,6 @@ def downloadData(sourceName, fileName, columns, decompress=bz2.decompress):
 downloadData('invTypes.csv.bz2', 'invTypes.csv',
              ['typeID', 'groupID', 'typeName'])
 downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv',
-             ['solarSystemID', 'solarSystemName', 'security'])
+             ['solarSystemID', 'solarSystemName', 'regionID', 'security'])
+downloadData('mapRegions.csv.bz2', 'mapRegions.csv',
+             ['regionID', 'regionName'])

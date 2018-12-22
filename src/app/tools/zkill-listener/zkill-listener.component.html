@@ -28,6 +28,23 @@
     <div class="card mail-info" style="width:100%;" (click)="openLink(mail['zkb']['url'])">
       <div class="card-body">
         <div class="row">
+          <div class="col-2">
+            <div class="row">
+              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
+            </div>
+            <div class="row">
+              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
+              [<span [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
+                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</span>]
+            </div>
+            <div class="row">
+              <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }}
+            </div>
+            <div class="row">
+              <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK
+            </div>
+
+          </div>
           <div class="col-1">
             <img class="image" src="{{mail['victim']['character_id'] | image:'character'}}">
           </div>
@@ -76,19 +93,6 @@
             <div class="row">
               <img src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}" class="image-icon">
               {{ (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name }}
-            </div>
-          </div>
-          <div class="col-2">
-            <div class="row">
-              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }}
-            </div>
-            <div class="row">
-              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
-              [<span [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">
-                {{(universe.getSystemSecurity(mail['solar_system_id']) | slice:0:4)}}</span>]
-            </div>
-            <div class="row">
-              <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK
             </div>
           </div>
         </div>

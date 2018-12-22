@@ -7,10 +7,14 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
+
   private typeData = {};
   private systemData = {};
+  private regionData = {};
   private invTypes: Subscription;
   private mapSolarSystems: Subscription;
+  private mapRegions: Subscription;
+
   constructor(private http: HttpClient, private papa: Papa) {
     // Setup typeData
     this.invTypes =
@@ -34,6 +38,17 @@ export class UniverseService {
             throw new Error('systemData could not be parsed.');
           }
         });
+    this.mapRegions =
+      this.initializeData('mapRegions.csv', 'regionID',
+        this.regionData)
+        .add(() => {
+          // Hash-map validation function call-back
+          if (this.getRegionName(10000002) === 'The Forge') {
+            console.log('regionData initialized.');
+          } else {
+            throw new Error('regionData could not be parsed.');
+          }
+        });
   }
 
   initializeData(fileName: string, key: string, store: any): Subscription {
@@ -55,15 +70,27 @@ export class UniverseService {
   }
 
   getTypeName(id: number): string {
-    return this.invTypes.closed ? this.typeData[id]['typeName'] : null;
+    return this.invTypes.closed && id ? this.typeData[id]['typeName'] : null;
   }
 
   getSystemName(id: number): string {
-    return this.mapSolarSystems.closed ? this.systemData[id]['solarSystemName'] : null;
+    return this.mapSolarSystems.closed && id ? this.systemData[id]['solarSystemName'] : null;
   }
 
-  getSystemSecurity(id: number): string {
-    return this.mapSolarSystems.closed ? this.systemData[id]['security'] : null;
+  getSystemSecurity(id: number): number {
+    return this.mapSolarSystems.closed && id ? this.systemData[id]['security'] : null;
+  }
+
+  getSystemRegion(id: number): number {
+    return this.mapSolarSystems.closed && id ? this.systemData[id]['regionID'] : null;
+  }
+
+  getRegionName(id: number): string {
+    return this.mapRegions.closed && id ? this.regionData[id]['regionName'] : null;
+  }
+
+  getSystemRegionName(id: number): string {
+    return this.getRegionName(this.getSystemRegion(id));
   }
 
   getSecurityColor(sec: number): string {
