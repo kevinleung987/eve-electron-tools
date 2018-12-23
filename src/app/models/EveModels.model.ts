@@ -14,3 +14,15 @@ export class EveAlliance {
   corporations: Array<number>;
   image: string;
 }
+
+export class DisplayCorporation {
+  corporation: EveCorporation;
+  count: number;
+  highlighted: boolean;
+}
+
+export class DisplayAlliance {
+  alliance: EveAlliance;
+  count: number;
+  highlighted: boolean;
+}

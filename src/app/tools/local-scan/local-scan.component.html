@@ -24,9 +24,9 @@ Elise Randolph
       <button class="btn btn-raised btn-danger btn-block" (click)="resetView()">Reset</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
-      <label>Corporations: {{ getDisplayCorporations().length }}</label>
+      <label>Corporations: {{ local.displayCorporations.length }}</label>
       <div class="local-area container">
-        <div class="row display-item" *ngFor="let corp of getDisplayCorporations()" [class.bg-success]="corp.highlighted"
+        <div class="row display-item" *ngFor="let corp of local.displayCorporations" [class.bg-success]="corp.highlighted"
           (mouseenter)="highlightCorporation(corp)" (mouseleave)="resetHighlight()">
           <div class="col-3">
             <img [src]="corp.corporation.image">
@@ -41,9 +41,9 @@ Elise Randolph
       </div>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
-      <label>Alliances: {{ getDisplayAlliances().length }}</label>
+      <label>Alliances: {{ local.displayAlliances.length }}</label>
       <div class="local-area container">
-        <div class="row display-item" *ngFor="let alliance of getDisplayAlliances()" [class.bg-success]="alliance.highlighted"
+        <div class="row display-item" *ngFor="let alliance of local.displayAlliances" [class.bg-success]="alliance.highlighted"
           (mouseenter)="highlightAlliance(alliance)" (mouseleave)="resetHighlight()">
           <div class="col-3">
             <img [src]="alliance.alliance.image">
