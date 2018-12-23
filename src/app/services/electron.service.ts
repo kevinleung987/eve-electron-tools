@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ipcRenderer, remote, webFrame, shell } from 'electron';
+import { ipcRenderer, remote, shell, webFrame } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Subject } from 'rxjs';

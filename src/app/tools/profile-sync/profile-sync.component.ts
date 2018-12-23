@@ -60,16 +60,16 @@ export class ProfileSyncComponent implements OnInit {
     console.log(this.accounts, this.characters);
   }
 
-  select(item, key: Selected) {
+  select(item, selectionType: Selected) {
     const collection = this.accounts.includes(item) ? this.accounts : this.characters;
-    if (key === Selected.Primary) {
+    if (selectionType === Selected.Primary) {
       collection.forEach((result: any) => {
         if (result['selected'] === Selected.Primary && result !== item) {
           result['selected'] = null;
         }
       });
     }
-    item['selected'] = item['selected'] === key ? null : key;
+    item['selected'] = item['selected'] === selectionType ? null : selectionType;
   }
 }
 

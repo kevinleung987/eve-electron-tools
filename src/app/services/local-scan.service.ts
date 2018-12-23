@@ -1,11 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import {
-  EveCharacter,
-  EveCorporation,
-  EveAlliance
-} from '../models/EveModels.model';
+import { EveAlliance, EveCharacter, EveCorporation } from '../models/EveModels.model';
 import { EveService } from './eve.service';
 
 @Injectable({ providedIn: 'root' })
@@ -16,17 +11,19 @@ export class LocalScanService {
   public displayCorporations: {
     [id: number]: {
       corporation: EveCorporation;
-      count: number
+      count: number,
+      highlighted: boolean
     };
   };
   public displayAlliances: {
     [id: number]: {
       alliance: EveAlliance;
-      count: number
+      count: number,
+      highlighted: boolean
     };
   };
   public busy = false;
-  constructor(private http: HttpClient, private eve: EveService) {
+  constructor(private eve: EveService) {
     this.characters = {};
     this.corporations = {};
     this.alliances = {};
@@ -74,7 +71,7 @@ export class LocalScanService {
                 await this.eve.alliances(allianceId);
               this.alliances[allianceId] = {
                 name: allianceData['name'],
-                corporations: null,
+                corporations: [],
                 image:
                   `http://image.eveonline.com/Alliance/${allianceId}_128.png`
               };
@@ -99,7 +96,6 @@ export class LocalScanService {
       }
     }
     Promise.all(data).then((results) => {
-      console.log(results);
       // Temporary frequency tables
       const parsedCorporations = {};
       const parsedAlliances = {};
@@ -107,24 +103,33 @@ export class LocalScanService {
       results.forEach((item) => {
         const corp = item.corporation;
         const alliance = item.alliance;
+        // Process corporation frequency
         if (corp && parsedCorporations[corp]) {
           parsedCorporations[corp].count++;
         } else if (corp) {
           parsedCorporations[corp] = {
             corporation: this.corporations[corp],
-            count: 1
+            count: 1,
+            highlighted: false
           };
         }
-        if (alliance && parsedAlliances[alliance]) {
-          parsedAlliances[alliance].count++;
-        } else if (alliance) {
-          parsedAlliances[alliance] = {
-            alliance: this.alliances[alliance],
-            count: 1
-          };
+        // Process alliance frequency
+        if (alliance) {
+          if (parsedAlliances[alliance]) {
+            parsedAlliances[alliance].count++;
+          } else {
+            parsedAlliances[alliance] = {
+              alliance: this.alliances[alliance],
+              count: 1,
+              highlighted: false
+            };
+          }
+          // Link the alliance with it's corporation
+          if (!this.alliances[alliance].corporations.includes(corp)) {
+            this.alliances[alliance].corporations.push(corp);
+          }
         }
       });
-      // Show the end-result
       this.displayCorporations = parsedCorporations;
       this.displayAlliances = parsedAlliances;
       this.busy = false;

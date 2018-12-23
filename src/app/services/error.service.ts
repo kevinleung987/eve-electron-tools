@@ -6,7 +6,7 @@ export class MyErrorHandler implements ErrorHandler {
   constructor(private alert: AlertService) { }
 
   public handleError(error: any) {
-    console.error(error);
     this.alert.error(error);
+    throw error;
   }
 }

@@ -9,7 +9,7 @@ import { LocalScanService } from '../../services/local-scan.service';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
-  constructor(private alert: AlertService, public localScanService: LocalScanService) { }
+  constructor(private alert: AlertService, public local: LocalScanService) { }
 
   ngOnInit() { }
 
@@ -18,16 +18,15 @@ export class LocalScanComponent implements OnInit {
       this.alert.warning('Please enter EVE character names into the Local Scan window.');
       return;
     }
-    this.localScanService.parse(input);
+    this.local.parse(input);
     this.alert.success('Started Local Scan...');
   }
 
   getDisplayCorporations() {
-    const keys = Object.keys(this.localScanService.displayCorporations);
     const output = [];
-    keys.forEach(element => {
-      if (this.localScanService.displayCorporations[element] != null) {
-        output.push(this.localScanService.displayCorporations[element]);
+    Object.keys(this.local.displayCorporations).forEach(element => {
+      if (this.local.displayCorporations[element] != null) {
+        output.push(this.local.displayCorporations[element]);
       }
     });
     output.sort(function (a, b) { return b.count - a.count; });
@@ -35,11 +34,10 @@ export class LocalScanComponent implements OnInit {
   }
 
   getDisplayAlliances() {
-    const keys = Object.keys(this.localScanService.displayAlliances);
     const output = [];
-    keys.forEach(element => {
-      if (this.localScanService.displayAlliances[element] != null) {
-        output.push(this.localScanService.displayAlliances[element]);
+    Object.keys(this.local.displayAlliances).forEach(element => {
+      if (this.local.displayAlliances[element] != null) {
+        output.push(this.local.displayAlliances[element]);
       }
     });
     output.sort(function (a, b) { return b.count - a.count; });
@@ -47,8 +45,40 @@ export class LocalScanComponent implements OnInit {
   }
 
   resetView() {
-    this.localScanService.displayCorporations = {};
-    this.localScanService.displayAlliances = {};
+    this.local.displayCorporations = {};
+    this.local.displayAlliances = {};
     this.alert.info('Results cleared.');
+  }
+
+  resetHighlight() {
+    Object.keys(this.local.displayCorporations).forEach(element => {
+      const corp = this.local.displayCorporations[element];
+      if (corp != null) {
+        corp.highlighted = false;
+      }
+    });
+    Object.keys(this.local.displayAlliances).forEach(element => {
+      const alliance = this.local.displayAlliances[element];
+      if (alliance != null) {
+        alliance.highlighted = false;
+      }
+    });
+  }
+
+  highlightCorporation(corp: any) {
+    this.resetHighlight();
+    corp.highlighted = true;
+    if (corp.corporation.alliance) {
+      const alliance = this.local.displayAlliances[corp.corporation.alliance];
+      alliance.highlighted = true;
+    }
+  }
+
+  highlightAlliance(alliance: any) {
+    this.resetHighlight();
+    alliance.highlighted = true;
+    alliance.alliance.corporations.forEach(corp => {
+      this.local.displayCorporations[corp].highlighted = true;
+    });
   }
 }

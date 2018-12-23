@@ -16,15 +16,16 @@ Grath Telkin
 Shadoo
 Elise Randolph
       </textarea>
-      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="localScanService.busy">Scan</button>
+      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="local.busy">Scan</button>
       <button class="btn btn-raised btn-danger btn-block" (click)="resetView()">Reset</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Corporations: {{ getDisplayCorporations().length }}</label>
       <div class="local-area container">
-        <div class="row display-item" *ngFor="let corp of getDisplayCorporations()">
+        <div class="row display-item" *ngFor="let corp of getDisplayCorporations()" [class.bg-success]="corp.highlighted"
+          (mouseenter)="highlightCorporation(corp)" (mouseleave)="resetHighlight()">
           <div class="col-3">
-            <img [src]="corp.corporation.image" alt="">
+            <img [src]="corp.corporation.image">
           </div>
           <div class="col-7">
             {{corp.corporation.name}}
@@ -38,15 +39,16 @@ Elise Randolph
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Alliances: {{ getDisplayAlliances().length }}</label>
       <div class="local-area container">
-        <div class="row display-item" *ngFor="let item of getDisplayAlliances()">
+        <div class="row display-item" *ngFor="let alliance of getDisplayAlliances()" [class.bg-success]="alliance.highlighted"
+          (mouseenter)="highlightAlliance(alliance)" (mouseleave)="resetHighlight()">
           <div class="col-3">
-            <img [src]="item.alliance.image" alt="">
+            <img [src]="alliance.alliance.image">
           </div>
           <div class="col-7">
-            {{item.alliance.name}}
+            {{alliance.alliance.name}}
           </div>
           <div class="col-2">
-            {{item.count}}
+            {{alliance.count}}
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { ElectronService } from './electron.service';
+
 /**
  * Manages maintenence of the Config file for EVE-ET, configuration settings
  * are represented as key-value pairs.

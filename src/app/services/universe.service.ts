@@ -2,107 +2,82 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Papa } from 'ngx-papaparse';
 import { PapaParseResult } from 'ngx-papaparse/lib/interfaces/papa-parse-result';
-import { Subscription } from 'rxjs';
-import { map, merge } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
 
-  private typeData = {};
-  private systemData = {};
-  private regionData = {};
-  private typeNames = {};
-  private s_typeData: Subscription;
-  private s_systemData: Subscription;
-  private s_regionData: Subscription;
-  private s_typeNames: Subscription;
+  private typeData = new BehaviorSubject(null);
+  private systemData = new BehaviorSubject(null);
+  private regionData = new BehaviorSubject(null);
+  private typeNames = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private papa: Papa) {
-    // Setup typeData
-    this.s_typeData =
-      this.initializeData('invTypes.csv', 'typeID', this.typeData)
-        .add(() => {
-          // Hash-map validation function call-back
-          if (this.getTypeName(670) === 'Capsule') {
-            console.log('typeData initialized.');
-          } else {
-            throw new Error('typeData could not be parsed.');
-          }
-        });
-    this.s_systemData =
-      this.initializeData('mapSolarSystems.csv', 'solarSystemID',
-        this.systemData)
-        .add(() => {
-          // Hash-map validation function call-back
-          if (this.getSystemName(30000142) === 'Jita') {
-            console.log('systemData initialized.');
-          } else {
-            throw new Error('systemData could not be parsed.');
-          }
-        });
-    this.s_regionData =
-      this.initializeData('mapRegions.csv', 'regionID',
-        this.regionData)
-        .add(() => {
-          // Hash-map validation function call-back
-          if (this.getRegionName(10000002) === 'The Forge') {
-            console.log('regionData initialized.');
-          } else {
-            throw new Error('regionData could not be parsed.');
-          }
-        });
-    this.s_typeNames = this.initializeData('invTypes.csv', 'typeName',
+    this.initializeData('invTypes.csv', 'typeID', this.typeData)
+      .add(() => {
+        this.getTypeName(670) === 'Capsule' ? console.log('typeData initialized.') : console.error('typeData could not be parsed.');
+      });
+    this.initializeData('mapSolarSystems.csv', 'solarSystemID',
+      this.systemData)
+      .add(() => {
+        this.getSystemName(30000142) === 'Jita' ? console.log('systemData initialized.') :
+          console.error('systemData could not be parsed.');
+      });
+    this.initializeData('mapRegions.csv', 'regionID',
+      this.regionData)
+      .add(() => {
+        this.getRegionName(10000002) === 'The Forge' ? console.log('regionData initialized.') :
+          console.error('regionData could not be parsed.');
+      });
+    this.initializeData('invTypes.csv', 'typeName',
       this.typeNames)
       .add(() => {
-        // Hash-map validation function call-back
-        if (this.getTypeId('Tritanium') === 34) {
-          console.log('regionData initialized.');
-        } else {
-          throw new Error('regionData could not be parsed.');
-        }
+        this.getTypeId('Tritanium') === 34 ? console.log('regionData initialized.') : console.error('regionData could not be parsed.');
       });
   }
 
-  initializeData(fileName: string, key: string, store: any): Subscription {
+  initializeData(fileName: string, key: string, store: BehaviorSubject<any>): Subscription {
     return this.http.get('./assets/' + fileName, { responseType: 'text' })
       .pipe(map((data: any) => data))
       .subscribe((data: any) => {
         this.papa.parse(data, {
           header: true,
           complete: (result: PapaParseResult) => {
-            // Set the specified key to be the key in converting the csv array
-            // to a hash-map
+            // Map other columns as fields for the specified key
+            const tempData = {};
             result.data.forEach(element => {
-              store[element[key]] = element;
-              delete store[element[key]][key];
+              tempData[element[key]] = element;
+              delete tempData[element[key]][key];
             });
+            store.next(tempData);
           }
         });
       }, error => console.error(error));
   }
 
   getTypeName(id: number): string {
-    return this.s_typeData.closed && id ? this.typeData[id]['typeName'] : null;
+    return this.typeData.value && id ? this.typeData.value[id]['typeName'] : null;
   }
 
   getTypeId(name: string): number {
-    return this.s_typeNames && name ? Number(this.typeNames[name]['typeID']) : null;
+    return this.typeNames.value && name ? Number(this.typeNames.value[name]['typeID']) : null;
   }
 
   getSystemName(id: number): string {
-    return this.s_systemData.closed && id ? this.systemData[id]['solarSystemName'] : null;
+    return this.systemData.value && id ? this.systemData.value[id]['solarSystemName'] : null;
   }
 
   getSystemSecurity(id: number): number {
-    return this.s_systemData.closed && id ? this.systemData[id]['security'] : null;
+    return this.systemData.value && id ? this.systemData.value[id]['security'] : null;
   }
 
   getSystemRegion(id: number): number {
-    return this.s_systemData.closed && id ? this.systemData[id]['regionID'] : null;
+    return this.systemData.value && id ? this.systemData.value[id]['regionID'] : null;
   }
 
   getRegionName(id: number): string {
-    return this.s_regionData.closed && id ? this.regionData[id]['regionName'] : null;
+    return this.regionData.value && id ? this.regionData.value[id]['regionName'] : null;
   }
 
   getSystemRegionName(id: number): string {
