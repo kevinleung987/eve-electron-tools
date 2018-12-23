@@ -7,28 +7,32 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/']">Home
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">Home
           <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/local-scan']">Local Scan</a>
+        <a class="nav-link" [routerLink]="['/local-scan']" routerLinkActive="active">Local Scan</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/d-scan']">D-Scan</a>
+        <a class="nav-link" [routerLink]="['/d-scan']" routerLinkActive="active">D-Scan</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/market']">Market</a>
+        <a class="nav-link" [routerLink]="['/market']" routerLinkActive="active">Market</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/zkill-listener']">Zkill Listener</a>
+        <a class="nav-link" [routerLink]="['/zkill-listener']" routerLinkActive="active">Zkill Listener</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/profile-sync']">Profile Sync</a>
+        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/profile-sync']" routerLinkActive="active">
+          Profile Sync
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/vni-companion']">VNI Companion</a>
+        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/vni-companion']" routerLinkActive="active">
+          VNI Companion
+        </a>
       </li>
     </ul>
   </div>

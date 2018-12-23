@@ -1,13 +1,22 @@
-import { NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
+import { Injectable, NgModule } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  DetachedRouteHandle,
+  RouteReuseStrategy,
+  RouterModule,
+  RouterStateSnapshot,
+  Routes,
+} from '@angular/router';
 
+import { ElectronService } from './services/electron.service';
+import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
 import { LocalScanComponent } from './tools/local-scan/local-scan.component';
 import { MarketComponent } from './tools/market/market.component';
 import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.component';
+import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
 import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
 import { HomeComponent } from './ui/home/home.component';
-import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
-import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
   handlers: { [key: string]: DetachedRouteHandle } = {};
@@ -35,16 +44,25 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 }
 
+@Injectable()
+class CanActivateElectron implements CanActivate {
+  constructor(private electron: ElectronService) { }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.electron.isElectron;
+  }
+}
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'local-scan', component: LocalScanComponent },
   { path: 'd-scan', component: DirectionalScanComponent },
   { path: 'market', component: MarketComponent },
   { path: 'zkill-listener', component: ZkillListenerComponent },
-  { path: 'profile-sync', component: ProfileSyncComponent },
-  { path: 'vni-companion', component: VNICompanionComponent },
+  { path: 'profile-sync', component: ProfileSyncComponent, canActivate: [CanActivateElectron] },
+  { path: 'vni-companion', component: VNICompanionComponent, canActivate: [CanActivateElectron] },
 ];
 
-@NgModule({ imports: [RouterModule.forRoot(routes, { useHash: true })], exports: [RouterModule] })
+@NgModule({ imports: [RouterModule.forRoot(routes, { useHash: true })], providers: [CanActivateElectron], exports: [RouterModule] })
 export class AppRoutingModule {
 }
