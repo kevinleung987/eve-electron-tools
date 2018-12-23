@@ -1,1 +1,35 @@
-<app-header [title]="'Directional Scan'"></app-header>
+<app-header [title]="'Directional Scan'">
+  <div class="mx-auto">
+    <h5>
+      Open the Directional Scanner ingame(Alt+D), and copy those results into the D-Scan box below. Press Scan to parse
+      the results into a sorted frequency table.
+    </h5>
+  </div>
+</app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <label>D-Scan</label>
+      <textarea #dScanInput type="text" rows="20" [placeholder]="'Paste D-Scan here.'" [value]="placeholder">
+      </textarea>
+      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(dScanInput.value)" [disabled]="busy">Scan</button>
+      <button class="btn btn-raised btn-danger btn-block" (click)="reset()">Reset</button>
+    </div>
+    <div class="col-6">
+      <label>Results</label>
+      <div class="card card-body" *ngFor="let item of display">
+        <div class="row">
+          <div class="col-4">
+            <img class="image" src="{{item['typeId'] | image:'ship'}}">
+          </div>
+          <div class="col-6">
+            <h5>{{item['name']}}</h5>
+          </div>
+          <div class="col-2">
+            <b>{{item['count']}}</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

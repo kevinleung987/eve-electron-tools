@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 
 import { LocalScanService } from '../../services/local-scan.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-local-scan',
@@ -10,6 +11,7 @@ import { LocalScanService } from '../../services/local-scan.service';
 })
 export class LocalScanComponent implements OnInit {
 
+  placeholder = environment.localScanPlaceholder;
   parallel = false;
   debug = false;
 

@@ -1,6 +1,19 @@
 export const environment = {
-  production: true,
+  production: false,
   settingsFile: 'settings.json',
+  localScanPlaceholder: `Chribba
+The Mittani
+The Judge
+Vile Rat
+Grath Telkin
+Shadoo
+Elise Randolph`,
+  dScanPlaceholder:
+    `32458	Infrastructure Hub	Infrastructure Hub	3.1 AU
+32226	Territorial Claim Unit	Territorial Claim Unit	3.1 AU
+17843	Vexor Navy Issue	Vexor Navy Issue	-
+17843	Vexor Navy Issue	Vexor Navy Issue	-
+17843	Vexor Navy Issue	Vexor Navy Issue	-`,
   zkillExample: {
     'attackers': [
       {

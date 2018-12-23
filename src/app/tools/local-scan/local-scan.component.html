@@ -6,33 +6,26 @@
         will break down which Corporation and Alliance they belong to. You can mouseover the results to see the
         relationship between Corporations and Alliances.
       </h5>
-      <div class="alert alert-secondary" role="alert" *ngIf="parallel">
-        Enabling "Parallel Mode" will make as many requests as possible in parallel, rather than sequentially, this
-        will make the UI unresponsive but can sometimes resolve large input very quickly. When Parallel Mode is
+      <div class="alert alert-warning" role="alert" *ngIf="parallel">
+        Enabling "Parallel" will cause the tool to make as many API requests as possible in parallel, this
+        can make the UI unresponsive but will sometimes speed up large input. When Parallel is
         disabled, requests are made sequentially and all results are cached, which significantly reduces the number of
-        requests that need to be made and is usually faster than Parallel Mode.
+        requests that need to be made and is usually faster than Parallel.
       </div>
     </div>
   </app-header>
   <div class="row">
     <div class="col-sm-12 col-lg-4">
       <label>Local Scan</label>
-      <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'">
-Chribba
-The Mittani
-The Judge
-Vile Rat
-Grath Telkin
-Shadoo
-Elise Randolph
+      <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'" [value]="placeholder">
       </textarea>
       <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="local.busy">Scan</button>
       <button class="btn btn-raised btn-danger btn-block" (click)="resetView()">Reset</button>
-      <label class="btn btn-secondary active">
+      <label class="btn btn-secondary active col-6">
         <input type="checkbox" checked [(ngModel)]="parallel" [disabled]="local.busy">
-        Parallel Mode
+        Parallel
       </label>
-      <label class="btn btn-warning active">
+      <label class="btn btn-warning active col-6">
         <input type="checkbox" checked [(ngModel)]="debug">
         Debug
       </label>
