@@ -1,8 +1,10 @@
 <div class="container">
   <app-header [title]="'Profile Syncer'">
     <div class="mx-auto">
-      <h5>Click on Start Listening to begin listening for new killmails from zKillboard. Left-click to
-        view a mail on zKillboard. Right-click to delete a mail.</h5>
+      <h5>Locate your EVE Profiles folder using Select Folder and press Scan Profiles to load your profiles. You can
+        bind a name to a account to make it easier to differentiate between accounts. Left-click to select a "Primary"
+        profile which will act as the source copy. Right-click to select multiple "Secondary" profiles which act as
+        destinations to write to.</h5>
     </div>
   </app-header>
   <div class="row directory-buttons">
@@ -16,12 +18,20 @@
     <div class="row">
       <h4 class="mx-auto section-header">Accounts({{ accounts.length }})</h4>
     </div>
+    <div class="row justify-content-center" *ngIf="accounts.length > 0">
+      <div class="col-4">
+        <input type="name" class="form-control" id="accountName" placeholder="Enter name" [(ngModel)]="name">
+      </div>
+      <div class="col-2">
+        <button type="button" class="btn btn-raised btn-success mx-auto" (click)="bindName()">Bind Name</button>
+      </div>
+    </div>
     <div class="row">
       <div class="col-3" *ngFor="let account of accounts">
         <div class="card" [class.bg-success]="account['selected'] === s.Primary" [class.bg-secondary]="account['selected'] === s.Secondary"
           (click)="select(account, s.Primary)" (contextmenu)="select(account, s.Secondary)">
           <div class="card-body">
-            {{ account['id'] }}
+            {{ account['id'] }}<b>{{ accountBindings[account['id']] ? ' - '+accountBindings[account['id']] : null}}</b>
           </div>
         </div>
       </div>

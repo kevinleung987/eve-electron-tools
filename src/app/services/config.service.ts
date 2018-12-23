@@ -26,7 +26,7 @@ export class ConfigService {
     return this.config[key];
   }
 
-  set(key: string, value: string) {
+  set(key: string, value: any) {
     this.config[key] = value;
     this.electron.fs.writeFileSync(this.path, JSON.stringify(this.config));
     console.log('SET:', key, this.config[key]);
@@ -55,5 +55,14 @@ export class ConfigService {
       this.electron.fs.writeFileSync(this.path, JSON.stringify(this.config));
     }
     console.log('Config initialized', this.config);
+  }
+
+  default(key: string, defaultValue: any) {
+    let val = this.get(key);
+    if (val == null) {
+      this.set(key, defaultValue);
+      val = this.get(key);
+    }
+    return val;
   }
 }

@@ -13,11 +13,15 @@ export class ProfileSyncComponent implements OnInit {
   profilesPath: string;
   accounts: string[] = [];
   characters: string[] = [];
+  accountBindings: { [id: number]: string };
+  name = '';
   s = Selected;
   constructor(private electron: ElectronService, private config: ConfigService) { }
 
   ngOnInit() {
-    this.profilesPath = this.config.get('profilesPath');
+    this.profilesPath = this.config.default('profilesPath', null);
+    this.accountBindings = this.config.default('profileAccountBindings', {});
+    console.log(this.accountBindings);
   }
 
   selectFolder() {
@@ -43,13 +47,13 @@ export class ProfileSyncComponent implements OnInit {
     result.forEach((file) => {
       if (/core_user_[0-9]*.dat/.test(file)) {
         const account = {
-          id: file.substring(10, file.length - 4),
+          id: Number(file.substring(10, file.length - 4)),
           selected: Selected.None
         };
         accounts.push(account);
       } else if (/core_char_[0-9]*.dat/.test(file)) {
         const character = {
-          id: file.substring(10, file.length - 4),
+          id: Number(file.substring(10, file.length - 4)),
           selected: Selected.None
         };
         characters.push(character);
@@ -70,6 +74,19 @@ export class ProfileSyncComponent implements OnInit {
       });
     }
     item['selected'] = item['selected'] === selectionType ? null : selectionType;
+  }
+
+  bindName() {
+    let selected = null;
+    this.accounts.forEach((account) => {
+      if (account['selected'] === Selected.Primary) {
+        selected = account['id'];
+      }
+    });
+    if (selected != null) {
+      this.accountBindings[selected] = this.name;
+      this.config.set('profileAccountBindings', this.accountBindings);
+    }
   }
 }
 
