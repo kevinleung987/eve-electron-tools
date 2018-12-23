@@ -1,35 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">EVE Electron Tools</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/']">Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/local-scan']">Local Scan</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/d-scan']">D-Scan</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/market']">Market</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/zkill-listener']">Zkill Listener</a>
-      </li>
-      <li class="nav-item" *ngIf="electron.isElectron">
-        <a class="nav-link" [routerLink]="['/profile-sync']">Profile Sync</a>
-      </li>
-      <li class="nav-item" *ngIf="electron.isElectron">
-        <a class="nav-link" [routerLink]="['/vni-companion']">VNI Companion</a>
-      </li>
-    </ul>
+<div class="container">
+  <div class="title">
+    <div class="row">
+      <h1 class="mx-auto">
+        {{title}}
+      </h1>
+    </div>
+    <ng-content></ng-content>
   </div>
-</nav>
+</div>

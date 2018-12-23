@@ -15,14 +15,16 @@ import { LocalScanComponent } from './tools/local-scan/local-scan.component';
 import { MarketComponent } from './tools/market/market.component';
 import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.component';
 import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
-import { HeaderComponent } from './ui/header/header.component';
 import { HomeComponent } from './ui/home/home.component';
 import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
 import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
+import { NavbarComponent } from './ui/navbar/navbar.component';
+import { HeaderComponent } from './ui/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     HeaderComponent,
     HomeComponent,
     LocalScanComponent,
@@ -42,8 +44,10 @@ import { VNICompanionComponent } from './tools/vni-companion/vni-companion.compo
     PapaParseModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
+      timeOut: 3000,
       preventDuplicates: true,
-      progressBar: true
+      progressBar: true,
+      onActivateTick: true
     })
   ],
   providers: [

@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ElectronService } from 'src/app/services/electron.service';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
-  constructor(public electron: ElectronService) { }
+  @Input() title: string;
+  @Input() description: string;
+  constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
+
 }

@@ -1,17 +1,18 @@
+<app-header [title]="'EVE Electron Tools'">
+  <div class="mx-auto">
+    <h5>Check out the tools available so far in the nav-bar above.</h5>
+  </div>
+</app-header>
 <div class="container">
-  <div class="row">
-    <h1>EVE Electron Tools</h1>
-
-  </div>
-  <div class="row">
-    <p>Check out the tools available so far in the nav-bar above.</p>
-  </div>
   <div class="row" *ngIf="!electron.isElectron;else in_electron">
     <p>You are running not running under Electron.</p>
   </div>
   <ng-template #in_electron>
     <div class="row">
       <p>You are running under Electron.</p>
+    </div>
+    <div class="row">
+      <h3>Config Editor</h3>
     </div>
     <div class="row">
       <textarea #configText rows="20" [innerText]="config.getConfig()"></textarea>

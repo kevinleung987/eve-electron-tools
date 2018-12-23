@@ -1,14 +1,15 @@
 <div class="container">
-  <div class="row">
-    <h1 class="mx-auto">
-      Profile Syncer
-    </h1>
-  </div>
-  <div class="row">
+  <app-header [title]="'Profile Syncer'">
+    <div class="mx-auto">
+      <h5>Click on Start Listening to begin listening for new killmails from zKillboard. Left-click to
+        view a mail on zKillboard. Right-click to delete a mail.</h5>
+    </div>
+  </app-header>
+  <div class="row directory-buttons">
     <button type="button" class="btn btn-raised btn-primary mx-auto" (click)="selectFolder()">Select Folder</button>
     <button type="button" class="btn btn-raised btn-info mx-auto" (click)="parseProfiles()">Scan Profiles</button>
   </div>
-  <div class="row current-directory" (click)="openProfilesFolder()">
+  <div class="row current-directory card card-body" (click)="openProfilesFolder()">
     <b class="mx-auto">Current Profile Directory: {{ profilesPath || 'No folder selected.' }}</b>
   </div>
   <div *ngIf="profilesPath">

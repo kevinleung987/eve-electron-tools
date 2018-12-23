@@ -1,12 +1,10 @@
 <div class="container">
-  <div class="row">
-    <h1 class="mx-auto">
-      zKill Listener
-    </h1>
-  </div>
-  <div class="row">
-    <p class="mx-auto">Left-click to view the mail on zKillboard. Right-click to delete the mail.</p>
-  </div>
+  <app-header [title]="'zKill Listener'">
+    <div class="mx-auto">
+      <h5>Click on Start Listening to begin listening for new killmails from zKillboard. Left-click to
+        view a mail on zKillboard. Right-click to delete a mail.</h5>
+    </div>
+  </app-header>
   <div class="row">
     <div class="col-2">
       <button type="button" class="btn btn-raised btn-primary" (click)="start()" [disabled]="listening">Start Listening</button>
@@ -37,8 +35,8 @@
             </div>
             <div class="row detail-row">
               <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}}
-              <span>[<strong [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
-                  | slice:0:4)}}</strong>]</span>
+              <span>[<b [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
+                  | slice:0:4)}}</b>]</span>
             </div>
             <div class="row detail-row">
               <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }}

@@ -1,9 +1,13 @@
 <div class="container">
-  <div class="row">
-    <h1 class="mx-auto">
-      Local Scan
-    </h1>
-  </div>
+  <app-header [title]="'Local Scan'">
+    <div class="mx-auto">
+      <h5>
+        Paste the names of the pilots from the local channel in-game, or from other channels and press Scan. This tool
+        will break down which Corporation and Alliance they belong to. You can mouseover the results to see the
+        relationship between Corporations and Alliances.
+      </h5>
+    </div>
+  </app-header>
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-4">
       <label>Local Scan</label>
@@ -28,10 +32,10 @@ Elise Randolph
             <img [src]="corp.corporation.image">
           </div>
           <div class="col-7">
-            {{corp.corporation.name}}
+            <b>{{corp.corporation.name}}</b>
           </div>
           <div class="col-2">
-            {{corp.count}}
+            <b>{{corp.count}}</b>
           </div>
         </div>
       </div>
@@ -45,10 +49,10 @@ Elise Randolph
             <img [src]="alliance.alliance.image">
           </div>
           <div class="col-7">
-            {{alliance.alliance.name}}
+            <b>{{alliance.alliance.name}}</b>
           </div>
           <div class="col-2">
-            {{alliance.count}}
+            <b>{{alliance.count}}</b>
           </div>
         </div>
       </div>
