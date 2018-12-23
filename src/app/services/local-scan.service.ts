@@ -33,6 +33,7 @@ export class LocalScanService {
   }
 
   async parse(localList: string, parallel: boolean) {
+    this.busy = true;
     const startTime = new Date().getTime();
     this.reset();
     const data = [];
@@ -189,6 +190,5 @@ export class LocalScanService {
     this.progress = 0;
     this.cacheStats = { character: [0, 0], corporation: [0, 0], alliance: [0, 0] };
     this.runTime = 0;
-    this.busy = true;
   }
 }

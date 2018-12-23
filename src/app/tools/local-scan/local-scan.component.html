@@ -1,19 +1,19 @@
-<div class="container">
-  <app-header [title]="'Local Scan'">
-    <div class="mx-auto">
-      <h5>
-        Paste the names of the pilots from the local channel in-game, or from other channels and press Scan. This tool
-        will break down which Corporation and Alliance they belong to. You can mouseover the results to see the
-        relationship between Corporations and Alliances.
-      </h5>
-      <div class="alert alert-warning" role="alert" *ngIf="parallel">
-        Enabling "Parallel" will cause the tool to make as many API requests as possible in parallel, this
-        can make the UI unresponsive but will sometimes speed up large input. When Parallel is
-        disabled, requests are made sequentially and all results are cached, which significantly reduces the number of
-        requests that need to be made and is usually faster than Parallel.
-      </div>
+<app-header [title]="'Local Scan'">
+  <div class="mx-auto">
+    <h5>
+      Paste the names of the pilots from the local channel in-game, or from other channels and press Scan. This tool
+      will break down which Corporation and Alliance they belong to. You can mouseover the results to see the
+      relationship between Corporations and Alliances.
+    </h5>
+    <div class="alert alert-warning" role="alert" *ngIf="parallel">
+      Enabling "Parallel" will cause the tool to make as many API requests as possible in parallel, this
+      can make the UI unresponsive but will sometimes speed up large input. When Parallel is
+      disabled, requests are made sequentially and all results are cached, which significantly reduces the number of
+      requests that need to be made and is usually faster than Parallel.
     </div>
-  </app-header>
+  </div>
+</app-header>
+<div class="container">
   <div class="row">
     <div class="col-sm-12 col-lg-4">
       <label>Local Scan</label>
