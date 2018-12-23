@@ -9,6 +9,10 @@ import { LocalScanService } from '../../services/local-scan.service';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
+
+  parallel = false;
+  debug = false;
+
   constructor(private alert: AlertService, public local: LocalScanService) { }
 
   ngOnInit() { }
@@ -18,8 +22,8 @@ export class LocalScanComponent implements OnInit {
       this.alert.warning('Please enter EVE character names into the Local Scan window.');
       return;
     }
-    this.alert.success('Started Local Scan...');
-    this.local.parse(input);
+    this.parallel ? this.alert.success('Started Parallel Local Scan...') : this.alert.success('Started Local Scan...');
+    this.local.parse(input, this.parallel);
   }
 
   resetView() {
@@ -42,8 +46,7 @@ export class LocalScanComponent implements OnInit {
   highlightCorporation(corp: any) {
     corp.highlighted = true;
     if (corp.corporation.alliance) {
-      const alliance = this.local.activeAlliances[corp.corporation.alliance];
-      alliance.highlighted = true;
+      this.highlightAlliance(this.local.activeAlliances[corp.corporation.alliance]);
     }
   }
 

@@ -1,11 +1,12 @@
 <app-header [title]="'EVE Electron Tools'">
   <div class="row">
-    <h5 class="mx-auto">Check out the tools available so far in the nav-bar above.</h5>
+    <h5 class="mx-auto">Check out the tools available in the nav-bar above.</h5>
   </div>
 </app-header>
 <div class="container">
   <div class="row" *ngIf="!electron.isElectron;else in_electron">
-    <p>You are running not running under Electron.</p>
+    <p>You are running not running under Electron. Please download the Desktop client if you want to use any of the
+      Electron-powered tools.</p>
   </div>
   <ng-template #in_electron>
     <div class="row">

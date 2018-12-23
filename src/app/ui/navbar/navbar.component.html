@@ -24,11 +24,11 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/zkill-listener']">Zkill Listener</a>
       </li>
-      <li class="nav-item" *ngIf="electron.isElectron">
-        <a class="nav-link" [routerLink]="['/profile-sync']">Profile Sync</a>
+      <li class="nav-item">
+        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/profile-sync']">Profile Sync</a>
       </li>
-      <li class="nav-item" *ngIf="electron.isElectron">
-        <a class="nav-link" [routerLink]="['/vni-companion']">VNI Companion</a>
+      <li class="nav-item">
+        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/vni-companion']">VNI Companion</a>
       </li>
     </ul>
   </div>
