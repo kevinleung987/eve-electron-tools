@@ -27,10 +27,7 @@ export class LocalScanComponent implements OnInit {
   }
 
   resetView() {
-    this.local.activeCorporations = {};
-    this.local.activeAlliances = {};
-    this.local.displayCorporations = [];
-    this.local.displayAlliances = [];
+    this.local.reset();
     this.alert.info('Results cleared.');
   }
 

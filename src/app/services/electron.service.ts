@@ -20,7 +20,7 @@ export class ElectronService {
   path: typeof path;
 
   constructor() {
-    this.isElectron = window && window.process && window.process.type;
+    this.isElectron = Boolean(window && window.process && window.process.type);
     this.updateOccured = new Subject();
     if (this.isElectron) {
       // Setup Electron APIs

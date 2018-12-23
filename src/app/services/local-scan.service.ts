@@ -32,6 +32,65 @@ export class LocalScanService {
     this.activeAlliances = {};
   }
 
+  async parse(localList: string, parallel: boolean) {
+    const startTime = new Date().getTime();
+    this.reset();
+    const data = [];
+    const lines = localList.split('\n');
+    // Process each line to get corp and alliance info
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (line.replace(/\s/g, '').length) {
+        const tempData = parallel ? this.processLine(lines[i].trim()) : await this.processLine(lines[i].trim());
+        data.push(tempData);
+        this.progress++;
+      }
+    }
+    // Temporary frequency tables
+    const parsedCorporations = {};
+    const parsedAlliances = {};
+    const results = parallel ? await Promise.all(data) : data;
+    // Process each item into the frequency tables
+    results.forEach((item) => {
+      const corp = item.corporation;
+      const alliance = item.alliance;
+      // Process corporation frequency
+      if (corp && parsedCorporations[corp]) {
+        parsedCorporations[corp].count++;
+      } else if (corp) {
+        parsedCorporations[corp] = {
+          corporation: this.corporations[corp],
+          count: 1,
+          highlighted: false
+        };
+      }
+      // Process alliance frequency
+      if (alliance) {
+        if (parsedAlliances[alliance]) {
+          parsedAlliances[alliance].count++;
+        } else {
+          parsedAlliances[alliance] = {
+            alliance: this.alliances[alliance],
+            count: 1,
+            highlighted: false
+          };
+        }
+        // Link the alliance with it's corporation
+        if (!this.alliances[alliance].corporations.includes(corp)) {
+          this.alliances[alliance].corporations.push(corp);
+        }
+      }
+    });
+    this.activeCorporations = parsedCorporations;
+    this.activeAlliances = parsedAlliances;
+    this.displayCorporations = this.getDisplayCorporations();
+    this.displayAlliances = this.getDisplayAlliances();
+    this.busy = false;
+
+    const time = (new Date().getTime() - startTime) / 1000;
+    this.runTime = time;
+  }
+
   async processLine(line: string): Promise<any> {
     const result = {
       corporation: null,
@@ -122,66 +181,14 @@ export class LocalScanService {
     return output;
   }
 
-  async parse(localList: string, parallel: boolean) {
-    const startTime = new Date().getTime();
+  reset() {
+    this.activeCorporations = {};
+    this.activeAlliances = {};
+    this.displayCorporations = [];
+    this.displayAlliances = [];
     this.progress = 0;
     this.cacheStats = { character: [0, 0], corporation: [0, 0], alliance: [0, 0] };
     this.runTime = 0;
     this.busy = true;
-
-    const data = [];
-    const lines = localList.split('\n');
-    // Process each line to get corp and alliance info
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      if (line.replace(/\s/g, '').length) {
-        const tempData = parallel ? this.processLine(lines[i].trim()) : await this.processLine(lines[i].trim());
-        data.push(tempData);
-        this.progress++;
-      }
-    }
-    // Temporary frequency tables
-    const parsedCorporations = {};
-    const parsedAlliances = {};
-    const results = parallel ? await Promise.all(data) : data;
-    // Process each item into the frequency tables
-    results.forEach((item) => {
-      const corp = item.corporation;
-      const alliance = item.alliance;
-      // Process corporation frequency
-      if (corp && parsedCorporations[corp]) {
-        parsedCorporations[corp].count++;
-      } else if (corp) {
-        parsedCorporations[corp] = {
-          corporation: this.corporations[corp],
-          count: 1,
-          highlighted: false
-        };
-      }
-      // Process alliance frequency
-      if (alliance) {
-        if (parsedAlliances[alliance]) {
-          parsedAlliances[alliance].count++;
-        } else {
-          parsedAlliances[alliance] = {
-            alliance: this.alliances[alliance],
-            count: 1,
-            highlighted: false
-          };
-        }
-        // Link the alliance with it's corporation
-        if (!this.alliances[alliance].corporations.includes(corp)) {
-          this.alliances[alliance].corporations.push(corp);
-        }
-      }
-    });
-    this.activeCorporations = parsedCorporations;
-    this.activeAlliances = parsedAlliances;
-    this.displayCorporations = this.getDisplayCorporations();
-    this.displayAlliances = this.getDisplayAlliances();
-    this.busy = false;
-
-    const time = (new Date().getTime() - startTime) / 1000;
-    this.runTime = time;
   }
 }

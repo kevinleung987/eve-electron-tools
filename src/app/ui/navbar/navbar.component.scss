@@ -1,8 +1,4 @@
-.navbar {
-  background-color: lightgrey;
-}
-
-a.disable {
-  pointer-events: none;
+a.disabled {
+  // pointer-events: none;
   cursor: default;
 }

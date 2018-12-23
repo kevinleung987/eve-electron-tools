@@ -9,6 +9,7 @@ import {
   Routes,
 } from '@angular/router';
 
+import { AlertService } from './services/alert.service';
 import { ElectronService } from './services/electron.service';
 import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
 import { LocalScanComponent } from './tools/local-scan/local-scan.component';
@@ -45,16 +46,20 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 }
 
 @Injectable()
-class CanActivateElectron implements CanActivate {
-  constructor(private electron: ElectronService) { }
+export class CanActivateElectron implements CanActivate {
+  constructor(private electron: ElectronService, private alert: AlertService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (!this.electron.isElectron) {
+      this.alert.warning('This feature is only available in the Desktop client');
+    }
     return this.electron.isElectron;
   }
 }
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'local-scan', component: LocalScanComponent },
   { path: 'd-scan', component: DirectionalScanComponent },
   { path: 'market', component: MarketComponent },
@@ -63,6 +68,11 @@ const routes: Routes = [
   { path: 'vni-companion', component: VNICompanionComponent, canActivate: [CanActivateElectron] },
 ];
 
-@NgModule({ imports: [RouterModule.forRoot(routes, { useHash: true })], providers: [CanActivateElectron], exports: [RouterModule] })
+@NgModule({
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload',
+    useHash: false
+  })], providers: [CanActivateElectron], exports: [RouterModule]
+})
 export class AppRoutingModule {
 }
