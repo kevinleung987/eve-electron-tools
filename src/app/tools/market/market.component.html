@@ -10,10 +10,10 @@
     <div class="col-6" (keydown)="onKeydown($event)">
       <div class="row">
         <div class="col-10">
-          <input #searchBar class="form-control" placeholder="Type here..." [(ngModel)]="searchValue">
+          <input #searchBar class="form-control" placeholder="Type here..." [(ngModel)]="searchValue" (input)="makeDirty()">
         </div>
         <div class="col-2">
-          <button type="button" class="btn btn-raised btn-primary" (click)="submit()">Submit</button>
+          <button type="button" class="btn btn-raised btn-primary" (click)="onSubmit()" [disabled]="dirty || items.length === 0">Submit</button>
         </div>
       </div>
       <div class="list-group">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="col-6">
-
+      {{activeIndex}}
     </div>
   </div>
 </div>
