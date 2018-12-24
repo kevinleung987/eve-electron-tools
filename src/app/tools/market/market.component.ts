@@ -13,7 +13,7 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class MarketComponent implements OnInit {
   readonly numSuggestions = 10;
-  readonly searchDelay = 200;
+  readonly searchDelay = 250;
   items = [];
   searchValue = '';
   activeIndex = -1;
@@ -39,27 +39,44 @@ export class MarketComponent implements OnInit {
     this.dirty = true;
   }
 
+  focusSearchBar() {
+    this.searchBar.nativeElement.focus();
+    this.searchBar.nativeElement.selectionStart = this.searchBar.nativeElement.selectionStart = 10000;
+  }
+
+  stopEvent(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   onKeydown(event: KeyboardEvent) {
     // Manipulate index pointing at the active suggestion
     if (event.key === 'ArrowDown' || event.key === 'Tab') {
+      // Iterate down through suggestions
       if (this.activeIndex < this.items.length - 1) {
         this.activate(this.activeIndex + 1);
       } else if (this.items.length > 0) {
         this.activate(0);
       }
-      event.preventDefault();
-      event.stopPropagation();
+      this.stopEvent(event);
     } else if (event.key === 'ArrowUp') {
+      // Iterate up through suggestions
       if (this.activeIndex > 0) {
         this.activate(this.activeIndex - 1);
       } else if (this.items.length > 0) {
         this.activate(this.items.length - 1);
       }
+      this.stopEvent(event);
     } else if (event.key === 'Enter' || event.key === 'ArrowRight') {
       // Treat as if Submit button had been pressed
       this.onSubmit();
-      event.preventDefault();
-      event.stopPropagation();
+      this.stopEvent(event);
+    } else if (event.key === 'Escape' || event.key === 'ArrowLeft') {
+      // Reset Search Bar
+      this.searchValue = '';
+    }
+    if (event.key !== 'Backspace') {
+      this.focusSearchBar();
     }
   }
 
@@ -81,6 +98,6 @@ export class MarketComponent implements OnInit {
     this.activate(this.activeIndex);
     const submission = this.universe.getTypeId(this.searchValue);
     if (submission == null) { throw new Error('Bad search value submitted.'); }
-    this.alert.info(`${this.searchValue}[${submission.toString()}]`);
+    this.alert.info(`${this.searchValue} [${submission.toString()}]`);
   }
 }

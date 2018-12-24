@@ -11,6 +11,7 @@ export class SuggestionService {
       if (result) {
         this.typeNames = Object.keys(result);
         this.typeNames.sort();
+        console.log('Type name suggestions loaded.', this.typeNames.length, 'suggestions.');
       }
     });
   }

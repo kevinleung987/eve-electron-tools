@@ -16,9 +16,9 @@
           <button type="button" class="btn btn-raised btn-primary" (click)="onSubmit()" [disabled]="dirty || items.length === 0">Submit</button>
         </div>
       </div>
-      <div class="list-group">
-        <button *ngFor="let item of items;index as i" class="suggestion-item list-group-item list-group-item-light"
-          [class.active]="i === activeIndex" (click)="activate(i)" tabindex="-1">{{item}}</button>
+      <div class="list-group card card-body suggestion-list" *ngIf="items.length > 0">
+        <button *ngFor="let item of items;index as i" class="suggestion-item list-group-item" [ngClass]="{'list-group-item-dark': i % 2 === 0}"
+          [class.active]="i === activeIndex" (click)="activate(i)">{{item}}</button>
       </div>
     </div>
     <div class="col-6">

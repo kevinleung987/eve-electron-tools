@@ -46,9 +46,8 @@ import { NavbarComponent } from './ui/navbar/navbar.component';
     PapaParseModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      timeOut: 3000,
+      timeOut: 2500,
       preventDuplicates: true,
-      progressBar: true,
       onActivateTick: true
     })
   ],
