@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UniverseService } from 'src/app/services/universe.service';
-import { MatchService } from 'src/app/services/match.service';
+import { SuggestionService } from 'src/app/services/suggestion.service';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from 'src/app/services/alert.service';
@@ -20,10 +20,10 @@ export class MarketComponent implements OnInit {
   dirty = false;
 
   @ViewChild('searchBar') searchBar: ElementRef;
-  constructor(private alert: AlertService, public universe: UniverseService, public match: MatchService) { }
+  constructor(private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService) { }
 
   ngOnInit() {
-    // If the user does not type for a certain amount of time, refresh the autocomplete suggestions
+    // If the user does not type for a certain amount of time, refresh suggestions
     fromEvent(this.searchBar.nativeElement, 'input')
       .pipe(map((event: Event) => (<HTMLInputElement>event.target).value),
         debounceTime(this.searchDelay),
@@ -64,7 +64,9 @@ export class MarketComponent implements OnInit {
   }
 
   search() {
-    this.items = this.match.autoComplete(this.match.typeNames, this.searchValue, this.numSuggestions);
+    if (this.searchValue == null) { return; }
+    const suggestion = this.suggest.suggest(this.suggest.typeNames, this.searchValue, this.numSuggestions);
+    this.items = suggestion ? suggestion : [];
   }
 
   activate(index: number) {

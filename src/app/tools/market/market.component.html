@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="list-group">
-        <button *ngFor="let item of items;index as i" class="autocomplete-item list-group-item list-group-item-light"
+        <button *ngFor="let item of items;index as i" class="suggestion-item list-group-item list-group-item-light"
           [class.active]="i === activeIndex" (click)="activate(i)" tabindex="-1">{{item}}</button>
       </div>
     </div>

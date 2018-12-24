@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import matchSorter, { rankings, caseRankings } from 'match-sorter';
 import { UniverseService } from './universe.service';
 @Injectable({ providedIn: 'root' })
-export class MatchService {
+export class SuggestionService {
 
   typeNames: string[];
+
   constructor(private universe: UniverseService) {
     this.universe.typeNames.subscribe((result) => {
       if (result) {
@@ -13,7 +14,8 @@ export class MatchService {
       }
     });
   }
-  autoComplete(items: any[], value: any, num: number) {
+
+  suggest(items: any[], value: any, num: number) {
     const startTime = Date.now();
     if (items == null || value == null || value.length < 1) {
       return null;

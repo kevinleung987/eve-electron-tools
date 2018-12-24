@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ConfigService } from './services/config.service';
 import { ElectronService } from './services/electron.service';
 import { UniverseService } from './services/universe.service';
-import { MatchService } from './services/match.service';
+import { SuggestionService } from './services/suggestion.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { MatchService } from './services/match.service';
 })
 export class AppComponent {
   constructor(private electron: ElectronService, private universe: UniverseService,
-    private config: ConfigService, private match: MatchService, private changeDetector: ChangeDetectorRef) {
+    private config: ConfigService, private suggest: SuggestionService, private changeDetector: ChangeDetectorRef) {
     // Watches for updates to state that occur in Electron-land and
     // signals Angular re-render the view.
     this.electron.updateOccured.subscribe((reason) => {

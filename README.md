@@ -43,7 +43,7 @@ Some features require Electron and so are only available in the Desktop build.
 Other Dependencies:
 - **[ngx-papaparse](https://github.com/alberthaff/ngx-papaparse)** - Elegant CSV parsing
 - **[ngx-toastr](https://github.com/scttcper/ngx-toastr)** - Toast notifications
-- **[ng-select](https://github.com/ng-select/ng-select)** - Autocomplete & Multiselect
+- **[match-sorter](https://github.com/kentcdodds/match-sorter)** - String matching to power Suggestions service
 
 ## Note About Data Dependencies
 
