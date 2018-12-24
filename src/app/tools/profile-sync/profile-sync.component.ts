@@ -86,6 +86,7 @@ export class ProfileSyncComponent implements OnInit {
     if (selected != null) {
       this.accountBindings[selected] = this.name;
       this.config.set('profileAccountBindings', this.accountBindings);
+      this.name = null;
     }
   }
 }

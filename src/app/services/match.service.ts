@@ -15,12 +15,12 @@ export class MatchService {
     });
   }
   autoComplete(value: any, num: number) {
-    // const startTime = Date.now();
-    if (this.typeNames == null || value == null || value.length < 3) {
+    const startTime = Date.now();
+    if (this.typeNames == null || value == null || value.length < 1) {
       return null;
     }
     const result = matchSorter(this.typeNames, value).slice(0, num);
-    // console.log((Date.now() - startTime) / 1000);
+    console.log((Date.now() - startTime) / 1000);
     return result;
   }
 }

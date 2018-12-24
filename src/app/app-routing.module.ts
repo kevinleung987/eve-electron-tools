@@ -69,7 +69,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })], providers: [CanActivateElectron], exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  providers: [CanActivateElectron], exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

@@ -13,18 +13,41 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class MarketComponent implements OnInit {
   items = [];
   searchValue = '';
+  activeIndex = -1;
   @ViewChild('searchBar') searchBar: ElementRef;
   constructor(public universe: UniverseService, public match: MatchService) { }
 
   ngOnInit() {
     fromEvent(this.searchBar.nativeElement, 'input')
       .pipe(map((event: Event) => (<HTMLInputElement>event.target).value),
-        debounceTime(500),
+        debounceTime(200),
         distinctUntilChanged()
       ).subscribe(data => this.search());
   }
 
   search() {
-    this.items = this.match.autoComplete(this.searchValue, 5);
+    this.items = this.match.autoComplete(this.searchValue, 10);
+  }
+
+  activate(index) {
+    this.activeIndex = index;
+  }
+
+  onKeydown(event) {
+    if (event.key === 'ArrowDown') {
+      if (this.activeIndex < this.items.length - 1) {
+        this.activeIndex++;
+      }
+    } else if (event.key === 'ArrowUp') {
+      if (this.activeIndex > 0) {
+        this.activeIndex--;
+      }
+    } else if (event.key === 'Enter' || event.key === 'ArrowRight') {
+      this.searchValue = this.items[this.activeIndex];
+    }
+  }
+
+  submit() {
+    console.log(this.searchValue);
   }
 }
