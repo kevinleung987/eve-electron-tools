@@ -9,8 +9,8 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule, CustomReuseStrategy } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EvePipe } from './common/eve.pipe';
-import { ImagePipe } from './common/image.pipe';
+import { EvePipe } from './shared/pipes/eve.pipe';
+import { ImagePipe } from './shared/pipes/image.pipe';
 import { MyErrorHandler } from './services/error.service';
 import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
 import { LocalScanComponent } from './tools/local-scan/local-scan.component';
@@ -18,9 +18,9 @@ import { MarketComponent } from './tools/market/market.component';
 import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.component';
 import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
 import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
-import { HeaderComponent } from './ui/header/header.component';
-import { HomeComponent } from './ui/home/home.component';
-import { NavbarComponent } from './ui/navbar/navbar.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { HomeComponent } from './shared/home/home.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @NgModule({
   declarations: [
