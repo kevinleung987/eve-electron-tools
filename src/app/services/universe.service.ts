@@ -57,7 +57,7 @@ export class UniverseService {
   }
 
   getTypeName(id: number): string {
-    return this.typeData.value && id ? this.typeData.value[id]['typeName'] : null;
+    return this.typeData.value && this.typeData.value[id] ? this.typeData.value[id]['typeName'] : null;
   }
 
   getAllTypeNames(): string[] {
@@ -65,23 +65,23 @@ export class UniverseService {
   }
 
   getTypeId(name: string): number {
-    return this.typeNames.value && name ? Number(this.typeNames.value[name]['typeID']) : null;
+    return this.typeNames.value && this.typeNames.value[name] ? Number(this.typeNames.value[name]['typeID']) : null;
   }
 
   getSystemName(id: number): string {
-    return this.systemData.value && id ? this.systemData.value[id]['solarSystemName'] : null;
+    return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['solarSystemName'] : null;
   }
 
   getSystemSecurity(id: number): number {
-    return this.systemData.value && id ? this.systemData.value[id]['security'] : null;
+    return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['security'] : null;
   }
 
   getSystemRegion(id: number): number {
-    return this.systemData.value && id ? this.systemData.value[id]['regionID'] : null;
+    return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['regionID'] : null;
   }
 
   getRegionName(id: number): string {
-    return this.regionData.value && id ? this.regionData.value[id]['regionName'] : null;
+    return this.regionData.value && this.regionData.value[id] ? this.regionData.value[id]['regionName'] : null;
   }
 
   getSystemRegionName(id: number): string {
