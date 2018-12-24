@@ -8,10 +8,10 @@ import { map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
 
-  private typeData = new BehaviorSubject(null);
-  private systemData = new BehaviorSubject(null);
-  private regionData = new BehaviorSubject(null);
-  private typeNames = new BehaviorSubject(null);
+  public typeData = new BehaviorSubject(null);
+  public systemData = new BehaviorSubject(null);
+  public regionData = new BehaviorSubject(null);
+  public typeNames = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private papa: Papa) {
     this.initializeData('invTypes.csv', 'typeID', this.typeData)
@@ -58,6 +58,10 @@ export class UniverseService {
 
   getTypeName(id: number): string {
     return this.typeData.value && id ? this.typeData.value[id]['typeName'] : null;
+  }
+
+  getAllTypeNames(): string[] {
+    return this.typeNames.value ? Object.keys(this.typeNames.value) : null;
   }
 
   getTypeId(name: string): number {

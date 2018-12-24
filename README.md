@@ -40,6 +40,10 @@ Some features require Electron and so are only available in the Desktop build.
 - **[Bootstrap Material Design](https://github.com/FezVrasta/bootstrap-material-design)** - Material Design-flavoured Bootstrap
 - **[Electron-Builder](https://github.com/electron-userland/electron-builder)** - Cross-platform Electron builds
 - **[Travis](https://travis-ci.com/)** - Build automation
+Other Dependencies:
+- **[ngx-papaparse](https://github.com/alberthaff/ngx-papaparse)** - Elegant CSV parsing
+- **[ngx-toastr](https://github.com/scttcper/ngx-toastr)** - Toast notifications
+- **[ng-select](https://github.com/ng-select/ng-select)** - Autocomplete & Multiselect
 
 ## Note About Data Dependencies
 

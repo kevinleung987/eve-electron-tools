@@ -1,6 +1,6 @@
 <app-header [title]="'Local Scan'">
-  <div class="mx-auto">
-    <h5>
+  <div class="row">
+    <h5 class="mx-auto">
       Paste the names of the pilots from the local channel in-game, or from other channels and press Scan. This tool
       will break down which Corporation and Alliance they belong to. You can mouseover the results to see the
       relationship between Corporations and Alliances.
@@ -16,7 +16,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-lg-4">
-      <label>Local Scan</label>
+      <label><b>Local Scan</b></label>
       <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'" [value]="placeholder">
       </textarea>
       <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="local.busy">Scan</button>
@@ -31,7 +31,7 @@
       </label>
     </div>
     <div class="col-sm-12 col-lg-4">
-      <label>Corporations: {{ local.displayCorporations.length }}</label>
+      <label><b>Corporations({{ local.displayCorporations.length }})</b></label>
       <div class="local-area container">
         <div class="row display-item" *ngFor="let corp of local.displayCorporations" [class.bg-success]="corp.highlighted"
           (mouseenter)="highlightCorporation(corp)" (mouseleave)="resetHighlight()">
@@ -55,7 +55,7 @@
       </p>
     </div>
     <div class="col-sm-12 col-lg-4">
-      <label>Alliances: {{ local.displayAlliances.length }}</label>
+      <label><b>Alliances({{ local.displayAlliances.length }})</b></label>
       <div class="local-area container">
         <div class="row display-item" *ngFor="let alliance of local.displayAlliances" [class.bg-success]="alliance.highlighted"
           (mouseenter)="highlightAlliance(alliance)" (mouseleave)="resetHighlight()">

@@ -17,12 +17,12 @@ export class ZkillListenerComponent implements OnInit {
   public listening = false;
   public mails = [];
 
-  constructor(private electron: ElectronService, private alert: AlertService, public universe: UniverseService) {
+  constructor(private electron: ElectronService, private alert: AlertService, public universe: UniverseService) { }
+
+  ngOnInit() {
     this.mails.push(environment.zkillExample);
     console.log(this.mails);
   }
-
-  ngOnInit() { }
 
   start() {
     this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
