@@ -26,14 +26,15 @@ export class MarketComponent implements OnInit {
   }
 
   search() {
-    this.items = this.match.autoComplete(this.searchValue, 10);
+    this.items = this.match.autoComplete(this.match.typeNames, this.searchValue, 10);
   }
 
   activate(index) {
     this.activeIndex = index;
+    this.searchValue = this.items[this.activeIndex];
   }
 
-  onKeydown(event) {
+  onKeydown(event: KeyboardEvent) {
     if (event.key === 'ArrowDown') {
       if (this.activeIndex < this.items.length - 1) {
         this.activeIndex++;
@@ -43,7 +44,9 @@ export class MarketComponent implements OnInit {
         this.activeIndex--;
       }
     } else if (event.key === 'Enter' || event.key === 'ArrowRight') {
-      this.searchValue = this.items[this.activeIndex];
+      this.activate(this.activeIndex);
+      event.preventDefault();
+      event.stopPropagation();
     }
   }
 

@@ -1,5 +1,9 @@
-.autocomplete-item {
-  padding-top: 0.5em;
+.autocomplete-item:hover {
+  font-weight: bold;
+}
+
+.autocomplete-item.active {
+  font-weight: bold;
 }
 
 .dropdown-menu {

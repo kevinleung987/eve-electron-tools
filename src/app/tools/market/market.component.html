@@ -17,8 +17,8 @@
         </div>
       </div>
       <div class="list-group">
-        <button *ngFor="let item of items;index as i" class="list-group-item list-group-item-action list-group-item-light"
-          [class.active]="i === activeIndex" (click)="activate(i)">{{item}}</button>
+        <button *ngFor="let item of items;index as i" class="autocomplete-item list-group-item list-group-item-light"
+          [class.active]="i === activeIndex" (click)="activate(i)" tabindex="-1">{{item}}</button>
       </div>
     </div>
     <div class="col-6">

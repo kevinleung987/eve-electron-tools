@@ -6,20 +6,19 @@ export class MatchService {
 
   typeNames: string[];
   constructor(private universe: UniverseService) {
-    this.typeNames = universe.typeNames.value;
-    universe.typeNames.subscribe((result) => {
+    this.universe.typeNames.subscribe((result) => {
       if (result) {
         this.typeNames = Object.keys(result);
         this.typeNames.sort();
       }
     });
   }
-  autoComplete(value: any, num: number) {
+  autoComplete(items: any[], value: any, num: number) {
     const startTime = Date.now();
-    if (this.typeNames == null || value == null || value.length < 1) {
+    if (items == null || value == null || value.length < 1) {
       return null;
     }
-    const result = matchSorter(this.typeNames, value).slice(0, num);
+    const result = matchSorter(items, value).slice(0, num);
     console.log((Date.now() - startTime) / 1000);
     return result;
   }
