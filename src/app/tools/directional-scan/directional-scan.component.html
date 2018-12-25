@@ -17,16 +17,18 @@
     </div>
     <div class="col-6">
       <label><b>Results({{display.length}})</b></label>
-      <div class="card card-body" *ngFor="let item of display">
-        <div class="row">
-          <div class="col-4">
-            <img class="image" src="{{item['typeId'] | image:'ship'}}">
-          </div>
-          <div class="col-6">
-            <h5>{{item['name']}}</h5>
-          </div>
-          <div class="col-2">
-            <b>{{item['count']}}</b>
+      <div class="results-area">
+        <div class="card card-body" *ngFor="let item of display">
+          <div class="row">
+            <div class="col-4">
+              <img class="image" src="{{item['typeId'] | image:'ship'}}">
+            </div>
+            <div class="col-6">
+              <h5>{{item['name']}}</h5>
+            </div>
+            <div class="col-2">
+              <b>{{item['count']}}</b>
+            </div>
           </div>
         </div>
       </div>

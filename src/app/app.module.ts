@@ -47,6 +47,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       timeOut: 2500,
+      maxOpened: 5,
+      autoDismiss: true,
       preventDuplicates: true,
       onActivateTick: true
     })
