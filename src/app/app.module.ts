@@ -21,6 +21,7 @@ import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.co
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './shared/home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { SearchComponent } from './shared/search/search.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     VNICompanionComponent,
     EvePipe,
     ImagePipe,
-    ProfileSyncComponent
+    ProfileSyncComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
