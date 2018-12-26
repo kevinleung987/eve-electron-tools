@@ -16,7 +16,9 @@ export class UniverseService {
   constructor(private http: HttpClient, private papa: Papa) {
     this.initializeData('invTypes.csv', 'typeID', this.typeData)
       .add(() => {
-        this.getTypeName(670) === 'Capsule' ? console.log('typeData initialized.') : console.error('typeData could not be parsed.');
+        this.getTypeName(34) === 'Tritanium' ? console.log('typeData initialized.') : console.error('typeData could not be parsed.');
+        this.initializeMap(this.typeData, this.typeNames, 'typeName', null);
+        this.getTypeId('Tritanium') === 34 ? console.log('typeNames initialized.') : console.error('typeNames could not be parsed.');
       });
     this.initializeData('mapSolarSystems.csv', 'solarSystemID',
       this.systemData)
@@ -29,11 +31,6 @@ export class UniverseService {
       .add(() => {
         this.getRegionName(10000002) === 'The Forge' ? console.log('regionData initialized.') :
           console.error('regionData could not be parsed.');
-      });
-    this.initializeData('invTypes.csv', 'typeName',
-      this.typeNames)
-      .add(() => {
-        this.getTypeId('Tritanium') === 34 ? console.log('regionData initialized.') : console.error('regionData could not be parsed.');
       });
   }
 
@@ -56,6 +53,18 @@ export class UniverseService {
       }, error => console.error(error));
   }
 
+  initializeMap(data: BehaviorSubject<any>, target: BehaviorSubject<any>, key: any, value: any) {
+    const mapping = {};
+    Object.keys(data.value).forEach(item => {
+      if (value == null) {
+        mapping[data.value[item][key]] = item;
+      } else {
+        mapping[data.value[item][key]] = data.value[item][value];
+      }
+    });
+    target.next(mapping);
+  }
+
   getTypeName(id: number): string {
     return this.typeData.value && this.typeData.value[id] ? this.typeData.value[id]['typeName'] : null;
   }
@@ -65,7 +74,7 @@ export class UniverseService {
   }
 
   getTypeId(name: string): number {
-    return this.typeNames.value && this.typeNames.value[name] ? Number(this.typeNames.value[name]['typeID']) : null;
+    return this.typeNames.value && this.typeNames.value[name] ? Number(this.typeNames.value[name]) : null;
   }
 
   getSystemName(id: number): string {

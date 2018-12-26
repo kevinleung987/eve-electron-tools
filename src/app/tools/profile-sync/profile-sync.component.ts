@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Selected } from 'src/app/models/Profile.model';
 import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-profile-sync',
@@ -15,7 +16,7 @@ export class ProfileSyncComponent implements OnInit {
   accountBindings: { [id: number]: string };
   name = '';
   s = Selected;
-  constructor(private electron: ElectronService, private config: ConfigService) { }
+  constructor(private electron: ElectronService, private config: ConfigService, private alert: AlertService) { }
 
   ngOnInit() {
     this.profilesPath = this.config.default('profilesPath', null);
@@ -39,7 +40,8 @@ export class ProfileSyncComponent implements OnInit {
   }
 
   parseProfiles() {
-    // Unfortunately needs to be synchronous to minimze UI defects.
+    if (!this.electron.fs.existsSync(this.profilesPath)) { this.alert.warning('Folder does not exist.'); return; }
+    // Synchronous to minimze UI defects.
     const result = this.electron.fs.readdirSync(this.profilesPath);
     const accounts = [];
     const characters = [];

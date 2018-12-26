@@ -11,6 +11,7 @@ import { ElectronService } from 'src/app/services/electron.service';
 export class HomeComponent implements OnInit {
 
   configText = this.config.getConfig();
+
   constructor(public electron: ElectronService, public config: ConfigService, private alert: AlertService) { }
 
   ngOnInit() { }
@@ -31,6 +32,12 @@ export class HomeComponent implements OnInit {
     this.alert.info(this.config.isDemo() ?
       'Demo Mode Enabled, this may require a refresh if you have loaded any tools' :
       'Demo Mode Disabled');
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  toggleDebug(event: Event) {
+    this.config.debug = !this.config.debug;
     event.preventDefault();
     event.stopPropagation();
   }

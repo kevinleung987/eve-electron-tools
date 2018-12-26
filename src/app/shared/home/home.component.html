@@ -1,14 +1,28 @@
 <app-header [title]="'EVE Electron Tools'">
-  <div class="row justify-content-center">
-    <h5 class="mx-auto">
-      <p>Check out the tools available in the nav-bar above.</p>
-      <p>Enabling Demo Mode will load demo values in all tools on load.</p>
-    </h5>
-  </div>
   <div class="row">
-    <label class="btn btn-raised btn-warning btn-lg mx-auto" (click)="toggleDemo($event)">
-      <input type="checkbox" [checked]="config.isDemo()"> Demo Mode
-    </label>
+    <div class="col-6">
+      <h5 class="mx-auto">
+        <p>Check out the tools available in the nav-bar above.</p>
+        <p>Enabling Demo Mode will load preset demonstration values in all tools.</p>
+        <p *ngIf="!electron.isElectron">
+          You are running not running under Electron. Please download the Desktop client if you want to use any of the
+          Electron-powered tools.
+        </p>
+        <p *ngIf="electron.isElectron">
+          You are running under Electron.
+        </p>
+      </h5>
+    </div>
+    <div class="col-3">
+      <label class="btn btn-raised btn-info btn-lg mx-auto" (click)="toggleDemo($event)">
+        <input type="checkbox" [checked]="config.isDemo()"> Demo Mode
+      </label>
+    </div>
+    <div class="col-3">
+      <label class="btn btn-raised btn-warning btn-lg mx-auto" (click)="toggleDebug($event)">
+        <input type="checkbox" [checked]="config.debug"> Debug
+      </label>
+    </div>
   </div>
   <div class="row" *ngIf="!electron.isElectron">
     <p class="mx-auto">
@@ -17,10 +31,7 @@
     </p>
   </div>
 </app-header>
-<div class="container" *ngIf="electron.isElectron">
-  <div class="row">
-    <h5>You are running under Electron.</h5>
-  </div>
+<div class="container" *ngIf="config.debug">
   <div class="row">
     <h3>Config Editor</h3>
   </div>
@@ -28,8 +39,9 @@
     <textarea rows="20" [(ngModel)]="configText"></textarea>
   </div>
   <div class="row">
-    <button type="button" class="btn btn-raised btn-primary" (click)="writeConfig(configText)">Write
-      Config</button>
-    <button type="button" class="btn btn-raised btn-success" (click)="readConfig()">Read Config</button>
+    <button type="button" class="btn btn-raised btn-primary" (click)="writeConfig(configText)">
+      Write Config
+    </button>
+    <button type="button" class="btn btn-raised btn-secondary" (click)="readConfig()">Read Config</button>
   </div>
 </div>

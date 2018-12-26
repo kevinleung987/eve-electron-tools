@@ -11,7 +11,8 @@
 <div class="container">
   <div class="row directory-buttons">
     <button type="button" class="btn btn-raised btn-primary mx-auto" (click)="selectFolder()">Select Folder</button>
-    <button type="button" class="btn btn-raised btn-info mx-auto" (click)="parseProfiles()">Scan Profiles</button>
+    <button type="button" class="btn btn-raised btn-info mx-auto" (click)="parseProfiles()" [disabled]="profilesPath === ''">Scan
+      Profiles</button>
   </div>
   <div class="row current-directory card card-body" (click)="openProfilesFolder()">
     <b class="mx-auto">Current Profile Directory: {{ profilesPath || 'No folder selected.' }}</b>
