@@ -10,16 +10,19 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
 })
 export class SearchComponent implements OnInit {
 
+  @Input() id: string;
   @Input() source: any[];
   @Input() numSuggestions = 10;
   @Input() searchDelay = 250;
   @Output() submit: EventEmitter<string> = new EventEmitter();
   @Output() select: EventEmitter<string> = new EventEmitter();
   @Output() dirty: EventEmitter<boolean> = new EventEmitter();
+  @ViewChild('search') searchContainer: ElementRef;
   @ViewChild('searchBar') searchBar: ElementRef;
   suggestions = [];
   searchValue = '';
   activeIndex = -1;
+  suggestionsHidden = false;
 
   constructor(public suggest: SuggestionService) { }
 
@@ -106,5 +109,13 @@ export class SearchComponent implements OnInit {
 
   onSubmit() {
     this.submit.emit(this.activeIndex >= 0 ? this.searchValue : null);
+  }
+
+  hide(event: MouseEvent) {
+    const target = event.relatedTarget as HTMLElement;
+    // Only hide the suggestions if the user focuses on something that's not within this Search Component
+    if (!this.searchContainer.nativeElement.contains(target)) {
+      this.suggestionsHidden = true;
+    }
   }
 }

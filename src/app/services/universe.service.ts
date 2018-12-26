@@ -12,6 +12,8 @@ export class UniverseService {
   public systemData = new BehaviorSubject(null);
   public regionData = new BehaviorSubject(null);
   public typeNames = new BehaviorSubject(null);
+  public systemNames = new BehaviorSubject(null);
+  public regionNames = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private papa: Papa) {
     this.initializeData('invTypes.csv', 'typeID', this.typeData)
@@ -25,12 +27,18 @@ export class UniverseService {
       .add(() => {
         this.getSystemName(30000142) === 'Jita' ? console.log('systemData initialized.') :
           console.error('systemData could not be parsed.');
+        this.initializeMap(this.systemData, this.systemNames, 'solarSystemName', null);
+        this.getSystemId('Jita') === 30000142 ? console.log('systemNames initialized.') :
+          console.error('systemNames could not be parsed.');
       });
     this.initializeData('mapRegions.csv', 'regionID',
       this.regionData)
       .add(() => {
         this.getRegionName(10000002) === 'The Forge' ? console.log('regionData initialized.') :
           console.error('regionData could not be parsed.');
+        this.initializeMap(this.regionData, this.regionNames, 'regionName', null);
+        this.getRegionId('The Forge') === 10000002 ? console.log('regionNames initialized.') :
+          console.error('regionNames could not be parsed.');
       });
   }
 
@@ -81,6 +89,10 @@ export class UniverseService {
     return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['solarSystemName'] : null;
   }
 
+  getSystemId(name: string): number {
+    return this.systemNames.value && this.systemNames.value[name] ? Number(this.systemNames.value[name]) : null;
+  }
+
   getSystemSecurity(id: number): number {
     return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['security'] : null;
   }
@@ -91,6 +103,10 @@ export class UniverseService {
 
   getRegionName(id: number): string {
     return this.regionData.value && this.regionData.value[id] ? this.regionData.value[id]['regionName'] : null;
+  }
+
+  getRegionId(name: string): number {
+    return this.regionNames.value && this.regionNames.value[name] ? Number(this.regionNames.value[name]) : null;
   }
 
   getSystemRegionName(id: number): string {
