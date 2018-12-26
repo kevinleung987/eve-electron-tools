@@ -34,3 +34,5 @@ downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv',
              ['solarSystemID', 'solarSystemName', 'regionID', 'security'])
 downloadData('mapRegions.csv.bz2', 'mapRegions.csv',
              ['regionID', 'regionName'])
+downloadData('invGroups.csv.bz2', 'invGroups.csv',
+             ['groupID', 'groupName'])

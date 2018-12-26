@@ -14,6 +14,10 @@ export class UniversePipe implements PipeTransform {
         return this.universe.getTypeName(value);
       case 'region':
         return this.universe.getRegionName(value);
+      case 'groupID':
+        return this.universe.getTypeGroup(value).toString();
+      case 'group':
+        return this.universe.getGroupName(value);
       default:
         return null;
     }

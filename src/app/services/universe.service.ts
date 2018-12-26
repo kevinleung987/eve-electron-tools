@@ -7,11 +7,13 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
-  readonly numToLoad = 6;
+
+  readonly numToLoad = 7;
   public isLoaded = new BehaviorSubject(0);
   public typeData = new BehaviorSubject(null);
   public systemData = new BehaviorSubject(null);
   public regionData = new BehaviorSubject(null);
+  public groupData = new BehaviorSubject(null);
   public typeNames = new BehaviorSubject(null);
   public systemNames = new BehaviorSubject(null);
   public regionNames = new BehaviorSubject(null);
@@ -43,6 +45,13 @@ export class UniverseService {
         this.getRegionId('The Forge') === 10000002 ? console.log('regionNames initialized.') :
           console.error('regionNames could not be parsed.');
         this.incrementLoad(2);
+      });
+    this.initializeData('invGroups.csv', 'groupID',
+      this.groupData)
+      .add(() => {
+        this.getGroupName(6) === 'Sun' ? console.log('groupData initialized.') :
+          console.error('groupData could not be parsed.');
+        this.incrementLoad(1);
       });
   }
 
@@ -93,12 +102,12 @@ export class UniverseService {
     return this.typeData.value && this.typeData.value[id] ? this.typeData.value[id]['typeName'] : null;
   }
 
-  getAllTypeNames(): string[] {
-    return this.typeNames.value ? Object.keys(this.typeNames.value) : null;
-  }
-
   getTypeId(name: string): number {
     return this.typeNames.value && this.typeNames.value[name] ? Number(this.typeNames.value[name]) : null;
+  }
+
+  getTypeGroup(id: number): number {
+    return this.typeData.value && this.typeData.value[id] ? this.typeData.value[id]['groupID'] : null;
   }
 
   getSystemName(id: number): string {
@@ -129,39 +138,34 @@ export class UniverseService {
     return this.getRegionName(this.getSystemRegion(id));
   }
 
+  getGroupName(id: number): string {
+    return this.groupData.value && this.groupData.value[id] ? this.groupData.value[id]['groupName'] : null;
+  }
+
   getSecurityColor(sec: number): string {
-    if (sec <= 0.0) {
-      return '#F00000';
-    }
-    if (sec <= 0.1) {
-      return '#D73000';
-    }
-    if (sec <= 0.2) {
-      return '#F04800';
-    }
-    if (sec <= 0.3) {
-      return '#F06000';
-    }
-    if (sec <= 0.4) {
-      return '#D77700';
-    }
-    if (sec <= 0.5) {
-      return '#EFEF00';
-    }
-    if (sec <= 0.6) {
-      return '#8FEF2F';
-    }
-    if (sec <= 0.7) {
-      return '#00F000';
-    }
-    if (sec <= 0.8) {
-      return '#00EF47';
-    }
-    if (sec <= 0.9) {
-      return '#48F0C0';
-    }
-    if (sec <= 1.0) {
-      return '#2FEFEF';
+    switch (true) {
+      case sec <= 0.0:
+        return '#F00000';
+      case sec <= 0.1:
+        return '#D73000';
+      case sec <= 0.2:
+        return '#F04800';
+      case sec <= 0.3:
+        return '#F06000';
+      case sec <= 0.4:
+        return '#D77700';
+      case sec <= 0.5:
+        return '#EFEF00';
+      case sec <= 0.6:
+        return '#8FEF2F';
+      case sec <= 0.7:
+        return '#00F000';
+      case sec <= 0.8:
+        return '#00EF47';
+      case sec <= 0.9:
+        return '#48F0C0';
+      case sec <= 1.0:
+        return '#2FEFEF';
     }
   }
 }

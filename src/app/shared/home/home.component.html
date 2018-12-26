@@ -22,11 +22,6 @@
                [checked]="config.debug">Debug</label>
     </div>
   </div>
-  <div class="row"
-       *ngIf="!electron.isElectron">
-    <p class="mx-auto">You are running not running under Electron. Please download the Desktop client if you want to
-      use any of the Electron-powered tools.</p>
-  </div>
 </app-header>
 <div class="container"
      *ngIf="config.debug">
