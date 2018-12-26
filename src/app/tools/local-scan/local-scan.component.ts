@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
-
-import { LocalScanService } from '../../services/local-scan.service';
+import { ConfigService } from 'src/app/services/config.service';
+import { LocalScanService } from 'src/app/services/local-scan.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,11 +11,11 @@ import { environment } from 'src/environments/environment';
 })
 export class LocalScanComponent implements OnInit {
 
-  placeholder = environment.localScanPlaceholder;
+  placeholder = this.config.isDemo() ? environment.localScanPlaceholder : null;
   parallel = false;
   debug = false;
 
-  constructor(private alert: AlertService, public local: LocalScanService) { }
+  constructor(private config: ConfigService, private alert: AlertService, public local: LocalScanService) { }
 
   ngOnInit() { }
 

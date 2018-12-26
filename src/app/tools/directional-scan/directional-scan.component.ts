@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
 
@@ -10,11 +11,11 @@ import { environment } from 'src/environments/environment';
 })
 export class DirectionalScanComponent implements OnInit {
 
-  placeholder = environment.dScanPlaceholder;
+  placeholder = this.config.isDemo() ? environment.dScanPlaceholder : null;
   busy = false;
   results: { [name: string]: { typeId: number, count: number } } = {};
   display: { name: string, typeId: number, count: number }[] = [];
-  constructor(private alert: AlertService, private universe: UniverseService) { }
+  constructor(private config: ConfigService, private alert: AlertService, private universe: UniverseService) { }
 
   ngOnInit() { }
 

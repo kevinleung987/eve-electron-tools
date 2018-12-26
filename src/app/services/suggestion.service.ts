@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import matchSorter, { rankings, caseRankings } from 'match-sorter';
-import { UniverseService } from './universe.service';
+import matchSorter from 'match-sorter';
+import { UniverseService } from 'src/app/services/universe.service';
+
 @Injectable({ providedIn: 'root' })
 export class SuggestionService {
 

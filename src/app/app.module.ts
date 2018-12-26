@@ -6,22 +6,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { PapaParseModule } from 'ngx-papaparse';
 import { ToastrModule } from 'ngx-toastr';
-
-import { AppRoutingModule, CustomReuseStrategy } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { EvePipe } from './shared/pipes/eve.pipe';
-import { ImagePipe } from './shared/pipes/image.pipe';
-import { MyErrorHandler } from './services/error.service';
-import { DirectionalScanComponent } from './tools/directional-scan/directional-scan.component';
-import { LocalScanComponent } from './tools/local-scan/local-scan.component';
-import { MarketComponent } from './tools/market/market.component';
-import { ProfileSyncComponent } from './tools/profile-sync/profile-sync.component';
-import { VNICompanionComponent } from './tools/vni-companion/vni-companion.component';
-import { ZkillListenerComponent } from './tools/zkill-listener/zkill-listener.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent } from './shared/home/home.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { SearchComponent } from './shared/search/search.component';
+import { AppRoutingModule, CustomReuseStrategy } from 'src/app/app-routing.module';
+import { AppComponent } from 'src/app/app.component';
+import { MyErrorHandler } from 'src/app/services/error.service';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
+import { HomeComponent } from 'src/app/shared/home/home.component';
+import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
+import { EvePipe } from 'src/app/shared/pipes/eve.pipe';
+import { ImagePipe } from 'src/app/shared/pipes/image.pipe';
+import { SearchComponent } from 'src/app/shared/search/search.component';
+import { DirectionalScanComponent } from 'src/app/tools/directional-scan/directional-scan.component';
+import { LocalScanComponent } from 'src/app/tools/local-scan/local-scan.component';
+import { MarketComponent } from 'src/app/tools/market/market.component';
+import { ProfileSyncComponent } from 'src/app/tools/profile-sync/profile-sync.component';
+import { VNICompanionComponent } from 'src/app/tools/vni-companion/vni-companion.component';
+import { ZkillListenerComponent } from 'src/app/tools/zkill-listener/zkill-listener.component';
 
 @NgModule({
   declarations: [

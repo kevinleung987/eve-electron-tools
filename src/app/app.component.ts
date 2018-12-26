@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 
-import { ConfigService } from './services/config.service';
-import { ElectronService } from './services/electron.service';
-import { UniverseService } from './services/universe.service';
-import { SuggestionService } from './services/suggestion.service';
+import { ConfigService } from 'src/app/services/config.service';
+import { ElectronService } from 'src/app/services/electron.service';
+import { UniverseService } from 'src/app/services/universe.service';
+import { SuggestionService } from 'src/app/services/suggestion.service';
 
 @Component({
   selector: 'app-root',
@@ -19,5 +19,6 @@ export class AppComponent {
       console.log('Manual view update because of:', reason);
       this.changeDetector.detectChanges();
     });
+    console.log(this.config.isDemo);
   }
 }

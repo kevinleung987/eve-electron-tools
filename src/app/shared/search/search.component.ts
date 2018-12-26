@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, Input, EventEmitter } from '@angular/core';
-import { SuggestionService } from 'src/app/services/suggestion.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { SuggestionService } from 'src/app/services/suggestion.service';
 
 @Component({
   selector: 'app-search',
@@ -16,11 +16,10 @@ export class SearchComponent implements OnInit {
   @Output() submit: EventEmitter<string> = new EventEmitter();
   @Output() select: EventEmitter<string> = new EventEmitter();
   @Output() dirty: EventEmitter<boolean> = new EventEmitter();
+  @ViewChild('searchBar') searchBar: ElementRef;
   suggestions = [];
   searchValue = '';
   activeIndex = -1;
-
-  @ViewChild('searchBar') searchBar: ElementRef;
 
   constructor(public suggest: SuggestionService) { }
 
@@ -93,7 +92,7 @@ export class SearchComponent implements OnInit {
   }
 
   updateSuggestions() {
-    if (this.searchValue == null) { return; }
+    if (this.searchValue == null || this.searchValue.length === 0) { return; }
     const suggestion = this.suggest.suggest(this.source, this.searchValue, this.numSuggestions);
     this.suggestions = suggestion ? suggestion : [];
   }

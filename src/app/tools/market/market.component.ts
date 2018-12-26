@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { UniverseService } from 'src/app/services/universe.service';
-import { SuggestionService } from 'src/app/services/suggestion.service';
-import { fromEvent } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
+import { SuggestionService } from 'src/app/services/suggestion.service';
+import { UniverseService } from 'src/app/services/universe.service';
 
 
 @Component({

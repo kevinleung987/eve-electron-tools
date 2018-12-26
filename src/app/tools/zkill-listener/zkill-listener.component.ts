@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { AlertService } from 'src/app/services/alert.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
-
-import { UniverseService } from '../../services/universe.service';
+import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,11 +17,14 @@ export class ZkillListenerComponent implements OnInit {
   public listening = false;
   public mails = [];
 
-  constructor(private electron: ElectronService, private alert: AlertService, public universe: UniverseService) { }
+  constructor(private config: ConfigService, private electron: ElectronService, private alert: AlertService,
+    public universe: UniverseService) { }
 
   ngOnInit() {
-    this.mails.push(environment.zkillExample);
-    console.log(this.mails);
+    if (this.config.isDemo()) {
+      this.mails.push(environment.zkillExample);
+      console.log(this.mails);
+    }
   }
 
   start() {

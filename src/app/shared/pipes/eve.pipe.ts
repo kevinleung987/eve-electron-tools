@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-import { ElectronService } from '../../services/electron.service';
-import { EveService } from '../../services/eve.service';
+import { ElectronService } from 'src/app/services/electron.service';
+import { EveService } from 'src/app/services/eve.service';
 
 @Pipe({ name: 'eve' })
 export class EvePipe implements PipeTransform {
