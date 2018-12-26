@@ -1,11 +1,12 @@
 <div #search
-     class="search"
+     class="search container"
      (focusout)="hide($event)"
      (focusin)="suggestionsHidden = false">
   <div class="row">
     <input #searchBar
+           id="searchBar"
            class="form-control search-field"
-           placeholder="Type here..."
+           [placeholder]="placeholder"
            [(ngModel)]="searchValue"
            (input)="makeDirty()"
            (keydown)="onKeydown($event, true)">

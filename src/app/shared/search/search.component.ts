@@ -10,7 +10,7 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
 })
 export class SearchComponent implements OnInit {
 
-  @Input() id: string;
+  @Input() placeholder: string;
   @Input() source: any[];
   @Input() numSuggestions = 10;
   @Input() searchDelay = 250;

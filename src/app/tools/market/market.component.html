@@ -9,24 +9,70 @@
 <div class="container">
   <div class="row">
     <div class="col-6">
+      <h5>Current Item: {{currItem | universe:'item'}}</h5>
       <div class="row">
         <div class="col-10">
-          <app-search [source]="suggest.typeNames"
-                      (submit)="onSubmit($event)"
-                      (select)="onSelect($event)"
-                      (dirty)="onDirty($event)"></app-search>
+          <app-search [placeholder]="'Search for an item here...'"
+                      [source]="suggest.typeNames"
+                      (submit)="onSubmitItem($event)"
+                      (select)="onSelectItem($event)"
+                      (dirty)="onDirtyItem($event)"></app-search>
         </div>
         <div class="col-2">
           <button type="button"
                   class="btn btn-raised btn-primary"
-                  (click)="onSubmit(searchValue)"
-                  [disabled]="dirty || searchValue.length === 0">Select</button>
+                  (click)="onSubmitItem(searchItem)"
+                  [disabled]="dirtyItem || searchItem.length === 0">Select</button>
         </div>
       </div>
     </div>
     <div class="col-6">
+      <h5>Current Region: {{currRegion | universe:'region'}}</h5>
       <div class="row">
-        <h5 class="mx-auto">Current Selection</h5>
+        <div class="col-10">
+          <app-search [placeholder]="'Select a market region...'"
+                      [source]="suggest.regionNames"
+                      (submit)="onSubmitRegion($event)"
+                      (select)="onSelectRegion($event)"
+                      (dirty)="onDirtyRegion($event)"></app-search>
+        </div>
+        <div class="col-2">
+          <button type="button"
+                  class="btn btn-raised btn-primary"
+                  (click)="onSubmitRegion(searchRegion)"
+                  [disabled]="dirtyRegion || searchRegion.length === 0">Select</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-10">
+        <h1>{{currItem | universe:'item'}}</h1>
+        <p>Group Name</p>
+      </div>
+      <div class="col-2">
+        <img class="image"
+             src="{{currItem | image:'ship':128}}">
+      </div>
+    </div>
+    <hr class="my-4">
+    <div class="row">
+      <div class="col-6 buy-column">
+        <h5>
+          <p class="display-4 text-center">Buy</p>
+          <p>Max</p>
+          <p>Min</p>
+          <p>Avg</p>
+        </h5>
+      </div>
+      <div class="col-6 sell-column">
+        <h5>
+          <p class="display-4 text-center">Sell</p>
+          <p>Max</p>
+          <p>Min</p>
+          <p>Avg</p>
+        </h5>
       </div>
     </div>
   </div>

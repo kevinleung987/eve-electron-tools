@@ -14,6 +14,7 @@ import { HomeComponent } from 'src/app/shared/home/home.component';
 import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
 import { EvePipe } from 'src/app/shared/pipes/eve.pipe';
 import { ImagePipe } from 'src/app/shared/pipes/image.pipe';
+import { UniversePipe } from 'src/app/shared/pipes/universe.pipe';
 import { SearchComponent } from 'src/app/shared/search/search.component';
 import { DirectionalScanComponent } from 'src/app/tools/directional-scan/directional-scan.component';
 import { LocalScanComponent } from 'src/app/tools/local-scan/local-scan.component';
@@ -35,6 +36,7 @@ import { ZkillListenerComponent } from 'src/app/tools/zkill-listener/zkill-liste
     VNICompanionComponent,
     EvePipe,
     ImagePipe,
+    UniversePipe,
     ProfileSyncComponent,
     SearchComponent
   ],

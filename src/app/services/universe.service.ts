@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
-
+  readonly numToLoad = 6;
+  public isLoaded = new BehaviorSubject(0);
   public typeData = new BehaviorSubject(null);
   public systemData = new BehaviorSubject(null);
   public regionData = new BehaviorSubject(null);
@@ -21,6 +22,7 @@ export class UniverseService {
         this.getTypeName(34) === 'Tritanium' ? console.log('typeData initialized.') : console.error('typeData could not be parsed.');
         this.initializeMap(this.typeData, this.typeNames, 'typeName', null);
         this.getTypeId('Tritanium') === 34 ? console.log('typeNames initialized.') : console.error('typeNames could not be parsed.');
+        this.incrementLoad(2);
       });
     this.initializeData('mapSolarSystems.csv', 'solarSystemID',
       this.systemData)
@@ -30,6 +32,7 @@ export class UniverseService {
         this.initializeMap(this.systemData, this.systemNames, 'solarSystemName', null);
         this.getSystemId('Jita') === 30000142 ? console.log('systemNames initialized.') :
           console.error('systemNames could not be parsed.');
+        this.incrementLoad(2);
       });
     this.initializeData('mapRegions.csv', 'regionID',
       this.regionData)
@@ -39,6 +42,7 @@ export class UniverseService {
         this.initializeMap(this.regionData, this.regionNames, 'regionName', null);
         this.getRegionId('The Forge') === 10000002 ? console.log('regionNames initialized.') :
           console.error('regionNames could not be parsed.');
+        this.incrementLoad(2);
       });
   }
 
@@ -71,6 +75,18 @@ export class UniverseService {
       }
     });
     target.next(mapping);
+  }
+
+  incrementLoad(num: number) {
+    this.isLoaded.next(this.isLoaded.value + num);
+  }
+
+  waitUntilLoaded(callback: () => void) {
+    this.isLoaded.subscribe((numLoaded => {
+      if (numLoaded >= this.numToLoad) {
+        callback();
+      }
+    }));
   }
 
   getTypeName(id: number): string {
