@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  settingsFile: 'settings.json',
+  configFileName: 'settings.json',
   localScanPlaceholder: `Chribba
 The Mittani
 The Judge
