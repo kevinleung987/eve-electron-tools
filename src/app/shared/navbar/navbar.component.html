@@ -1,38 +1,55 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">EVE Electron Tools</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand"
+     href="#">EVE Electron Tools</a>
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse"
+       id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">Home
-          <span class="sr-only">(current)</span>
+        <a class="nav-link"
+           [routerLink]="['/home']"
+           routerLinkActive="active">Home <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/local-scan']" routerLinkActive="active">Local Scan</a>
+        <a class="nav-link"
+           [routerLink]="['/local-scan']"
+           routerLinkActive="active">Local Scan</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/d-scan']" routerLinkActive="active">D-Scan</a>
+        <a class="nav-link"
+           [routerLink]="['/d-scan']"
+           routerLinkActive="active">D-Scan</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/market']" routerLinkActive="active">Market</a>
+        <a class="nav-link"
+           [routerLink]="['/market']"
+           routerLinkActive="active">Market</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/zkill-listener']" routerLinkActive="active">Zkill Listener</a>
+        <a class="nav-link"
+           [routerLink]="['/zkill-listener']"
+           routerLinkActive="active">Zkill Listener</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/profile-sync']" routerLinkActive="active">
-          Profile Sync
-        </a>
+        <a class="nav-link"
+           [class.disabled]="!electron.isElectron"
+           [routerLink]="['/profile-sync']"
+           routerLinkActive="active"> Profile Sync </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.disabled]="!electron.isElectron" [routerLink]="['/vni-companion']" routerLinkActive="active">
-          VNI Companion
-        </a>
+        <a class="nav-link"
+           [class.disabled]="!electron.isElectron"
+           [routerLink]="['/vni-companion']"
+           routerLinkActive="active"> VNI Companion </a>
       </li>
     </ul>
   </div>

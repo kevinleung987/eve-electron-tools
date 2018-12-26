@@ -1,40 +1,49 @@
 <app-header [title]="'Local Scan'">
   <div class="row">
-    <h5 class="mx-auto">
-      Paste the names of the pilots from the local channel in-game, or from other channels and press Scan. This tool
-      will break down which Corporation and Alliance they belong to. You can mouseover the results to see the
-      relationship between Corporations and Alliances.
-    </h5>
-    <div class="alert alert-warning" role="alert" *ngIf="parallel">
-      Enabling "Parallel" will cause the tool to make as many API requests as possible in parallel, this
-      can make the UI unresponsive but will sometimes speed up large input. When Parallel is
-      disabled, requests are made sequentially and all results are cached, which significantly reduces the number of
-      requests that need to be made and is usually faster than Parallel.
-    </div>
+    <h5 class="mx-auto">Paste the names of the pilots from the local channel in-game, or from other channels and press
+      <kbd>Scan</kbd>. This tool will break down which Corporation and Alliance they belong to. You can mouseover the
+      results to see the relationship between Corporations and Alliances.</h5>
+    <div class="alert alert-warning"
+         role="alert"
+         *ngIf="parallel">Enabling <kbd>Parallel</kbd> will cause the tool to make as many API requests as possible in
+      parallel, this can make the UI unresponsive but will sometimes speed up large input. When Parallel is disabled,
+      requests are made sequentially and all results are cached, which significantly reduces the number of requests
+      that need to be made and is usually faster than Parallel.</div>
   </div>
 </app-header>
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-lg-4">
       <label><b>Local Scan</b></label>
-      <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'" [value]="placeholder">
+      <textarea #localInput
+                type="text"
+                rows="20"
+                [placeholder]="'Paste Local Scan here.'"
+                [value]="placeholder">
       </textarea>
-      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="local.busy">Scan</button>
-      <button class="btn btn-raised btn-danger btn-block" (click)="resetView()">Reset</button>
+      <button class="btn btn-raised btn-primary btn-block"
+              (click)="onSubmit(localInput.value)"
+              [disabled]="local.busy">Scan</button>
+      <button class="btn btn-raised btn-danger btn-block"
+              (click)="resetView()">Reset</button>
       <label class="btn btn-secondary active col-6">
-        <input type="checkbox" checked [(ngModel)]="parallel" [disabled]="local.busy">
-        Parallel
-      </label>
+        <input type="checkbox"
+               checked
+               [(ngModel)]="parallel"
+               [disabled]="local.busy"> Parallel </label>
       <label class="btn btn-warning active col-6">
-        <input type="checkbox" checked [(ngModel)]="debug">
-        Debug
-      </label>
+        <input type="checkbox"
+               checked
+               [(ngModel)]="debug"> Debug </label>
     </div>
     <div class="col-sm-12 col-lg-4">
       <label><b>Corporations({{ local.displayCorporations.length }})</b></label>
       <div class="local-area container">
-        <div class="row display-item" *ngFor="let corp of local.displayCorporations" [class.bg-success]="corp.highlighted"
-          (mouseenter)="highlightCorporation(corp)" (mouseleave)="resetHighlight()">
+        <div class="row display-item"
+             *ngFor="let corp of local.displayCorporations"
+             [class.bg-success]="corp.highlighted"
+             (mouseenter)="highlightCorporation(corp)"
+             (mouseleave)="resetHighlight()">
           <div class="col-3">
             <img [src]="corp.corporation.image">
           </div>
@@ -46,19 +55,22 @@
           </div>
         </div>
       </div>
-      <p *ngIf="debug">
-        Character Cache Hits/Misses: {{local.cacheStats.character.toString().replace(',', '/')}}<br>
-        Corporation Cache Hits/Misses: {{local.cacheStats.corporation.toString().replace(',', '/')}}<br>
-        Alliance Cache Hits/Misses: {{local.cacheStats.alliance.toString().replace(',', '/')}}<br>
-        Progress: {{local.progress}} <br>
-        Time:{{local.runTime}}
-      </p>
+      <span *ngIf="debug">
+        <p>Character Cache Hits/Misses: {{local.cacheStats.character.toString().replace(',', '/')}}</p>
+        <p>Corporation Cache Hits/Misses: {{local.cacheStats.corporation.toString().replace(',', '/')}}</p>
+        <p>Alliance Cache Hits/Misses: {{local.cacheStats.alliance.toString().replace(',', '/')}}</p>
+        <p>Progress: {{local.progress}}</p>
+        <p>Time:{{local.runTime}}</p>
+      </span>
     </div>
     <div class="col-sm-12 col-lg-4">
       <label><b>Alliances({{ local.displayAlliances.length }})</b></label>
       <div class="local-area container">
-        <div class="row display-item" *ngFor="let alliance of local.displayAlliances" [class.bg-success]="alliance.highlighted"
-          (mouseenter)="highlightAlliance(alliance)" (mouseleave)="resetHighlight()">
+        <div class="row display-item"
+             *ngFor="let alliance of local.displayAlliances"
+             [class.bg-success]="alliance.highlighted"
+             (mouseenter)="highlightAlliance(alliance)"
+             (mouseleave)="resetHighlight()">
           <div class="col-3">
             <img [src]="alliance.alliance.image">
           </div>

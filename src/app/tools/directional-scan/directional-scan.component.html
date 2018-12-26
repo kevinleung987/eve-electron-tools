@@ -1,27 +1,35 @@
 <app-header [title]="'Directional Scan'">
   <div class="row">
-    <h5 class="mx-auto">
-      Open the Directional Scanner in-game(Alt+D), and copy those results(Ctrl+A, Ctrl+C) into the D-Scan box below
-      (Ctrl+V). Press Scan to parse the results into a sorted frequency table.
-    </h5>
+    <h5 class="mx-auto">Open the Directional Scanner in-game <kbd>Alt+D</kbd>, and copy those results <kbd>Ctrl+A,
+        Ctrl+C</kbd> into the D-Scan box below <kbd>Ctrl+V</kbd>. Press Scan to parse the results into a sorted
+      frequency table.</h5>
   </div>
 </app-header>
 <div class="container">
   <div class="row">
     <div class="col-6">
       <label><b>D-Scan</b></label>
-      <textarea #dScanInput type="text" rows="20" [placeholder]="'Paste D-Scan here.'" [value]="placeholder">
+      <textarea #dScanInput
+                type="text"
+                rows="20"
+                [placeholder]="'Paste D-Scan here.'"
+                [value]="placeholder">
       </textarea>
-      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(dScanInput.value)" [disabled]="busy">Scan</button>
-      <button class="btn btn-raised btn-danger btn-block" (click)="reset()">Reset</button>
+      <button class="btn btn-raised btn-primary btn-block"
+              (click)="onSubmit(dScanInput.value)"
+              [disabled]="busy">Scan</button>
+      <button class="btn btn-raised btn-danger btn-block"
+              (click)="reset()">Reset</button>
     </div>
     <div class="col-6">
       <label><b>Results({{display.length}})</b></label>
       <div class="results-area">
-        <div class="card card-body" *ngFor="let item of display">
+        <div class="card card-body"
+             *ngFor="let item of display">
           <div class="row">
             <div class="col-4">
-              <img class="image" src="{{item['typeId'] | image:'ship'}}">
+              <img class="image"
+                   src="{{item['typeId'] | image:'ship'}}">
             </div>
             <div class="col-6">
               <h5>{{item['name']}}</h5>

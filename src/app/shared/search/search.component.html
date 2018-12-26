@@ -1,10 +1,18 @@
 <div class="search">
-  <input #searchBar class="form-control" placeholder="Type here..." [(ngModel)]="searchValue" (input)="makeDirty()"
-    (keydown)="onKeydown($event, true)">
-  <div class="list-group card card-body suggestion-list" *ngIf="suggestions.length > 0" (keydown)="onKeydown($event, false)">
-    <button class="suggestion-item list-group-item" [ngClass]="{'list-group-item-dark': i % 2 === 0}" [class.active]="i === activeIndex"
-      (click)="updateSelection(i)" (dblclick)="onSubmit()" *ngFor="let suggestion of suggestions;index as i">
-      {{suggestion}}
-    </button>
+  <input #searchBar
+         class="form-control"
+         placeholder="Type here..."
+         [(ngModel)]="searchValue"
+         (input)="makeDirty()"
+         (keydown)="onKeydown($event, true)">
+  <div class="list-group card card-body suggestion-list"
+       *ngIf="suggestions.length > 0"
+       (keydown)="onKeydown($event, false)">
+    <button class="suggestion-item list-group-item"
+            [ngClass]="{'list-group-item-dark': i % 2 === 0}"
+            [class.active]="i === activeIndex"
+            (click)="updateSelection(i)"
+            (dblclick)="onSubmit()"
+            *ngFor="let suggestion of suggestions;index as i">{{suggestion}}</button>
   </div>
 </div>
