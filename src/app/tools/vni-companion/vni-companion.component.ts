@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-vni-companion',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vni-companion.component.scss']
 })
 export class VNICompanionComponent implements OnInit {
-  constructor() { }
+  constructor(private navigation: NavigationService) { }
 
   ngOnInit() { }
 }

@@ -28,11 +28,18 @@ def downloadData(sourceName, fileName, columns, decompress=bz2.decompress):
     os.remove(downloadsDir + tempFile)
 
 
+print('invTypes')
 downloadData('invTypes.csv.bz2', 'invTypes.csv',
              ['typeID', 'groupID', 'typeName'])
+print('mapSolarSystems')
 downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv',
              ['solarSystemID', 'solarSystemName', 'regionID', 'security'])
+print('mapRegions')
 downloadData('mapRegions.csv.bz2', 'mapRegions.csv',
              ['regionID', 'regionName'])
+print('invGroups')
 downloadData('invGroups.csv.bz2', 'invGroups.csv',
              ['groupID', 'groupName'])
+print('mapSolarSystemJumps')
+downloadData('mapSolarSystemJumps.csv.bz2', 'mapSolarSystemJumps.csv',
+             ['fromSolarSystemID', 'toSolarSystemID'])
