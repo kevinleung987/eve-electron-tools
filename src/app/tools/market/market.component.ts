@@ -3,6 +3,8 @@ import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
+import { MarketService } from 'src/app/services/market.service';
+import { Price } from 'src/app/models/Market.model';
 
 
 @Component({
@@ -19,9 +21,10 @@ export class MarketComponent implements OnInit {
   searchRegion = '';
   dirtyRegion = false;
   currRegion: number = null;
+  currPrice: Price;
 
   constructor(private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService,
-    private config: ConfigService) {
+    private config: ConfigService, private market: MarketService) {
     this.universe.waitUntilLoaded(() => {
       if (this.config.isDemo()) {
         this.searchItem = 'Ishtar';
@@ -29,6 +32,7 @@ export class MarketComponent implements OnInit {
       }
       this.searchRegion = 'The Forge';
       this.currRegion = this.universe.getRegionId(this.searchRegion);
+      this.updatePrice();
     });
 
   }
@@ -42,6 +46,7 @@ export class MarketComponent implements OnInit {
     if (submission == null) { throw new Error('Bad search value submitted.'); }
     this.currItem = submission;
     this.alert.info(`${this.searchItem} [${submission.toString()}]`);
+    this.updatePrice();
   }
 
   onSelectItem(event) {
@@ -59,6 +64,7 @@ export class MarketComponent implements OnInit {
     if (submission == null) { throw new Error('Bad search value submitted.'); }
     this.currRegion = submission;
     this.alert.info(`${this.searchRegion} [${submission.toString()}]`);
+    this.updatePrice();
   }
 
   onSelectRegion(event) {
@@ -67,5 +73,13 @@ export class MarketComponent implements OnInit {
 
   onDirtyRegion(event) {
     this.dirtyRegion = event;
+  }
+
+  updatePrice() {
+    if (this.currItem && this.currRegion) {
+      this.market.getPrices(this.currItem, this.currRegion).then((result) => {
+        this.currPrice = result;
+      });
+    }
   }
 }

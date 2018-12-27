@@ -61,17 +61,19 @@
       <div class="col-6 buy-column">
         <h5>
           <p class="display-4 text-center">Buy</p>
-          <p>Max</p>
-          <p>Min</p>
-          <p>Avg</p>
+          <p><b>Max: <span class="price">{{currPrice?.buy?.max | number}} ISK</span></b></p>
+          <p>Min: <span class="price">{{currPrice?.buy?.min | number}} ISK</span></p>
+          <p>Avg: <span class="price">{{currPrice?.buy?.avg | number}} ISK</span></p>
+          <p>Quantity: {{currPrice?.buy?.quantity | number}}</p>
         </h5>
       </div>
       <div class="col-6 sell-column">
         <h5>
           <p class="display-4 text-center">Sell</p>
-          <p>Max</p>
-          <p>Min</p>
-          <p>Avg</p>
+          <p>Max: <span class="price">{{currPrice?.sell?.max | number}} ISK</span></p>
+          <p><b>Min: <span class="price">{{currPrice?.sell?.min | number}} ISK</span></b></p>
+          <p>Avg: <span class="price">{{currPrice?.sell?.avg | number}} ISK</span></p>
+          <p>Quantity: {{currPrice?.sell?.quantity | number}}</p>
         </h5>
       </div>
     </div>

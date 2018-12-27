@@ -35,4 +35,11 @@ export class EveService {
         `https://esi.evetech.net/latest/alliances/${id}/?datasource=tranquility`)
       .toPromise();
   }
+
+  marketOrders(typeId: number, regionId: number): Promise<any> {
+    return this.http
+      .get(
+        `https://esi.evetech.net/latest/markets/${regionId}/orders/?datasource=tranquility&order_type=all&type_id=${typeId}`)
+      .toPromise();
+  }
 }
