@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   configFileName: 'settings.json',
   localScanPlaceholder: `Chribba
 The Mittani

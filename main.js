@@ -26,6 +26,7 @@ function createWindow() {
       electron: require(`${__dirname}/node_modules/electron`)
     });
     win.loadURL('http://localhost:4200');
+    win.webContents.openDevTools()
   } else { // load the dist folder from Angular
     win.loadURL(
       url.format({
@@ -35,9 +36,6 @@ function createWindow() {
       })
     );
   }
-
-  // The following is optional and will open the DevTools:
-  win.webContents.openDevTools()
 
   win.on("closed", () => {
     win = null;
