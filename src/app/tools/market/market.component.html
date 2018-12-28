@@ -11,37 +11,17 @@
     <div class="col-6">
       <h5>Current Item: {{currItem | universe:'item'}}</h5>
       <div class="row">
-        <div class="col-10">
-          <app-search [placeholder]="'Search for an item here...'"
-                      [source]="suggest.typeNames"
-                      (submit)="onSubmitItem($event)"
-                      (select)="onSelectItem($event)"
-                      (dirty)="onDirtyItem($event)"></app-search>
-        </div>
-        <div class="col-2">
-          <button type="button"
-                  class="btn btn-raised btn-primary"
-                  (click)="onSubmitItem(searchItem)"
-                  [disabled]="dirtyItem || searchItem.length === 0">Select</button>
-        </div>
+        <app-search [placeholder]="'Search for an item here...'"
+                    [source]="suggest.typeNames"
+                    (submit)="onSubmitItem($event)"></app-search>
       </div>
     </div>
     <div class="col-6">
       <h5>Current Region: {{currRegion | universe:'region'}}</h5>
       <div class="row">
-        <div class="col-10">
-          <app-search [placeholder]="'Select a market region...'"
-                      [source]="suggest.regionNames"
-                      (submit)="onSubmitRegion($event)"
-                      (select)="onSelectRegion($event)"
-                      (dirty)="onDirtyRegion($event)"></app-search>
-        </div>
-        <div class="col-2">
-          <button type="button"
-                  class="btn btn-raised btn-primary"
-                  (click)="onSubmitRegion(searchRegion)"
-                  [disabled]="dirtyRegion || searchRegion.length === 0">Select</button>
-        </div>
+        <app-search [placeholder]="'Select a market region...'"
+                    [source]="suggest.regionNames"
+                    (submit)="onSubmitRegion($event)"></app-search>
       </div>
     </div>
   </div>

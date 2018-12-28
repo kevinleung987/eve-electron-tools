@@ -3,25 +3,35 @@
      (focusout)="hide($event)"
      (focusin)="suggestionsHidden = false">
   <div class="row">
-    <input #searchBar
-           id="searchBar"
-           class="form-control search-field"
-           [placeholder]="placeholder"
-           [(ngModel)]="searchValue"
-           (input)="makeDirty()"
-           (keydown)="onKeydown($event, true)">
+    <div class="col-9">
+      <input #searchBar
+             id="searchBar"
+             class="form-control search-field"
+             [placeholder]="placeholder"
+             [(ngModel)]="searchValue"
+             (input)="makeDirty()"
+             (keydown)="onKeydown($event, true)">
+    </div>
+    <div class="col-3">
+      <button type="button"
+              class="btn btn-raised btn-primary"
+              (click)="onSubmit()"
+              [disabled]="dirty || searchValue.length === 0">Select</button>
+    </div>
   </div>
   <div class="row">
-    <div class="list-group card card-body suggestion-list"
-         [class.hidden]="suggestionsHidden"
-         *ngIf="suggestions.length > 0"
-         (keydown)="onKeydown($event, false)">
-      <button class="suggestion-item list-group-item"
-              [ngClass]="{'list-group-item-dark': i % 2 === 0}"
-              [class.active]="i === activeIndex"
-              (click)="updateSelection(i)"
-              (dblclick)="onSubmit()"
-              *ngFor="let suggestion of suggestions;index as i">{{suggestion}}</button>
+    <div class="col-9">
+      <div class="list-group card card-body suggestion-list"
+           [class.hidden]="suggestionsHidden"
+           *ngIf="suggestions.length > 0"
+           (keydown)="onKeydown($event, false)">
+        <button class="suggestion-item list-group-item"
+                [ngClass]="{'list-group-item-dark': i % 2 === 0}"
+                [class.active]="i === activeIndex"
+                (click)="updateSelection(i)"
+                (dblclick)="onSubmit()"
+                *ngFor="let suggestion of suggestions;index as i">{{suggestion}}</button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { ZkillMail } from 'src/app/models/Zkill.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
@@ -12,10 +13,12 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./zkill-listener.component.scss']
 })
 export class ZkillListenerComponent implements OnInit {
+
+  listening = false;
+  mails: ZkillMail[] = [];
   private length = 5;
   private socket: WebSocketSubject<{}>;
-  public listening = false;
-  public mails = [];
+  private filters: ((mail: ZkillMail) => boolean)[] = [];
 
   constructor(private config: ConfigService, private electron: ElectronService, private alert: AlertService,
     public universe: UniverseService) { }
@@ -33,10 +36,11 @@ export class ZkillListenerComponent implements OnInit {
 
     this.listening = true;
     this.socket.subscribe(
-      message => {
-        message['attackers'].forEach(element => {
-          if (element['final_blow']) {
-            message['final_blow'] = element;
+      (message: ZkillMail) => {
+        // Add explicit final_blow field for quick access
+        message['attackers'].forEach(attacker => {
+          if (attacker['final_blow']) {
+            message['final_blow'] = attacker;
           }
         });
         this.mails.unshift(message);

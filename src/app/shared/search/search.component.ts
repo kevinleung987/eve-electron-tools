@@ -15,10 +15,9 @@ export class SearchComponent implements OnInit {
   @Input() numSuggestions = 10;
   @Input() searchDelay = 250;
   @Output() submit: EventEmitter<string> = new EventEmitter();
-  @Output() select: EventEmitter<string> = new EventEmitter();
-  @Output() dirty: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('search') searchContainer: ElementRef;
   @ViewChild('searchBar') searchBar: ElementRef;
+  dirty = false;
   suggestions = [];
   searchValue = '';
   activeIndex = -1;
@@ -34,13 +33,12 @@ export class SearchComponent implements OnInit {
       ).subscribe(data => {
         this.activeIndex = -1;
         this.updateSuggestions();
-        this.dirty.emit(false);
-        this.select.emit('');
+        this.dirty = false;
       });
   }
 
   makeDirty() {
-    this.dirty.emit(true);
+    this.dirty = true;
   }
 
   focusSearchBar() {
@@ -104,7 +102,6 @@ export class SearchComponent implements OnInit {
     if (this.suggestions.length === 0) { return; }
     this.activeIndex = index >= 0 ? index : 0;
     this.searchValue = this.suggestions[this.activeIndex];
-    this.select.emit(this.searchValue);
   }
 
   onSubmit() {
