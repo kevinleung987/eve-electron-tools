@@ -18,7 +18,9 @@ export class AppComponent {
     // Watches for updates to state that occur in Electron-land and
     // signals Angular re-render the view.
     this.electron.updateOccured.subscribe((reason) => {
-      console.log('Manual view update because of:', reason);
+      if (reason) {
+        console.log('Manual view update because of:', reason);
+      }
       this.changeDetector.detectChanges();
     });
   }

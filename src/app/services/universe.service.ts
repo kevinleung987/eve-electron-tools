@@ -21,38 +21,35 @@ export class UniverseService {
   constructor(private http: HttpClient, private papa: Papa) {
     this.initializeData('invTypes.csv', 'typeID', this.typeData)
       .add(() => {
-        this.getTypeName(34) === 'Tritanium' ? console.log('typeData initialized.') : console.error('typeData could not be parsed.');
         this.initializeMap(this.typeData, this.typeNames, 'typeName', null);
-        this.getTypeId('Tritanium') === 34 ? console.log('typeNames initialized.') : console.error('typeNames could not be parsed.');
         this.incrementLoad(2);
       });
     this.initializeData('mapSolarSystems.csv', 'solarSystemID',
       this.systemData)
       .add(() => {
-        this.getSystemName(30000142) === 'Jita' ? console.log('systemData initialized.') :
-          console.error('systemData could not be parsed.');
         this.initializeMap(this.systemData, this.systemNames, 'solarSystemName', null);
-        this.getSystemId('Jita') === 30000142 ? console.log('systemNames initialized.') :
-          console.error('systemNames could not be parsed.');
         this.incrementLoad(2);
       });
     this.initializeData('mapRegions.csv', 'regionID',
       this.regionData)
       .add(() => {
-        this.getRegionName(10000002) === 'The Forge' ? console.log('regionData initialized.') :
-          console.error('regionData could not be parsed.');
         this.initializeMap(this.regionData, this.regionNames, 'regionName', null);
-        this.getRegionId('The Forge') === 10000002 ? console.log('regionNames initialized.') :
-          console.error('regionNames could not be parsed.');
         this.incrementLoad(2);
       });
     this.initializeData('invGroups.csv', 'groupID',
       this.groupData)
       .add(() => {
-        this.getGroupName(6) === 'Sun' ? console.log('groupData initialized.') :
-          console.error('groupData could not be parsed.');
         this.incrementLoad(1);
       });
+    this.waitUntilLoaded(() => {
+      if (!(this.getTypeName(34) === 'Tritanium')) { console.error('typeData could not be parsed.'); }
+      if (!(this.getTypeId('Tritanium') === 34)) { console.error('typeNames could not be parsed.'); }
+      if (!(this.getSystemName(30000142) === 'Jita')) { console.error('systemData could not be parsed.'); }
+      if (!(this.getSystemId('Jita') === 30000142)) { console.error('systemNames could not be parsed.'); }
+      if (!(this.getRegionName(10000002) === 'The Forge')) { console.error('regionData could not be parsed.'); }
+      if (!(this.getRegionId('The Forge') === 10000002)) { console.error('regionNames could not be parsed.'); }
+      if (!(this.getGroupName(6) === 'Sun')) { console.error('groupData could not be parsed.'); }
+    });
   }
 
   initializeData(fileName: string, key: string, store: BehaviorSubject<any>): Subscription {

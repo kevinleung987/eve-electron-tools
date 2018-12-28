@@ -3,7 +3,7 @@
     <h5 class="mx-auto">Locate your EVE Profiles folder using Select Folder and press Scan Profiles to load your
       profiles. <kbd>Left-click</kbd> to select a "Primary" profile which will act as the source copy. <kbd>Right-click</kbd>
       to select multiple "Secondary" profiles which act as destinations to write to. You can bind a name to a account
-      to make it easier to differentiate between accounts.</h5>
+      to make it easier to differentiate between accounts. Work In Progress.</h5>
   </div>
 </app-header>
 <div class="container">
@@ -47,7 +47,7 @@
              [class.bg-secondary]="account['selected'] === s.Secondary"
              (click)="select(account, s.Primary)"
              (contextmenu)="select(account, s.Secondary)">
-          <div class="card-body"> {{ account['id'] }}<b>{{ accountBindings[account['id']] ? ' -
+          <div class="card-body"> {{ account['id'] }} <b>{{ accountBindings[account['id']] ? ' -
               '+accountBindings[account['id']] : null}}</b>
           </div>
         </div>

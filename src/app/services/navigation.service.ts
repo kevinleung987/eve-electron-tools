@@ -34,7 +34,7 @@ export class NavigationService {
       }, error => console.error(error));
     this.ready.subscribe((result) => {
       if (result) {
-        console.log(this.getNumJumps(30001947, 30003647));
+        // console.log(this.getNumJumps(30001947, 30003647));
       }
     });
   }

@@ -1,1 +1,31 @@
-<app-header [title]="'VNI Companion'"></app-header>
+<app-header [title]="'VNI Companion'">
+  <div class="row">
+    <h5 class="mx-auto">Work In Progress.</h5>
+  </div>
+</app-header>
+<div class="container">
+  <div class="row"> {{logsPath}} </div>
+  <div class="row">
+    <button type="button"
+            class="btn btn-raised btn-primary mx-auto"
+            (click)="selectLogsFolder()">Select Folder</button>
+    <button type="button"
+            class="btn btn-raised btn-primary mx-auto"
+            (click)="startListeningGameLogs()"
+            [disabled]="gameLogWatcher != null">Start Listening</button>
+    <button type="button"
+            class="btn btn-raised btn-primary mx-auto"
+            (click)="stopListeningGameLogs()"
+            [disabled]="gameLogWatcher == null">Stop Listening</button>
+  </div>
+  <div class="row">
+    <div class="col-3"
+         *ngFor="let character of characters">
+      <div class="card">
+        <div class="card-body">
+          <img style="height: 64px; width: 64px;"
+               src="{{character['id'] | image:'character'}}"> {{character.name}} {{character.isk}}</div>
+      </div>
+    </div>
+  </div>
+</div>
