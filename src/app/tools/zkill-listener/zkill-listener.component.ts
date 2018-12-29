@@ -18,7 +18,15 @@ export class ZkillListenerComponent implements OnInit {
   mails: ZkillMail[] = [];
   private length = 5;
   private socket: WebSocketSubject<{}>;
-  private filters: ((mail: ZkillMail) => boolean)[] = [];
+  private activeFilters: {
+    who?: ((mail: ZkillMail) => boolean)
+    what?: ((mail: ZkillMail) => boolean)
+    where?: ((mail: ZkillMail) => boolean)
+  } = {};
+  filtersHidden = false;
+  shipChecked = true;
+  locationChecked = true;
+  involvedChecked = true;
 
   constructor(private config: ConfigService, private electron: ElectronService, private alert: AlertService,
     public universe: UniverseService) { }
@@ -33,7 +41,6 @@ export class ZkillListenerComponent implements OnInit {
   start() {
     this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
     this.socket.next({ action: 'sub', channel: 'killstream' });
-
     this.listening = true;
     this.socket.subscribe(
       (message: ZkillMail) => {

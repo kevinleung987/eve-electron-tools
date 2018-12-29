@@ -24,7 +24,109 @@
               (click)="clear()"
               [disabled]="mails.length === 0">Clear</button>
     </div>
+    <div class="col-1">
+      <button type="button"
+              class="btn btn-raised btn-info"
+              (click)="filtersHidden = !filtersHidden"
+              [disabled]="!shipChecked && !locationChecked && !involvedChecked">{{filtersHidden ? 'Show' : 'Hide'}}</button>
+    </div>
+    <!-- Filter toggles -->
+    <div class="col-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox"
+               class="custom-control-input"
+               [(ngModel)]="shipChecked"
+               id="shipCheck">
+        <label class="custom-control-label"
+               for="shipCheck">Filter by Ship</label>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox"
+               class="custom-control-input"
+               [(ngModel)]="locationChecked"
+               id="locationCheck">
+        <label class="custom-control-label"
+               for="locationCheck">Filter by Location</label>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox"
+               class="custom-control-input"
+               [(ngModel)]="involvedChecked"
+               id="involvedCheck">
+        <label class="custom-control-label"
+               for="involvedCheck">Filter by Involved</label>
+      </div>
+    </div>
   </div>
+  <div *ngIf="!filtersHidden">
+    <!-- Ship Filter -->
+    <div class="card row"
+         *ngIf="shipChecked">
+      <h5 class="card-header">Ship</h5>
+      <div class="card-body row">
+        <div class="col-2">
+          <select class="custom-select"
+                  id="shipWhichType">
+            <option value="victim"
+                    selected>Victim</option>
+            <option value="attacker">Attacker</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <select class="custom-select"
+                  id="shipFilterType">
+            <option value="ship"
+                    selected>Ship</option>
+            <option value="group">Ship Group</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Location Filter -->
+    <div class="card row"
+         *ngIf="locationChecked">
+      <h5 class="card-header">Location</h5>
+      <div class="card-body row">
+        <div class="col-2">
+          <select class="custom-select"
+                  id="locationFilterType">
+            <option value="region"
+                    selected>Region</option>
+            <option value="system">System</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Involved Filter -->
+    <div class="card row"
+         *ngIf="involvedChecked">
+      <h5 class="card-header">Involved</h5>
+      <div class="card-body row">
+        <div class="col-2">
+          <select class="custom-select"
+                  id="involvedWhichType">
+            <option value="victim"
+                    selected>Victim</option>
+            <option value="attacker">Attacker</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <select class="custom-select"
+                  id="involvedFilterType">
+            <option value="character"
+                    selected>Character</option>
+            <option value="corporation">Corporation</option>
+            <option value="alliance">Alliance</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mails -->
   <div class="row"
        *ngFor="let mail of mails; let i = index">
     <div class="card mail-info"
