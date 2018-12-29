@@ -9,43 +9,49 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-
   @Input() placeholder: string;
   @Input() useSuggestions = true;
-  @Input() source: any[];
   @Input() numSuggestions = 10;
   @Input() searchDelay = 250;
   @Output() submit: EventEmitter<string> = new EventEmitter();
   @ViewChild('search') searchContainer: ElementRef;
   @ViewChild('searchBar') searchBar: ElementRef;
+  private _source: string[];
   dirty = false;
   suggestions = [];
   searchValue = '';
   activeIndex = -1;
   suggestionsHidden = false;
 
+  @Input()
+  set source(source: string[]) {
+    this._source = source;
+    this.searchValue = '';
+    this.suggestions = [];
+  }
+
   constructor(public suggest: SuggestionService) { }
 
   ngOnInit() {
-    if (!this.useSuggestions) { return; }
+    if (!this.useSuggestions) {
+      return;
+    }
     fromEvent(this.searchBar.nativeElement, 'input')
       .pipe(map((event: Event) => (<HTMLInputElement>event.target).value),
-        debounceTime(this.searchDelay),
-        distinctUntilChanged()
-      ).subscribe(data => {
+        debounceTime(this.searchDelay), distinctUntilChanged())
+      .subscribe(data => {
         this.activeIndex = -1;
         this.updateSuggestions();
         this.dirty = false;
       });
   }
 
-  makeDirty() {
-    this.dirty = true;
-  }
+  makeDirty() { this.dirty = true; }
 
   focusSearchBar() {
     this.searchBar.nativeElement.focus();
-    this.searchBar.nativeElement.selectionStart = this.searchBar.nativeElement.selectionEnd = 10000;
+    this.searchBar.nativeElement.selectionStart =
+      this.searchBar.nativeElement.selectionEnd = 10000;
   }
 
   stopEvent(event: Event) {
@@ -96,7 +102,8 @@ export class SearchComponent implements OnInit {
 
   updateSuggestions() {
     if (this.searchValue == null || this.searchValue.length === 0) { return; }
-    const suggestion = this.suggest.suggest(this.source, this.searchValue, this.numSuggestions);
+    const suggestion = this.suggest.suggest(this._source, this.searchValue,
+      this.numSuggestions);
     this.suggestions = suggestion ? suggestion : [];
   }
 
@@ -118,7 +125,8 @@ export class SearchComponent implements OnInit {
 
   hide(event: MouseEvent) {
     const target = event.relatedTarget as HTMLElement;
-    // Only hide the suggestions if the user focuses on something that's not within this Search Component
+    // Only hide the suggestions if the user focuses on something that's not
+    // within this Search Component
     if (!this.searchContainer.nativeElement.contains(target)) {
       this.suggestionsHidden = true;
     }

@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./directional-scan.component.scss']
 })
 export class DirectionalScanComponent implements OnInit {
-
   placeholder = this.config.isDemo() ? environment.dScanPlaceholder : null;
   busy = false;
   results: { [name: string]: { typeId: number, count: number } } = {};

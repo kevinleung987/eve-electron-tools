@@ -11,7 +11,6 @@ import { FSWatcher } from 'fs';
   styleUrls: ['./vni-companion.component.scss']
 })
 export class VNICompanionComponent implements OnInit {
-
   logsPath: string;
   gameLogWatcher: FSWatcher = null;
   gameLogFiles: { [fileName: string]: { id: number, name: string, filePath: string, size: number, isk: number } } = {};

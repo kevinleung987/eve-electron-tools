@@ -14,7 +14,6 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
   styleUrls: ['./zkill-listener.component.scss']
 })
 export class ZkillListenerComponent implements OnInit {
-
   listening = false;
   mails: ZkillMail[] = [];
   private length = 5;
@@ -25,27 +24,22 @@ export class ZkillListenerComponent implements OnInit {
     involved?: ((mail: ZkillMail) => boolean)
   } = {};
   filterTypes = {
-    ship: {
-      whichType: 'victim',
-      filterType: 'ship'
-    },
-    location: {
-      filterType: 'region'
-    },
-    involved: {
-      whichType: 'victim',
-      filterType: 'character'
-    },
+    ship: { whichType: 'victim', filterType: 'ship' },
+    location: { filterType: 'region' },
+    involved: { whichType: 'victim', filterType: 'character' },
   };
   filtersHidden = false;
   shipChecked = true;
   locationChecked = true;
   involvedChecked = true;
 
-  constructor(private config: ConfigService, private electron: ElectronService, private alert: AlertService,
-    public universe: UniverseService, private suggest: SuggestionService) { }
+  constructor(private config: ConfigService, private electron: ElectronService,
+    private alert: AlertService, public universe: UniverseService,
+    private suggest: SuggestionService) { }
 
   ngOnInit() {
+    // @ts-ignore
+    window.$('app-zkill-listener').bootstrapMaterialDesign();
     if (this.config.isDemo()) {
       this.mails.push(environment.zkillExample);
       console.log(this.mails);
@@ -88,7 +82,26 @@ export class ZkillListenerComponent implements OnInit {
     this.alert.success('Cleared killmails.');
   }
 
-  openLink(url: string) {
-    this.electron.openUrl(url);
+  openLink(url: string) { this.electron.openUrl(url); }
+
+  getSuggestions(type: string) {
+    switch (type) {
+      case 'ship':
+        switch (this.filterTypes.ship.filterType) {
+          case 'ship':
+            return this.suggest.typeNames;
+          case 'group':
+            return this.suggest.groupNames;
+        }
+        break;
+      case 'location':
+        switch (this.filterTypes.location.filterType) {
+          case 'region':
+            return this.suggest.regionNames;
+          case 'system':
+            return this.suggest.systemNames;
+        }
+        break;
+    }
   }
 }

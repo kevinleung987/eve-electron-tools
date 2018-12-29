@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
-
   readonly numToLoad = 8;
   public isLoaded = new BehaviorSubject(0);
   public typeData = new BehaviorSubject(null);

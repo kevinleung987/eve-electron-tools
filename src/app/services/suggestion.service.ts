@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SuggestionService {
-
   typeNames: string[] = [];
   groupNames: string[] = [];
   systemNames: string[] = [];

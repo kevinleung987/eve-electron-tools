@@ -1,5 +1,5 @@
 <div #search
-     class="search container"
+     class="search"
      (focusout)="hide($event)"
      (focusin)="suggestionsHidden = false">
   <div class="row">
@@ -29,7 +29,7 @@
                 [ngClass]="{'list-group-item-dark': i % 2 === 0}"
                 [class.active]="i === activeIndex"
                 (click)="updateSelection(i)"
-                (dblclick)="onSubmit()"
+                (dblclick)="onSubmit();suggestionsHidden = true;"
                 *ngFor="let suggestion of suggestions;index as i">{{suggestion}}</button>
       </div>
     </div>

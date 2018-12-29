@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
  */
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
-
   private configPath: string;
   private config: ConfigFile;
   debug: boolean;

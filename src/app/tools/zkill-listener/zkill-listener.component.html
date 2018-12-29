@@ -32,33 +32,24 @@
     </div>
     <!-- Filter toggles -->
     <div class="col-2">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox"
-               class="custom-control-input"
-               [(ngModel)]="shipChecked"
-               id="shipCheck">
-        <label class="custom-control-label"
-               for="shipCheck">Filter by Ship</label>
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="shipChecked"><b>Filter by Ship</b></label>
       </div>
     </div>
     <div class="col-2">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox"
-               class="custom-control-input"
-               [(ngModel)]="locationChecked"
-               id="locationCheck">
-        <label class="custom-control-label"
-               for="locationCheck">Filter by Location</label>
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="locationChecked"><b>Filter by Location</b></label>
       </div>
     </div>
     <div class="col-2">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox"
-               class="custom-control-input"
-               [(ngModel)]="involvedChecked"
-               id="involvedCheck">
-        <label class="custom-control-label"
-               for="involvedCheck">Filter by Involved</label>
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="involvedChecked"><b>Filter by Involved</b></label>
       </div>
     </div>
   </div>
@@ -88,7 +79,7 @@
         </div>
         <div class="col-8">
           <app-search [placeholder]="'Search'"
-                      [source]="suggest.typeNames"
+                      [source]="getSuggestions('ship')"
                       (submit)="null"></app-search>
         </div>
       </div>
@@ -110,7 +101,7 @@
         <div class="col-2"></div>
         <div class="col-8">
           <app-search [placeholder]="'Search'"
-                      [source]="suggest.systemNames"
+                      [source]="getSuggestions('location')"
                       (submit)="null"></app-search>
         </div>
       </div>
@@ -154,76 +145,74 @@
          style="width:100%;"
          (click)="openLink(mail['zkb']['url'])"
          (contextmenu)="mails.pop(i)">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-2">
-            <div class="row detail-row">
-              <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }} </div>
-            <div class="row detail-row">
-              <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}} <span>[<b [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
-                  | slice:0:4)}}</b>]</span>
-            </div>
-            <div class="row detail-row">
-              <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }} </div>
-            <div class="row detail-row">
-              <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK </div>
+      <div class="card-body row">
+        <div class="col-2">
+          <div class="row detail-row">
+            <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }} </div>
+          <div class="row detail-row">
+            <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}} <span>[<b [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
+                | slice:0:4)}}</b>]</span>
           </div>
-          <div class="col-1">
-            <img class="image"
-                 src="{{mail['victim']['character_id'] | image:'character'}}">
+          <div class="row detail-row">
+            <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }} </div>
+          <div class="row detail-row">
+            <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK </div>
+        </div>
+        <div class="col-1">
+          <img class="image"
+               src="{{mail['victim']['character_id'] | image:'character'}}">
+        </div>
+        <div class="col-1">
+          <img class="image"
+               src="{{mail['victim']['ship_type_id'] | image:'ship'}}">
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <b>Defender: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }} </div>
+          <div class="row">
+            <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }} </div>
+          <div class="row"
+               *ngIf="mail['victim']['alliance_id']">
+            <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}"
+                 class="image-icon">
+            <p>{{ (mail['victim']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
           </div>
-          <div class="col-1">
-            <img class="image"
-                 src="{{mail['victim']['ship_type_id'] | image:'ship'}}">
+          <div class="row"
+               *ngIf="!mail['victim']['alliance_id']">
+            <p>No Alliance</p>
           </div>
-          <div class="col-3">
-            <div class="row">
-              <b>Defender: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }} </div>
-            <div class="row">
-              <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }} </div>
-            <div class="row"
-                 *ngIf="mail['victim']['alliance_id']">
-              <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}"
-                   class="image-icon">
-              <p>{{ (mail['victim']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
-            </div>
-            <div class="row"
-                 *ngIf="!mail['victim']['alliance_id']">
-              <p>No Alliance</p>
-            </div>
-            <div class="row">
-              <img src="{{mail['victim']['corporation_id'] | image:'corporation'}}"
-                   class="image-icon"> {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }} </div>
+          <div class="row">
+            <img src="{{mail['victim']['corporation_id'] | image:'corporation'}}"
+                 class="image-icon"> {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }} </div>
+        </div>
+        <div class="col-1">
+          <img class="image"
+               src="{{mail['final_blow']['character_id'] | image:'character'}}">
+        </div>
+        <div class="col-1">
+          <img class="image"
+               src="{{mail['final_blow']['ship_type_id'] | image:'ship'}}">
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <b>Attacker: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }} ({{
+            mail['zkb']['npc'] ? 'NPC' : mail['attackers'].length }}) </div>
+          <div class="row">
+            <b>Ship: </b>{{ universe.getTypeName(mail['final_blow']['ship_type_id']) }} </div>
+          <div class="row"
+               *ngIf="mail['final_blow']['alliance_id']">
+            <img class="image-icon"
+                 src="{{mail['final_blow']['alliance_id'] | image:'alliance'}}">
+            <p>{{ (mail['final_blow']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
           </div>
-          <div class="col-1">
-            <img class="image"
-                 src="{{mail['final_blow']['character_id'] | image:'character'}}">
+          <div class="row"
+               *ngIf="!mail['final_blow']['alliance_id']">
+            <p>No Alliance</p>
           </div>
-          <div class="col-1">
-            <img class="image"
-                 src="{{mail['final_blow']['ship_type_id'] | image:'ship'}}">
-          </div>
-          <div class="col-3">
-            <div class="row">
-              <b>Attacker: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }} ({{
-              mail['zkb']['npc'] ? 'NPC' : mail['attackers'].length }}) </div>
-            <div class="row">
-              <b>Ship: </b>{{ universe.getTypeName(mail['final_blow']['ship_type_id']) }} </div>
-            <div class="row"
-                 *ngIf="mail['final_blow']['alliance_id']">
-              <img class="image-icon"
-                   src="{{mail['final_blow']['alliance_id'] | image:'alliance'}}">
-              <p>{{ (mail['final_blow']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
-            </div>
-            <div class="row"
-                 *ngIf="!mail['final_blow']['alliance_id']">
-              <p>No Alliance</p>
-            </div>
-            <div class="row">
-              <img class="image-icon"
-                   src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}"> {{
-              (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name }} </div>
-          </div>
+          <div class="row">
+            <img class="image-icon"
+                 src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}"> {{
+            (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name }} </div>
         </div>
       </div>
     </div>

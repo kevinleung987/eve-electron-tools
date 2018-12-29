@@ -26,15 +26,11 @@
               [disabled]="local.busy">Scan</button>
       <button class="btn btn-raised btn-danger btn-block"
               (click)="resetView()">Reset</button>
-      <label class="btn btn-secondary active col-6">
-        <input type="checkbox"
-               checked
-               [(ngModel)]="parallel"
-               [disabled]="local.busy"> Parallel </label>
-      <label class="btn btn-warning active col-6">
-        <input type="checkbox"
-               checked
-               [(ngModel)]="debug"> Debug </label>
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="parallel"><b>Parallel Mode</b></label>
+      </div>
     </div>
     <div class="col-sm-12 col-lg-4">
       <label><b>Corporations({{ local.displayCorporations.length }})</b></label>
@@ -55,7 +51,7 @@
           </div>
         </div>
       </div>
-      <span *ngIf="debug">
+      <span *ngIf="config.debug">
         <p>Character Cache Hits/Misses: {{local.cacheStats.character.toString().replace(',', '/')}}</p>
         <p>Corporation Cache Hits/Misses: {{local.cacheStats.corporation.toString().replace(',', '/')}}</p>
         <p>Alliance Cache Hits/Misses: {{local.cacheStats.alliance.toString().replace(',', '/')}}</p>

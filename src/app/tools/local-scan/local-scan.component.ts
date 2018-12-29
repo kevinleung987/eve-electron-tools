@@ -10,14 +10,15 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
-
   placeholder = this.config.isDemo() ? environment.localScanPlaceholder : null;
   parallel = false;
-  debug = false;
 
-  constructor(private config: ConfigService, private alert: AlertService, public local: LocalScanService) { }
+  constructor(public config: ConfigService, private alert: AlertService, public local: LocalScanService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // @ts-ignore
+    window.$('app-local-scan').bootstrapMaterialDesign();
+  }
 
   onSubmit(input: string) {
     if (input == null || input.length === 0) {

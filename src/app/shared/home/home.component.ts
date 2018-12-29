@@ -9,7 +9,6 @@ import { ElectronService } from 'src/app/services/electron.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
   configText = this.config.getConfig();
 
   constructor(public electron: ElectronService, public config: ConfigService, private alert: AlertService) { }

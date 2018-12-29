@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
-
   fileName = 'mapSolarSystemJumps.csv';
   jumps = {};
   ready = new BehaviorSubject(false);
@@ -34,15 +33,16 @@ export class NavigationService {
       }, error => console.error(error));
     this.ready.subscribe((result) => {
       if (result) {
-        // console.log(this.getNumJumps(30001947, 30003647));
+        // console.log(this.getRoute(30001947, 30003647));
       }
     });
   }
-
-  getNumJumps(start: number, finish: number) {
-    // Classic Breadth-First-Search, takes around 0.03 seconds for 100 jump route
+  // TODO: Convert to Uniform-Cost Search
+  getRoute(start: number, finish: number) {
+    // Breadth-First-Search with cycle-checking, takes around 0.03 seconds for
+    // 100 jump route
     const startTime = Date.now();
-    const prev = {};
+    const prev = {};  // Cycle checking
     prev[start] = 0;
     const open = [];
     open.push([start]);

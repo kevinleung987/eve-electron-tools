@@ -1,32 +1,24 @@
 import { Injectable } from '@angular/core';
-import {
-  DisplayAlliance,
-  DisplayCorporation,
-  EveAlliance,
-  EveCharacter,
-  EveCorporation,
-} from 'src/app/models/EveModels.model';
+import { DisplayAlliance, DisplayCorporation, EveAlliance, EveCharacter, EveCorporation, } from 'src/app/models/EveModels.model';
 import { EveService } from 'src/app/services/eve.service';
 
 @Injectable({ providedIn: 'root' })
 export class LocalScanService {
-
+  // Cached requests
   public characterMap: { [name: string]: number };
   public characters: { [id: number]: EveCharacter };
   public corporations: { [id: number]: EveCorporation };
   public alliances: { [id: number]: EveAlliance };
-
+  // Current results
   public activeCorporations: { [id: number]: DisplayCorporation };
   public activeAlliances: { [id: number]: DisplayAlliance };
-
   public displayCorporations: DisplayCorporation[] = [];
   public displayAlliances: DisplayAlliance[] = [];
-
+  // Statistics
   public progress = 0;
   public cacheStats = { character: [0, 0], corporation: [0, 0], alliance: [0, 0] }; // Hits/Misses
   public runTime = 0;
   public busy = false;
-
 
   constructor(private eve: EveService) {
     this.characterMap = {};

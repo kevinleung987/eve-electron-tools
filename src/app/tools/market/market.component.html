@@ -10,19 +10,15 @@
   <div class="row">
     <div class="col-6">
       <h5>Current Item: {{currItem | universe:'item'}}</h5>
-      <div class="row">
-        <app-search [placeholder]="'Search for an item here...'"
-                    [source]="suggest.typeNames"
-                    (submit)="onSubmitItem($event)"></app-search>
-      </div>
+      <app-search [placeholder]="'Search for an item here...'"
+                  [source]="suggest.typeNames"
+                  (submit)="onSubmitItem($event)"></app-search>
     </div>
     <div class="col-6">
       <h5>Current Region: {{currRegion | universe:'region'}}</h5>
-      <div class="row">
-        <app-search [placeholder]="'Select a market region...'"
-                    [source]="suggest.regionNames"
-                    (submit)="onSubmitRegion($event)"></app-search>
-      </div>
+      <app-search [placeholder]="'Select a market region...'"
+                  [source]="suggest.regionNames"
+                  (submit)="onSubmitRegion($event)"></app-search>
     </div>
   </div>
   <div class="jumbotron">
