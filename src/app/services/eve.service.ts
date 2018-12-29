@@ -42,4 +42,11 @@ export class EveService {
         `https://esi.evetech.net/latest/markets/${regionId}/orders/?datasource=tranquility&order_type=all&type_id=${typeId}`)
       .toPromise();
   }
+
+  universeTypes(typeId: number): Promise<any> {
+    return this.http
+      .get(
+        `https://esi.evetech.net/latest/universe/types/${typeId}/?datasource=tranquility&language=en-us`)
+      .toPromise();
+  }
 }

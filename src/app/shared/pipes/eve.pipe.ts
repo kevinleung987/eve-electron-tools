@@ -17,6 +17,8 @@ export class EvePipe implements PipeTransform {
         return this.eveService.corporations(value);
       case 'character':
         return this.eveService.characters(value);
+      case 'type':
+        return this.eveService.universeTypes(value);
       default:
         return null;
     }

@@ -25,7 +25,8 @@
     <div class="row">
       <div class="col-10">
         <h1>{{currItem | universe:'item'}}</h1>
-        <p>{{currItem | universe:'groupID' | universe:'group'}}</p>
+        <p><b>{{currItem | universe:'groupID' | universe:'group'}}</b></p>
+        <small [innerHTML]="(currItem | eve:'type' | async)?.description"></small>
       </div>
       <div class="col-2">
         <img class="image"
