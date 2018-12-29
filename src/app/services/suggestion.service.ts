@@ -7,11 +7,13 @@ import { BehaviorSubject } from 'rxjs';
 export class SuggestionService {
 
   typeNames: string[] = [];
+  groupNames: string[] = [];
   systemNames: string[] = [];
   regionNames: string[] = [];
 
   constructor(private universe: UniverseService) {
     this.loadSuggestions(this.universe.typeNames, this.typeNames, 'typeNames');
+    this.loadSuggestions(this.universe.groupNames, this.groupNames, 'groupNames');
     this.loadSuggestions(this.universe.systemNames, this.systemNames, 'systemNames');
     this.loadSuggestions(this.universe.regionNames, this.regionNames, 'regionNames');
   }

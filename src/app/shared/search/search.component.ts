@@ -11,6 +11,7 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
 export class SearchComponent implements OnInit {
 
   @Input() placeholder: string;
+  @Input() useSuggestions = true;
   @Input() source: any[];
   @Input() numSuggestions = 10;
   @Input() searchDelay = 250;
@@ -26,6 +27,7 @@ export class SearchComponent implements OnInit {
   constructor(public suggest: SuggestionService) { }
 
   ngOnInit() {
+    if (!this.useSuggestions) { return; }
     fromEvent(this.searchBar.nativeElement, 'input')
       .pipe(map((event: Event) => (<HTMLInputElement>event.target).value),
         debounceTime(this.searchDelay),
@@ -105,7 +107,13 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submit.emit(this.activeIndex >= 0 ? this.searchValue : null);
+    if (this.activeIndex >= 0 && this.useSuggestions) {
+      console.log(this.suggestions[this.activeIndex]);
+      this.submit.emit(this.suggestions[this.activeIndex]);
+    } else if (!this.useSuggestions) {
+      console.log(this.searchValue);
+      this.submit.emit(this.searchValue);
+    }
   }
 
   hide(event: MouseEvent) {

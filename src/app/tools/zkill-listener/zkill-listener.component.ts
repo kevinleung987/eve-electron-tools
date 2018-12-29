@@ -6,6 +6,7 @@ import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
 import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
+import { SuggestionService } from 'src/app/services/suggestion.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -19,17 +20,30 @@ export class ZkillListenerComponent implements OnInit {
   private length = 5;
   private socket: WebSocketSubject<{}>;
   private activeFilters: {
-    who?: ((mail: ZkillMail) => boolean)
-    what?: ((mail: ZkillMail) => boolean)
-    where?: ((mail: ZkillMail) => boolean)
+    ship?: ((mail: ZkillMail) => boolean),
+    location?: ((mail: ZkillMail) => boolean),
+    involved?: ((mail: ZkillMail) => boolean)
   } = {};
+  filterTypes = {
+    ship: {
+      whichType: 'victim',
+      filterType: 'ship'
+    },
+    location: {
+      filterType: 'region'
+    },
+    involved: {
+      whichType: 'victim',
+      filterType: 'character'
+    },
+  };
   filtersHidden = false;
   shipChecked = true;
   locationChecked = true;
   involvedChecked = true;
 
   constructor(private config: ConfigService, private electron: ElectronService, private alert: AlertService,
-    public universe: UniverseService) { }
+    public universe: UniverseService, private suggest: SuggestionService) { }
 
   ngOnInit() {
     if (this.config.isDemo()) {

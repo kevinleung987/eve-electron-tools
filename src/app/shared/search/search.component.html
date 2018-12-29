@@ -16,7 +16,7 @@
       <button type="button"
               class="btn btn-raised btn-primary"
               (click)="onSubmit()"
-              [disabled]="dirty || searchValue.length === 0">Select</button>
+              [disabled]="searchValue.length === 0 || (dirty && useSuggestions) || (activeIndex === -1 && useSuggestions)">Select</button>
     </div>
   </div>
   <div class="row">

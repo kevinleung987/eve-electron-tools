@@ -70,7 +70,8 @@
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
-                  id="shipWhichType">
+                  id="shipWhichType"
+                  [(ngModel)]="filterTypes.ship.whichType">
             <option value="victim"
                     selected>Victim</option>
             <option value="attacker">Attacker</option>
@@ -78,11 +79,17 @@
         </div>
         <div class="col-2">
           <select class="custom-select"
-                  id="shipFilterType">
+                  id="shipFilterType"
+                  [(ngModel)]="filterTypes.ship.filterType">
             <option value="ship"
                     selected>Ship</option>
             <option value="group">Ship Group</option>
           </select>
+        </div>
+        <div class="col-8">
+          <app-search [placeholder]="'Search'"
+                      [source]="suggest.typeNames"
+                      (submit)="null"></app-search>
         </div>
       </div>
     </div>
@@ -93,11 +100,18 @@
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
-                  id="locationFilterType">
+                  id="locationFilterType"
+                  [(ngModel)]="filterTypes.location.filterType">
             <option value="region"
                     selected>Region</option>
             <option value="system">System</option>
           </select>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-8">
+          <app-search [placeholder]="'Search'"
+                      [source]="suggest.systemNames"
+                      (submit)="null"></app-search>
         </div>
       </div>
     </div>
@@ -108,7 +122,8 @@
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
-                  id="involvedWhichType">
+                  id="involvedWhichType"
+                  [(ngModel)]="filterTypes.involved.whichType">
             <option value="victim"
                     selected>Victim</option>
             <option value="attacker">Attacker</option>
@@ -116,12 +131,18 @@
         </div>
         <div class="col-2">
           <select class="custom-select"
-                  id="involvedFilterType">
+                  id="involvedFilterType"
+                  [(ngModel)]="filterTypes.involved.filterType">
             <option value="character"
                     selected>Character</option>
             <option value="corporation">Corporation</option>
             <option value="alliance">Alliance</option>
           </select>
+        </div>
+        <div class="col-8">
+          <app-search [placeholder]="'Search'"
+                      [useSuggestions]="false"
+                      (submit)="null"></app-search>
         </div>
       </div>
     </div>

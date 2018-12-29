@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
 
-  readonly numToLoad = 7;
+  readonly numToLoad = 8;
   public isLoaded = new BehaviorSubject(0);
   public typeData = new BehaviorSubject(null);
   public systemData = new BehaviorSubject(null);
@@ -17,6 +17,7 @@ export class UniverseService {
   public typeNames = new BehaviorSubject(null);
   public systemNames = new BehaviorSubject(null);
   public regionNames = new BehaviorSubject(null);
+  public groupNames = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private papa: Papa) {
     this.initializeData('invTypes.csv', 'typeID', this.typeData)
@@ -39,7 +40,8 @@ export class UniverseService {
     this.initializeData('invGroups.csv', 'groupID',
       this.groupData)
       .add(() => {
-        this.incrementLoad(1);
+        this.initializeMap(this.groupData, this.groupNames, 'groupName', null);
+        this.incrementLoad(2);
       });
     this.waitUntilLoaded(() => {
       if (!(this.getTypeName(34) === 'Tritanium')) { console.error('typeData could not be parsed.'); }
