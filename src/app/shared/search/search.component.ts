@@ -25,7 +25,6 @@ export class SearchComponent implements OnInit {
 
   @Input()
   set source(source: string[]) {
-    console.log('a');
     this._source = source;
     this.searchValue = '';
     this.suggestions = [];

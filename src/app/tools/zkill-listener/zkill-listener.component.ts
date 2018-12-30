@@ -38,13 +38,13 @@ export class ZkillListenerComponent implements OnInit {
   shipFilterType = ShipFilterType;
   locationFilterType = LocationFilterType;
   involvedFilterType = InvolvedFilterType;
-  private length = 5;
-  private socket: WebSocketSubject<{}>;
-  private activeFilters: {
+  activeFilters: {
     ship?: ((mail: ZkillMail) => boolean),
     location?: ((mail: ZkillMail) => boolean),
     involved?: ((mail: ZkillMail) => boolean)
   } = {};
+  private length = 5;
+  private socket: WebSocketSubject<{}>;
 
   constructor(private config: ConfigService, private electron: ElectronService,
     private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService) { }
@@ -54,7 +54,8 @@ export class ZkillListenerComponent implements OnInit {
     window.$('app-zkill-listener').bootstrapMaterialDesign();
     if (this.config.isDemo()) {
       this.mails.push(environment.zkillExample);
-      console.log(this.mails);
+      console.log(this.mails[0]);
+      console.log(this.applyFilters(this.mails[0]));
     }
   }
 
@@ -72,6 +73,7 @@ export class ZkillListenerComponent implements OnInit {
         });
         this.mails.unshift(message);
         console.log(message);
+        console.log(this.applyFilters(message));
         if (this.mails.length > this.length) {
           this.mails.pop();
         }
@@ -96,7 +98,63 @@ export class ZkillListenerComponent implements OnInit {
 
   openLink(url: string) { this.electron.openUrl(url); }
 
-  onSubmit(event, type: string) {
+  onSubmit(event, type: FilterType) {
     console.log(event, type);
+    switch (type) {
+      case FilterType.Ship:
+        switch (this.filterSettings.ship.whichType) {
+          case WhichType.Victim:
+            switch (this.filterSettings.ship.filterType) {
+              case ShipFilterType.Ship:
+
+              case ShipFilterType.ShipGroup:
+
+            } break;
+          case WhichType.Attacker:
+            switch (this.filterSettings.ship.filterType) {
+              case ShipFilterType.Ship:
+
+              case ShipFilterType.ShipGroup:
+
+            } break;
+        } break;
+      case FilterType.Location:
+        switch (this.filterSettings.location.filterType) {
+          case LocationFilterType.Region:
+
+          case LocationFilterType.System:
+
+        } break;
+      case FilterType.Involved:
+        switch (this.filterSettings.involved.whichType) {
+          case WhichType.Victim:
+            switch (this.filterSettings.involved.filterType) {
+              case InvolvedFilterType.Character:
+
+              case InvolvedFilterType.Corporation:
+
+              case InvolvedFilterType.Alliance:
+
+            } break;
+          case WhichType.Attacker:
+            switch (this.filterSettings.involved.filterType) {
+              case InvolvedFilterType.Character:
+
+              case InvolvedFilterType.Corporation:
+
+              case InvolvedFilterType.Alliance:
+
+            } break;
+        } break;
+    }
+  }
+
+  applyFilters(mail: ZkillMail): boolean {
+    Object.keys(this.activeFilters).forEach(filterType => {
+      if (this.activeFilters[filterType] && this.activeFilters[filterType](mail)) {
+        return true;
+      }
+    });
+    return false;
   }
 }

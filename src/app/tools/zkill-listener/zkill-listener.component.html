@@ -35,21 +35,24 @@
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="shipChecked"><b>Filter by Ship</b></label>
+                 [(ngModel)]="shipChecked"
+                 (change)="activeFilters.ship=null"><b>Filter by Ship</b></label>
       </div>
     </div>
     <div class="col-2">
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="locationChecked"><b>Filter by Location</b></label>
+                 [(ngModel)]="locationChecked"
+                 (change)="activeFilters.location=null"><b>Filter by Location</b></label>
       </div>
     </div>
     <div class="col-2">
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="involvedChecked"><b>Filter by Involved</b></label>
+                 [(ngModel)]="involvedChecked"
+                 (change)="activeFilters.involved=null"><b>Filter by Involved</b></label>
       </div>
     </div>
   </div>
