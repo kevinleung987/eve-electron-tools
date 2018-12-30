@@ -105,7 +105,7 @@ export class UniverseService {
   }
 
   getTypeGroup(id: number): number {
-    return this.typeData.value && this.typeData.value[id] ? this.typeData.value[id]['groupID'] : null;
+    return this.typeData.value && this.typeData.value[id] ? Number(this.typeData.value[id]['groupID']) : null;
   }
 
   getSystemName(id: number): string {
@@ -116,12 +116,12 @@ export class UniverseService {
     return this.systemNames.value && this.systemNames.value[name] ? Number(this.systemNames.value[name]) : null;
   }
 
-  getSystemSecurity(id: number): number {
+  getSystemSecurity(id: number): string {
     return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['security'] : null;
   }
 
   getSystemRegion(id: number): number {
-    return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['regionID'] : null;
+    return this.systemData.value && this.systemData.value[id] ? Number(this.systemData.value[id]['regionID']) : null;
   }
 
   getRegionName(id: number): string {
@@ -138,6 +138,10 @@ export class UniverseService {
 
   getGroupName(id: number): string {
     return this.groupData.value && this.groupData.value[id] ? this.groupData.value[id]['groupName'] : null;
+  }
+
+  getGroupId(name: string): number {
+    return this.groupNames.value && this.groupNames.value[name] ? Number(this.groupNames.value[name]) : null;
   }
 
   getSecurityColor(sec: number): string {

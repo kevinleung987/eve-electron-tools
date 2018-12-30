@@ -28,10 +28,8 @@ export class SuggestionService {
   }
 
   suggest(items: any[], value: any, num: number) {
-    const startTime = Date.now();
     if (items == null || value == null || value.length < 1) { return null; }
     const result = matchSorter(items, value).slice(0, num);
-    console.log((Date.now() - startTime) / 1000);
     return result;
   }
 }

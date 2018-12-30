@@ -116,10 +116,8 @@ export class SearchComponent implements OnInit {
   onSubmit() {
     this.suggestionsHidden = true;
     if (this.activeIndex >= 0 && this.useSuggestions) {
-      console.log(this.suggestions[this.activeIndex]);
       this.submit.emit(this.suggestions[this.activeIndex]);
     } else if (!this.useSuggestions) {
-      console.log(this.searchValue);
       this.submit.emit(this.searchValue);
     }
   }

@@ -28,14 +28,14 @@
       <button type="button"
               class="btn btn-raised btn-info"
               (click)="filtersHidden = !filtersHidden"
-              [disabled]="!shipChecked && !locationChecked && !involvedChecked">{{filtersHidden ? 'Show' : 'Hide'}}</button>
+              [disabled]="!checked.ship && !checked.location && !checked.involved">{{filtersHidden ? 'Show' : 'Hide'}}</button>
     </div>
     <!-- Filter toggles -->
     <div class="col-2">
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="shipChecked"
+                 [(ngModel)]="checked.ship"
                  (change)="activeFilters.ship=null"><b>Filter by Ship</b></label>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="locationChecked"
+                 [(ngModel)]="checked.location"
                  (change)="activeFilters.location=null"><b>Filter by Location</b></label>
       </div>
     </div>
@@ -51,7 +51,7 @@
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="involvedChecked"
+                 [(ngModel)]="checked.involved"
                  (change)="activeFilters.involved=null"><b>Filter by Involved</b></label>
       </div>
     </div>
@@ -59,7 +59,7 @@
   <div *ngIf="!filtersHidden">
     <!-- Ship Filter -->
     <div class="card row"
-         *ngIf="shipChecked">
+         *ngIf="checked.ship">
       <h5 class="card-header">Ship</h5>
       <div class="card-body row">
         <div class="col-2">
@@ -80,13 +80,13 @@
           <app-search [placeholder]="'Search'"
                       [source]="filterSettings.ship.filterType === shipFilterType.Ship 
                       ? suggest.typeNames : suggest.groupNames"
-                      (submit)="onSubmit($event, filterType.Ship)"></app-search>
+                      (submit)="onSubmitShip($event)"></app-search>
         </div>
       </div>
     </div>
     <!-- Location Filter -->
     <div class="card row"
-         *ngIf="locationChecked">
+         *ngIf="checked.location">
       <h5 class="card-header">Location</h5>
       <div class="card-body row">
         <div class="col-2">
@@ -101,13 +101,13 @@
           <app-search [placeholder]="'Search'"
                       [source]="filterSettings.location.filterType === locationFilterType.Region 
                       ? suggest.regionNames : suggest.systemNames"
-                      (submit)="onSubmit($event, filterType.Location)"></app-search>
+                      (submit)="onSubmitLocation($event)"></app-search>
         </div>
       </div>
     </div>
     <!-- Involved Filter -->
     <div class="card row"
-         *ngIf="involvedChecked">
+         *ngIf="checked.involved">
       <h5 class="card-header">Involved</h5>
       <div class="card-body row">
         <div class="col-2">
@@ -129,7 +129,7 @@
         <div class="col-8">
           <app-search [placeholder]="'Search'"
                       [useSuggestions]="false"
-                      (submit)="onSubmit($event, filterType.Involved)"></app-search>
+                      (submit)="onSubmitInvolved($event)"></app-search>
         </div>
       </div>
     </div>

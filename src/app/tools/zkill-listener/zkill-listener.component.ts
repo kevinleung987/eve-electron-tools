@@ -7,6 +7,7 @@ import {
   ShipFilterType,
   WhichType,
   ZkillMail,
+  Character,
 } from 'src/app/models/Zkill.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
@@ -14,6 +15,7 @@ import { ElectronService } from 'src/app/services/electron.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
+import { EveService } from 'src/app/services/eve.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -23,31 +25,31 @@ import { environment } from 'src/environments/environment';
 export class ZkillListenerComponent implements OnInit {
   listening = false;
   mails: ZkillMail[] = [];
+  // Filter-related variables
+  checked = { ship: true, location: true, involved: true };
+  filtersHidden = false;
   filterSettings = {
     ship: { whichType: WhichType.Victim, filterType: ShipFilterType.Ship },
     location: { filterType: LocationFilterType.Region },
     involved: { whichType: WhichType.Victim, filterType: InvolvedFilterType.Character },
   };
-  filtersHidden = false;
-  shipChecked = true;
-  locationChecked = true;
-  involvedChecked = true;
-  // Bindings to enums for template
-  whichType = WhichType;
-  filterType = FilterType;
-  shipFilterType = ShipFilterType;
-  locationFilterType = LocationFilterType;
-  involvedFilterType = InvolvedFilterType;
+  // Filter functions
   activeFilters: {
     ship?: ((mail: ZkillMail) => boolean),
     location?: ((mail: ZkillMail) => boolean),
     involved?: ((mail: ZkillMail) => boolean)
   } = {};
+  // Bindings to Enums for template
+  whichType = WhichType;
+  shipFilterType = ShipFilterType;
+  locationFilterType = LocationFilterType;
+  involvedFilterType = InvolvedFilterType;
+
   private length = 5;
   private socket: WebSocketSubject<{}>;
 
   constructor(private config: ConfigService, private electron: ElectronService,
-    private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService) { }
+    private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService, private eve: EveService) { }
 
   ngOnInit() {
     // @ts-ignore
@@ -55,7 +57,6 @@ export class ZkillListenerComponent implements OnInit {
     if (this.config.isDemo()) {
       this.mails.push(environment.zkillExample);
       console.log(this.mails[0]);
-      console.log(this.applyFilters(this.mails[0]));
     }
   }
 
@@ -98,63 +99,99 @@ export class ZkillListenerComponent implements OnInit {
 
   openLink(url: string) { this.electron.openUrl(url); }
 
-  onSubmit(event, type: FilterType) {
-    console.log(event, type);
-    switch (type) {
-      case FilterType.Ship:
-        switch (this.filterSettings.ship.whichType) {
-          case WhichType.Victim:
-            switch (this.filterSettings.ship.filterType) {
-              case ShipFilterType.Ship:
-
-              case ShipFilterType.ShipGroup:
-
-            } break;
-          case WhichType.Attacker:
-            switch (this.filterSettings.ship.filterType) {
-              case ShipFilterType.Ship:
-
-              case ShipFilterType.ShipGroup:
-
-            } break;
-        } break;
-      case FilterType.Location:
-        switch (this.filterSettings.location.filterType) {
-          case LocationFilterType.Region:
-
-          case LocationFilterType.System:
-
-        } break;
-      case FilterType.Involved:
-        switch (this.filterSettings.involved.whichType) {
-          case WhichType.Victim:
-            switch (this.filterSettings.involved.filterType) {
-              case InvolvedFilterType.Character:
-
-              case InvolvedFilterType.Corporation:
-
-              case InvolvedFilterType.Alliance:
-
-            } break;
-          case WhichType.Attacker:
-            switch (this.filterSettings.involved.filterType) {
-              case InvolvedFilterType.Character:
-
-              case InvolvedFilterType.Corporation:
-
-              case InvolvedFilterType.Alliance:
-
-            } break;
-        } break;
+  onSubmitShip(event) {
+    // Create filter function, store the id to filter for in closure
+    let filterFunc: ((typeId: number) => boolean) = null;
+    switch (this.filterSettings.ship.filterType) {
+      case ShipFilterType.Ship:
+        const filterTypeId = this.universe.getTypeId(event);
+        filterFunc = (typeId: number) => (typeId === filterTypeId);
+        break;
+      case ShipFilterType.ShipGroup:
+        const filterGroupId = this.universe.getGroupId(event);
+        filterFunc = (typeId: number) => (this.universe.getTypeGroup(typeId) === filterGroupId);
+        break;
     }
+    // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
+    switch (this.filterSettings.ship.whichType) {
+      case WhichType.Victim:
+        this.activeFilters.ship = (mail: ZkillMail) => filterFunc(mail.victim.ship_type_id);
+        break;
+      case WhichType.Attacker:
+        this.activeFilters.ship = (mail: ZkillMail) => {
+          let filtered = false;
+          mail.attackers.forEach(attacker => {
+            if (filterFunc(attacker.ship_type_id)) {
+              filtered = true;
+            }
+          });
+          return filtered;
+        };
+        break;
+    }
+    console.log('Match:', this.applyFilters(this.mails[0]));
+  }
+
+  onSubmitLocation(event) {
+    switch (this.filterSettings.location.filterType) {
+      case LocationFilterType.Region:
+        const filterRegionId = this.universe.getRegionId(event);
+        this.activeFilters.location = (mail: ZkillMail) => {
+          const regionId = this.universe.getSystemRegion(mail.solar_system_id);
+          return regionId === filterRegionId;
+        };
+        break;
+      case LocationFilterType.System:
+        const filterSystemId = this.universe.getSystemId(event);
+        this.activeFilters.location = (mail: ZkillMail) => {
+          return mail.solar_system_id === filterSystemId;
+        };
+        break;
+    }
+    console.log('Match:', this.applyFilters(this.mails[0]));
+  }
+
+  async onSubmitInvolved(event) {
+    // Create filter function, store the id to filter for in closure
+    let filterFunc: ((character: Character) => boolean) = null;
+    let filterToken: string;
+    switch (this.filterSettings.involved.filterType) {
+      case InvolvedFilterType.Character: filterToken = 'character'; break;
+      case InvolvedFilterType.Corporation: filterToken = 'corporation'; break;
+      case InvolvedFilterType.Alliance: filterToken = 'alliance'; break;
+    }
+    const searchResult = await this.eve.search(event, filterToken, true);
+    if (searchResult[filterToken] == null) { this.alert.error(`No ${filterToken} found.`); return; }
+    const filterId = searchResult[filterToken][0];
+    filterFunc = (character: Character) => (character[filterToken + '_id'] === filterId);
+    // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
+    switch (this.filterSettings.involved.whichType) {
+      case WhichType.Victim:
+        this.activeFilters.involved = (mail: ZkillMail) => filterFunc(mail.victim);
+        break;
+      case WhichType.Attacker:
+        this.activeFilters.involved = (mail: ZkillMail) => {
+          let filtered = false;
+          mail.attackers.forEach(attacker => {
+            if (filterFunc(attacker)) {
+              filtered = true;
+            }
+          });
+          return filtered;
+        };
+        break;
+    }
+    console.log('Match:', this.applyFilters(this.mails[0]));
   }
 
   applyFilters(mail: ZkillMail): boolean {
+    let filtered = false;
     Object.keys(this.activeFilters).forEach(filterType => {
-      if (this.activeFilters[filterType] && this.activeFilters[filterType](mail)) {
-        return true;
+      if (this.activeFilters[filterType] != null && this.activeFilters[filterType](mail)) {
+        filtered = true;
+        return;
       }
     });
-    return false;
+    return filtered;
   }
 }

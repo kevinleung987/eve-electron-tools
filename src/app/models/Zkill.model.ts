@@ -35,25 +35,24 @@ export class ZkillMail {
   final_blow: Attacker;
 }
 
-export class Attacker {
+export class Character {
   alliance_id: number;
   character_id: number;
   corporation_id: number;
+  ship_type_id: number;
+}
+
+export class Attacker extends Character {
   damage_done: number;
   final_blow: boolean;
   security_status: number;
-  ship_type_id: number;
   weapon_type_id: number;
 }
 
-export class Victim {
-  alliance_id: number;
-  character_id: number;
-  corporation_id: number;
+export class Victim extends Character {
   damage_taken: number;
   items: Item[];
   position: Position;
-  ship_type_id: number;
 }
 
 export class Item {
