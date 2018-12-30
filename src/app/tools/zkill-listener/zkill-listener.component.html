@@ -1,11 +1,12 @@
 <app-header [title]="'zKill Listener'">
   <div class="row">
-    <h5 class="mx-auto"> Click on Start Listening to begin listening for new killmails from zKillboard. <kbd>Left-click</kbd>
-      to view a mail on zKillboard. <kbd>Right-click</kbd> to delete a mail. </h5>
+    <h5 class="mx-auto"> Click on <kbd>Start Listening</kbd> to begin listening for new killmails from zKillboard. <kbd>Left-click</kbd>
+      to view a mail on zKillboard. <kbd>Right-click</kbd> to delete a mail.</h5>
   </div>
 </app-header>
 <div class="container">
-  <div class="row">
+  <!-- Top Button Row -->
+  <div class="row button-row">
     <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-primary"
@@ -18,19 +19,44 @@
               (click)="stop()"
               [disabled]="!listening">Stop Listening</button>
     </div>
-    <div class="col-1">
+    <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-success"
               (click)="clear()"
-              [disabled]="mails.length === 0">Clear</button>
+              [disabled]="mails.length === 0">Clear Results</button>
     </div>
-    <div class="col-1">
+    <div class="col-2">
+      <input type="list-length"
+             class="form-control"
+             [(ngModel)]="length">
+      <small>Length of List</small>
+    </div>
+    <div class="col-2">
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="checked.filters"><b>Enable Filters</b></label>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="checked.alerts"><b>Enable Alerts</b></label>
+      </div>
+    </div>
+  </div>
+  <!-- Filter toggles -->
+  <div class="row button-row"
+       [hidden]="!checked.filters">
+    <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-info"
               (click)="filtersHidden = !filtersHidden"
-              [disabled]="!checked.ship && !checked.location && !checked.involved">{{filtersHidden ? 'Show' : 'Hide'}}</button>
+              [disabled]="!checked.ship && !checked.location && !checked.involved">{{filtersHidden ? 'Show Filters' :
+        'Hide Filters'}}</button>
     </div>
-    <!-- Filter toggles -->
+    <div class="col-2">Num. Filtered: {{numFiltered}}</div>
     <div class="col-2">
       <div class="switch">
         <label>
@@ -53,6 +79,13 @@
           <input type="checkbox"
                  [(ngModel)]="checked.involved"
                  (change)="activeFilters.involved=null"><b>Filter by Involved</b></label>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="switch">
+        <label>
+          <input type="checkbox"
+                 [(ngModel)]="checked.matchAll"><b>Must match ALL filters</b></label>
       </div>
     </div>
   </div>

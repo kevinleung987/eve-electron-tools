@@ -3,12 +3,6 @@ export enum WhichType {
   Attacker = 'Attacker'
 }
 
-export enum FilterType {
-  Ship = 'Ship',
-  Location = 'Location',
-  Involved = 'Involved'
-}
-
 export enum ShipFilterType {
   Ship = 'Ship',
   ShipGroup = 'Ship Group'

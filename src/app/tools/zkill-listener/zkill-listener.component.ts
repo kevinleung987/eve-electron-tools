@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import {
-  FilterType,
   InvolvedFilterType,
   LocationFilterType,
   ShipFilterType,
@@ -24,9 +23,11 @@ import { EveService } from 'src/app/services/eve.service';
 })
 export class ZkillListenerComponent implements OnInit {
   listening = false;
+  length = 5;
   mails: ZkillMail[] = [];
+  checked = { filters: true, ship: true, location: true, involved: true, alerts: true, matchAll: false };
   // Filter-related variables
-  checked = { ship: true, location: true, involved: true };
+  numFiltered = 0;
   filtersHidden = false;
   filterSettings = {
     ship: { whichType: WhichType.Victim, filterType: ShipFilterType.Ship },
@@ -45,7 +46,6 @@ export class ZkillListenerComponent implements OnInit {
   locationFilterType = LocationFilterType;
   involvedFilterType = InvolvedFilterType;
 
-  private length = 5;
   private socket: WebSocketSubject<{}>;
 
   constructor(private config: ConfigService, private electron: ElectronService,
@@ -94,6 +94,7 @@ export class ZkillListenerComponent implements OnInit {
 
   clear() {
     this.mails = [];
+    this.numFiltered = 0;
     this.alert.success('Cleared killmails.');
   }
 
@@ -189,9 +190,12 @@ export class ZkillListenerComponent implements OnInit {
     Object.keys(this.activeFilters).forEach(filterType => {
       if (this.activeFilters[filterType] != null && this.activeFilters[filterType](mail)) {
         filtered = true;
-        return;
+
       }
     });
+    if (filtered) {
+      this.numFiltered++;
+    }
     return filtered;
   }
 }
