@@ -61,26 +61,23 @@
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
-                  id="shipWhichType"
-                  [(ngModel)]="filterTypes.ship.whichType">
-            <option value="victim"
-                    selected>Victim</option>
-            <option value="attacker">Attacker</option>
+                  [(ngModel)]="filterSettings.ship.whichType">
+            <option [value]="whichType.Victim">Victim</option>
+            <option [value]="whichType.Attacker">Attacker</option>
           </select>
         </div>
         <div class="col-2">
           <select class="custom-select"
-                  id="shipFilterType"
-                  [(ngModel)]="filterTypes.ship.filterType">
-            <option value="ship"
-                    selected>Ship</option>
-            <option value="group">Ship Group</option>
+                  [(ngModel)]="filterSettings.ship.filterType">
+            <option [value]="shipFilterType.Ship">Ship</option>
+            <option [value]="shipFilterType.ShipGroup">Ship Group</option>
           </select>
         </div>
         <div class="col-8">
           <app-search [placeholder]="'Search'"
-                      [source]="getSuggestions('ship')"
-                      (submit)="null"></app-search>
+                      [source]="filterSettings.ship.filterType === shipFilterType.Ship 
+                      ? suggest.typeNames : suggest.groupNames"
+                      (submit)="onSubmit($event, filterType.Ship)"></app-search>
         </div>
       </div>
     </div>
@@ -91,18 +88,17 @@
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
-                  id="locationFilterType"
-                  [(ngModel)]="filterTypes.location.filterType">
-            <option value="region"
-                    selected>Region</option>
-            <option value="system">System</option>
+                  [(ngModel)]="filterSettings.location.filterType">
+            <option [value]="locationFilterType.Region">Region</option>
+            <option [value]="locationFilterType.System">System</option>
           </select>
         </div>
         <div class="col-2"></div>
         <div class="col-8">
           <app-search [placeholder]="'Search'"
-                      [source]="getSuggestions('location')"
-                      (submit)="null"></app-search>
+                      [source]="filterSettings.location.filterType === locationFilterType.Region 
+                      ? suggest.regionNames : suggest.systemNames"
+                      (submit)="onSubmit($event, filterType.Location)"></app-search>
         </div>
       </div>
     </div>
@@ -113,27 +109,24 @@
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
-                  id="involvedWhichType"
-                  [(ngModel)]="filterTypes.involved.whichType">
-            <option value="victim"
-                    selected>Victim</option>
-            <option value="attacker">Attacker</option>
+                  [(ngModel)]="filterSettings.involved.whichType">
+            <option [value]="whichType.Victim">Victim</option>
+            <option [value]="whichType.Attacker">Attacker</option>
           </select>
         </div>
         <div class="col-2">
           <select class="custom-select"
-                  id="involvedFilterType"
-                  [(ngModel)]="filterTypes.involved.filterType">
-            <option value="character"
+                  [(ngModel)]="filterSettings.involved.filterType">
+            <option [value]="involvedFilterType.Character"
                     selected>Character</option>
-            <option value="corporation">Corporation</option>
-            <option value="alliance">Alliance</option>
+            <option [value]="involvedFilterType.Corporation">Corporation</option>
+            <option [value]="involvedFilterType.Alliance">Alliance</option>
           </select>
         </div>
         <div class="col-8">
           <app-search [placeholder]="'Search'"
                       [useSuggestions]="false"
-                      (submit)="null"></app-search>
+                      (submit)="onSubmit($event, filterType.Involved)"></app-search>
         </div>
       </div>
     </div>

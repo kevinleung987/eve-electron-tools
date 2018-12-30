@@ -25,6 +25,7 @@ export class SearchComponent implements OnInit {
 
   @Input()
   set source(source: string[]) {
+    console.log('a');
     this._source = source;
     this.searchValue = '';
     this.suggestions = [];
@@ -114,6 +115,7 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
+    this.suggestionsHidden = true;
     if (this.activeIndex >= 0 && this.useSuggestions) {
       console.log(this.suggestions[this.activeIndex]);
       this.submit.emit(this.suggestions[this.activeIndex]);

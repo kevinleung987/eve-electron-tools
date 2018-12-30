@@ -20,15 +20,21 @@
            routerLinkActive="active">Home <span class="sr-only">(current)</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link"
-           [routerLink]="['/local-scan']"
-           routerLinkActive="active">Local Scan</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"
-           [routerLink]="['/d-scan']"
-           routerLinkActive="active">D-Scan</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="navbarDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">Scan</a>
+        <div class="dropdown-menu"
+             aria-labelledby="navbarDropdown">
+          <a class="dropdown-item"
+             [routerLink]="['/local-scan']">Local Scan</a>
+          <a class="dropdown-item"
+             [routerLink]="['/d-scan']">D-Scan</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link"

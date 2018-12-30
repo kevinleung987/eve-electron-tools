@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
-import { ZkillMail } from 'src/app/models/Zkill.model';
+import {
+  FilterType,
+  InvolvedFilterType,
+  LocationFilterType,
+  ShipFilterType,
+  WhichType,
+  ZkillMail,
+} from 'src/app/models/Zkill.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
+import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
-import { SuggestionService } from 'src/app/services/suggestion.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -16,6 +23,21 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
 export class ZkillListenerComponent implements OnInit {
   listening = false;
   mails: ZkillMail[] = [];
+  filterSettings = {
+    ship: { whichType: WhichType.Victim, filterType: ShipFilterType.Ship },
+    location: { filterType: LocationFilterType.Region },
+    involved: { whichType: WhichType.Victim, filterType: InvolvedFilterType.Character },
+  };
+  filtersHidden = false;
+  shipChecked = true;
+  locationChecked = true;
+  involvedChecked = true;
+  // Bindings to enums for template
+  whichType = WhichType;
+  filterType = FilterType;
+  shipFilterType = ShipFilterType;
+  locationFilterType = LocationFilterType;
+  involvedFilterType = InvolvedFilterType;
   private length = 5;
   private socket: WebSocketSubject<{}>;
   private activeFilters: {
@@ -23,19 +45,9 @@ export class ZkillListenerComponent implements OnInit {
     location?: ((mail: ZkillMail) => boolean),
     involved?: ((mail: ZkillMail) => boolean)
   } = {};
-  filterTypes = {
-    ship: { whichType: 'victim', filterType: 'ship' },
-    location: { filterType: 'region' },
-    involved: { whichType: 'victim', filterType: 'character' },
-  };
-  filtersHidden = false;
-  shipChecked = true;
-  locationChecked = true;
-  involvedChecked = true;
 
   constructor(private config: ConfigService, private electron: ElectronService,
-    private alert: AlertService, public universe: UniverseService,
-    private suggest: SuggestionService) { }
+    private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService) { }
 
   ngOnInit() {
     // @ts-ignore
@@ -84,24 +96,7 @@ export class ZkillListenerComponent implements OnInit {
 
   openLink(url: string) { this.electron.openUrl(url); }
 
-  getSuggestions(type: string) {
-    switch (type) {
-      case 'ship':
-        switch (this.filterTypes.ship.filterType) {
-          case 'ship':
-            return this.suggest.typeNames;
-          case 'group':
-            return this.suggest.groupNames;
-        }
-        break;
-      case 'location':
-        switch (this.filterTypes.location.filterType) {
-          case 'region':
-            return this.suggest.regionNames;
-          case 'system':
-            return this.suggest.systemNames;
-        }
-        break;
-    }
+  onSubmit(event, type: string) {
+    console.log(event, type);
   }
 }

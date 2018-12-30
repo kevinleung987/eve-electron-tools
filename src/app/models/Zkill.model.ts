@@ -1,3 +1,30 @@
+export enum WhichType {
+  Victim = 'Victim',
+  Attacker = 'Attacker'
+}
+
+export enum FilterType {
+  Ship = 'Ship',
+  Location = 'Location',
+  Involved = 'Involved'
+}
+
+export enum ShipFilterType {
+  Ship = 'Ship',
+  ShipGroup = 'Ship Group'
+}
+
+export enum LocationFilterType {
+  Region = 'Region',
+  System = 'System'
+}
+
+export enum InvolvedFilterType {
+  Character = 'Character',
+  Corporation = 'Corporation',
+  Alliance = 'Alliance'
+}
+
 export class ZkillMail {
   attackers: Attacker[];
   killmail_id: number;
