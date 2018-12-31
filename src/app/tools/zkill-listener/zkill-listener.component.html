@@ -52,11 +52,13 @@
     <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-info"
-              (click)="filtersHidden = !filtersHidden"
-              [disabled]="!checked.ship && !checked.location && !checked.involved">{{filtersHidden ? 'Show Filters' :
-        'Hide Filters'}}</button>
+              (click)="checked.hideSettings = !checked.hideSettings"
+              [disabled]="!checked.ship && !checked.location && !checked.involved">{{checked.hideSettings ? 'Show
+        Filters' : 'Hide Filters'}}</button>
     </div>
-    <div class="col-2">Num. Filtered: {{numFiltered}}</div>
+    <div class="col-2">
+      <h5>Num. Filtered: {{numFiltered}}</h5>
+    </div>
     <div class="col-2">
       <div class="switch">
         <label>
@@ -89,12 +91,12 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!filtersHidden">
+  <div *ngIf="checked.filters && !checked.hideSettings">
     <!-- Ship Filter -->
     <div class="card row"
          *ngIf="checked.ship">
       <h5 class="card-header">Ship - <span [ngStyle]="{'color': activeFilters.ship ? 'green':'red'}">
-          {{activeFilters.ship? 'Active':'Inactive'}} </span></h5>
+          {{activeFilters.ship? 'Active':'Inactive'}}</span> - {{activeFilters.ship?.description}}</h5>
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
@@ -129,7 +131,7 @@
     <div class="card row"
          *ngIf="checked.location">
       <h5 class="card-header">Location - <span [ngStyle]="{'color': activeFilters.location ? 'green':'red'}">
-          {{activeFilters.location? 'Active':'Inactive'}} </span></h5>
+          {{activeFilters.location? 'Active':'Inactive'}}</span> - {{activeFilters.location?.description}}</h5>
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
@@ -158,7 +160,7 @@
     <div class="card row"
          *ngIf="checked.involved">
       <h5 class="card-header">Involved - <span [ngStyle]="{'color': activeFilters.involved ? 'green':'red'}">
-          {{activeFilters.involved? 'Active':'Inactive'}} </span></h5>
+          {{activeFilters.involved? 'Active':'Inactive'}}</span> - {{activeFilters.involved?.description}}</h5>
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"

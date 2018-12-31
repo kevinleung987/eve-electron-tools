@@ -1,7 +1,6 @@
 <div #search
      class="search"
-     (focusout)="hide($event)"
-     (focusin)="suggestionsHidden = false">
+     (focusout)="hide($event)">
   <div class="row">
     <div class="col-10">
       <input #searchBar
@@ -10,7 +9,8 @@
              [placeholder]="placeholder"
              [(ngModel)]="searchValue"
              (input)="makeDirty()"
-             (keydown)="onKeydown($event, true)">
+             (keydown)="onKeydown($event, true)"
+             (focusin)="suggestionsHidden=false">
     </div>
     <div class="col-2">
       <button type="button"
