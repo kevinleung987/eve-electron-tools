@@ -26,8 +26,7 @@ export class SearchComponent implements OnInit {
   @Input()
   set source(source: string[]) {
     this._source = source;
-    this.searchValue = '';
-    this.suggestions = [];
+    this.clear();
   }
 
   constructor(public suggest: SuggestionService) { }
@@ -47,6 +46,11 @@ export class SearchComponent implements OnInit {
   }
 
   makeDirty() { this.dirty = true; }
+
+  clear() {
+    this.searchValue = '';
+    this.suggestions = [];
+  }
 
   focusSearchBar() {
     this.searchBar.nativeElement.focus();

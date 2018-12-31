@@ -93,7 +93,8 @@
     <!-- Ship Filter -->
     <div class="card row"
          *ngIf="checked.ship">
-      <h5 class="card-header">Ship</h5>
+      <h5 class="card-header">Ship - <span [ngStyle]="{'color': activeFilters.ship ? 'green':'red'}">
+          {{activeFilters.ship? 'Active':'Inactive'}} </span></h5>
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
@@ -109,18 +110,26 @@
             <option [value]="shipFilterType.ShipGroup">Ship Group</option>
           </select>
         </div>
-        <div class="col-8">
-          <app-search [placeholder]="'Search'"
+        <div class="col-7">
+          <app-search #shipFilterSearch
+                      [placeholder]="'Search'"
                       [source]="filterSettings.ship.filterType === shipFilterType.Ship 
                       ? suggest.typeNames : suggest.groupNames"
                       (submit)="onSubmitShip($event)"></app-search>
+        </div>
+        <div class="col-1">
+          <button type="button"
+                  class="btn btn-raised btn-warning float-right"
+                  [disabled]="activeFilters.ship==null"
+                  (click)="shipFilterSearch.clear();activeFilters.ship=null">Reset</button>
         </div>
       </div>
     </div>
     <!-- Location Filter -->
     <div class="card row"
          *ngIf="checked.location">
-      <h5 class="card-header">Location</h5>
+      <h5 class="card-header">Location - <span [ngStyle]="{'color': activeFilters.location ? 'green':'red'}">
+          {{activeFilters.location? 'Active':'Inactive'}} </span></h5>
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
@@ -130,18 +139,26 @@
           </select>
         </div>
         <div class="col-2"></div>
-        <div class="col-8">
-          <app-search [placeholder]="'Search'"
+        <div class="col-7">
+          <app-search #locationFilterSearch
+                      [placeholder]="'Search'"
                       [source]="filterSettings.location.filterType === locationFilterType.Region 
                       ? suggest.regionNames : suggest.systemNames"
                       (submit)="onSubmitLocation($event)"></app-search>
+        </div>
+        <div class="col-1">
+          <button type="button"
+                  class="btn btn-raised btn-warning float-right"
+                  [disabled]="activeFilters.location==null"
+                  (click)="locationFilterSearch.clear();activeFilters.location=null">Reset</button>
         </div>
       </div>
     </div>
     <!-- Involved Filter -->
     <div class="card row"
          *ngIf="checked.involved">
-      <h5 class="card-header">Involved</h5>
+      <h5 class="card-header">Involved - <span [ngStyle]="{'color': activeFilters.involved ? 'green':'red'}">
+          {{activeFilters.involved? 'Active':'Inactive'}} </span></h5>
       <div class="card-body row">
         <div class="col-2">
           <select class="custom-select"
@@ -159,10 +176,17 @@
             <option [value]="involvedFilterType.Alliance">Alliance</option>
           </select>
         </div>
-        <div class="col-8">
-          <app-search [placeholder]="'Search'"
+        <div class="col-7">
+          <app-search #involvedFilterSearch
+                      [placeholder]="'Search'"
                       [useSuggestions]="false"
                       (submit)="onSubmitInvolved($event)"></app-search>
+        </div>
+        <div class="col-1">
+          <button type="button"
+                  class="btn btn-raised btn-warning float-right"
+                  [disabled]="activeFilters.involved==null"
+                  (click)="involvedFilterSearch.clear();activeFilters.involved=null">Reset</button>
         </div>
       </div>
     </div>
@@ -224,15 +248,15 @@
         </div>
         <div class="col-3">
           <div class="row">
-            <b>Attacker: </b>{{ (mail['final_blow']['character_id'] | eve:'character' | async)?.name }} ({{
+            <b>Attacker: </b>{{(mail['final_blow']['character_id'] | eve:'character' | async)?.name}} ({{
             mail['zkb']['npc'] ? 'NPC' : mail['attackers'].length }}) </div>
           <div class="row">
-            <b>Ship: </b>{{ universe.getTypeName(mail['final_blow']['ship_type_id']) }} </div>
+            <b>Ship: </b>{{universe.getTypeName(mail['final_blow']['ship_type_id'])}} </div>
           <div class="row"
                *ngIf="mail['final_blow']['alliance_id']">
             <img class="image-icon"
                  src="{{mail['final_blow']['alliance_id'] | image:'alliance'}}">
-            <p>{{ (mail['final_blow']['alliance_id'] | eve:'alliance' | async)?.name }}</p>
+            <p>{{(mail['final_blow']['alliance_id'] | eve:'alliance' | async)?.name}}</p>
           </div>
           <div class="row"
                *ngIf="!mail['final_blow']['alliance_id']">
@@ -240,8 +264,8 @@
           </div>
           <div class="row">
             <img class="image-icon"
-                 src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}"> {{
-            (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name }} </div>
+                 src="{{mail['final_blow']['corporation_id'] | image:'corporation'}}">{{
+            (mail['final_blow']['corporation_id'] | eve:'corporation' | async)?.name}}</div>
         </div>
       </div>
     </div>

@@ -36,10 +36,10 @@ export class ZkillListenerComponent implements OnInit {
   };
   // Filter functions
   activeFilters: {
-    ship?: ((mail: ZkillMail) => boolean),
-    location?: ((mail: ZkillMail) => boolean),
-    involved?: ((mail: ZkillMail) => boolean)
-  } = {};
+    ship: { description: string, filterFunc: ((mail: ZkillMail) => boolean) },
+    location: { description: string, filterFunc: ((mail: ZkillMail) => boolean) },
+    involved: { description: string, filterFunc: ((mail: ZkillMail) => boolean) }
+  } = { ship: null, location: null, involved: null };
   // Bindings to Enums for template
   whichType = WhichType;
   shipFilterType = ShipFilterType;
@@ -72,9 +72,12 @@ export class ZkillListenerComponent implements OnInit {
             message['final_blow'] = attacker;
           }
         });
-        this.mails.unshift(message);
-        console.log(message);
-        console.log(this.applyFilters(message));
+        if (this.checked.filters && this.applyFilters(message)) {
+          this.mails.unshift(message);
+        } else if (!this.checked.filters) {
+          this.mails.unshift(message);
+        }
+        console.log(message, this.applyFilters(message));
         if (this.mails.length > this.length) {
           this.mails.pop();
         }
@@ -116,40 +119,46 @@ export class ZkillListenerComponent implements OnInit {
     // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
     switch (this.filterSettings.ship.whichType) {
       case WhichType.Victim:
-        this.activeFilters.ship = (mail: ZkillMail) => filterFunc(mail.victim.ship_type_id);
+        this.activeFilters.ship = { description: '', filterFunc: (mail: ZkillMail) => filterFunc(mail.victim.ship_type_id) };
         break;
       case WhichType.Attacker:
-        this.activeFilters.ship = (mail: ZkillMail) => {
-          let filtered = false;
-          mail.attackers.forEach(attacker => {
-            if (filterFunc(attacker.ship_type_id)) {
-              filtered = true;
-            }
-          });
-          return filtered;
+        this.activeFilters.ship = {
+          description: '', filterFunc: (mail: ZkillMail) => {
+            let filtered = false;
+            mail.attackers.forEach(attacker => {
+              if (filterFunc(attacker.ship_type_id)) {
+                filtered = true;
+              }
+            });
+            return filtered;
+          }
         };
         break;
     }
-    console.log('Match:', this.applyFilters(this.mails[0]));
+    // console.log('Match:', this.applyFilters(this.mails[0]));
   }
 
   onSubmitLocation(event) {
     switch (this.filterSettings.location.filterType) {
       case LocationFilterType.Region:
         const filterRegionId = this.universe.getRegionId(event);
-        this.activeFilters.location = (mail: ZkillMail) => {
-          const regionId = this.universe.getSystemRegion(mail.solar_system_id);
-          return regionId === filterRegionId;
+        this.activeFilters.location = {
+          description: '', filterFunc: (mail: ZkillMail) => {
+            const regionId = this.universe.getSystemRegion(mail.solar_system_id);
+            return regionId === filterRegionId;
+          }
         };
         break;
       case LocationFilterType.System:
         const filterSystemId = this.universe.getSystemId(event);
-        this.activeFilters.location = (mail: ZkillMail) => {
-          return mail.solar_system_id === filterSystemId;
+        this.activeFilters.location = {
+          description: '', filterFunc: (mail: ZkillMail) => {
+            return mail.solar_system_id === filterSystemId;
+          }
         };
         break;
     }
-    console.log('Match:', this.applyFilters(this.mails[0]));
+    // console.log('Match:', this.applyFilters(this.mails[0]));
   }
 
   async onSubmitInvolved(event) {
@@ -168,34 +177,40 @@ export class ZkillListenerComponent implements OnInit {
     // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
     switch (this.filterSettings.involved.whichType) {
       case WhichType.Victim:
-        this.activeFilters.involved = (mail: ZkillMail) => filterFunc(mail.victim);
+        this.activeFilters.involved = { description: '', filterFunc: (mail: ZkillMail) => filterFunc(mail.victim) };
         break;
       case WhichType.Attacker:
-        this.activeFilters.involved = (mail: ZkillMail) => {
-          let filtered = false;
-          mail.attackers.forEach(attacker => {
-            if (filterFunc(attacker)) {
-              filtered = true;
-            }
-          });
-          return filtered;
+        this.activeFilters.involved = {
+          description: '', filterFunc: (mail: ZkillMail) => {
+            let filtered = false;
+            mail.attackers.forEach(attacker => {
+              if (filterFunc(attacker)) {
+                filtered = true;
+              }
+            });
+            return filtered;
+          }
         };
         break;
     }
-    console.log('Match:', this.applyFilters(this.mails[0]));
+    // console.log('Match:', this.applyFilters(this.mails[0]));
   }
 
   applyFilters(mail: ZkillMail): boolean {
-    let filtered = false;
+    // True until a filter fails if in match-all mode, False until made True by a filter in match-any mode
+    let filterMatch = this.checked.matchAll;
     Object.keys(this.activeFilters).forEach(filterType => {
-      if (this.activeFilters[filterType] != null && this.activeFilters[filterType](mail)) {
-        filtered = true;
-
+      if (this.activeFilters[filterType] != null) {
+        if (this.checked.matchAll) {
+          filterMatch = filterMatch && this.activeFilters[filterType].filterFunc(mail);
+        } else {
+          filterMatch = this.activeFilters[filterType].filterFunc(mail) ? true : filterMatch;
+        }
       }
     });
-    if (filtered) {
+    if (!filterMatch) {
       this.numFiltered++;
     }
-    return filtered;
+    return filterMatch;
   }
 }
