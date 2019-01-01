@@ -42,7 +42,8 @@
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="checked.alerts"><b>Enable Alerts</b></label>
+                 [(ngModel)]="checked.alerts"
+                 (click)="debug()"><b>Enable Alerts</b></label>
       </div>
     </div>
   </div>
@@ -60,135 +61,119 @@
       <h5>Num. Filtered: {{numFiltered}}</h5>
     </div>
     <div class="col-2">
-      <div class="switch">
-        <label>
-          <input type="checkbox"
-                 [(ngModel)]="checked.ship"
-                 (change)="activeFilters.ship=null"><b>Filter by Ship</b></label>
-      </div>
+      <select class="custom-select"
+              #addFilterSelect>
+        <option [value]="filterType.Ship">Ship</option>
+        <option [value]="filterType.Location">Location</option>
+        <option [value]="filterType.Involved">Involved</option>
+      </select>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-info"
+              (click)="addFilter(addFilterSelect.value)">Add Filter</button>
     </div>
     <div class="col-2">
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="checked.location"
-                 (change)="activeFilters.location=null"><b>Filter by Location</b></label>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="switch">
-        <label>
-          <input type="checkbox"
-                 [(ngModel)]="checked.involved"
-                 (change)="activeFilters.involved=null"><b>Filter by Involved</b></label>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="switch">
-        <label>
-          <input type="checkbox"
-                 [(ngModel)]="checked.matchAll"><b>{{checked.matchAll ? 'Match ALL filters' : 'Match ANY filters'}}</b></label>
+                 [(ngModel)]="checked.matchAll"><b>{{checked.matchAll ? 'Match ALL filters' : 'Match ANY filter'}}</b></label>
       </div>
     </div>
   </div>
   <div *ngIf="checked.filters && !checked.hideSettings">
-    <!-- Ship Filter -->
     <div class="card row"
-         *ngIf="checked.ship">
-      <h5 class="card-header">Ship - <span [ngStyle]="{'color': activeFilters.ship ? 'green':'red'}">
-          {{activeFilters.ship? 'Active':'Inactive'}}</span> - {{activeFilters.ship?.description}}</h5>
-      <div class="card-body row">
-        <div class="col-2">
-          <select class="custom-select"
-                  [(ngModel)]="filterSettings.ship.whichType">
-            <option [value]="whichType.Victim">Victim</option>
-            <option [value]="whichType.Attacker">Attacker</option>
-          </select>
+         *ngFor="let filter of filters; index as i">
+      <div class="col-12">
+        <div class="card-header row">
+          <div class="col-4">
+            <h5>{{filter.type}}</h5>
+          </div>
         </div>
-        <div class="col-2">
-          <select class="custom-select"
-                  [(ngModel)]="filterSettings.ship.filterType">
-            <option [value]="shipFilterType.Ship">Ship</option>
-            <option [value]="shipFilterType.ShipGroup">Ship Group</option>
-          </select>
+        <!-- Ship Filter -->
+        <div class="card-body row"
+             *ngIf="filter.type === filterType.Ship">
+          <div class="col-2">
+            <select class="custom-select"
+                    [(ngModel)]="filter.whichType">
+              <option [value]="whichType.Victim">Victim</option>
+              <option [value]="whichType.Attacker">Attacker</option>
+            </select>
+          </div>
+          <div class="col-2">
+            <select class="custom-select"
+                    [(ngModel)]="filter.filterType">
+              <option [value]="shipFilterType.Ship">Ship</option>
+              <option [value]="shipFilterType.ShipGroup">Ship Group</option>
+            </select>
+          </div>
+          <div class="col-7">
+            <app-search #shipFilterSearch
+                        [placeholder]="'Search'"
+                        [source]="getSource(filter.filterType)"
+                        (submit)="onSubmitShip($event, i)"></app-search>
+          </div>
+          <div class="col-1">
+            <button type="button"
+                    class="btn btn-raised btn-warning float-right"
+                    [disabled]="!filter.active"
+                    (click)="shipFilterSearch.clear();filter.active=false">Reset</button>
+          </div>
         </div>
-        <div class="col-7">
-          <app-search #shipFilterSearch
-                      [placeholder]="'Search'"
-                      [source]="filterSettings.ship.filterType === shipFilterType.Ship 
-                      ? suggest.typeNames : suggest.groupNames"
-                      (submit)="onSubmitShip($event)"></app-search>
+        <!-- Location Filter -->
+        <div class="card-body row"
+             *ngIf="filter.type === filterType.Location">
+          <div class="col-2">
+            <select class="custom-select"
+                    [(ngModel)]="filter.filterType">
+              <option [value]="locationFilterType.Region">Region</option>
+              <option [value]="locationFilterType.System">System</option>
+            </select>
+          </div>
+          <div class="col-2"></div>
+          <div class="col-7">
+            <app-search #locationFilterSearch
+                        [placeholder]="'Search'"
+                        [source]="getSource(filter.filterType)"
+                        (submit)="onSubmitLocation($event, i)"></app-search>
+          </div>
+          <div class="col-1">
+            <button type="button"
+                    class="btn btn-raised btn-warning float-right"
+                    [disabled]="!filter.active"
+                    (click)="locationFilterSearch.clear();filter.active=false">Reset</button>
+          </div>
         </div>
-        <div class="col-1">
-          <button type="button"
-                  class="btn btn-raised btn-warning float-right"
-                  [disabled]="activeFilters.ship==null"
-                  (click)="shipFilterSearch.clear();activeFilters.ship=null">Reset</button>
-        </div>
-      </div>
-    </div>
-    <!-- Location Filter -->
-    <div class="card row"
-         *ngIf="checked.location">
-      <h5 class="card-header">Location - <span [ngStyle]="{'color': activeFilters.location ? 'green':'red'}">
-          {{activeFilters.location? 'Active':'Inactive'}}</span> - {{activeFilters.location?.description}}</h5>
-      <div class="card-body row">
-        <div class="col-2">
-          <select class="custom-select"
-                  [(ngModel)]="filterSettings.location.filterType">
-            <option [value]="locationFilterType.Region">Region</option>
-            <option [value]="locationFilterType.System">System</option>
-          </select>
-        </div>
-        <div class="col-2"></div>
-        <div class="col-7">
-          <app-search #locationFilterSearch
-                      [placeholder]="'Search'"
-                      [source]="filterSettings.location.filterType === locationFilterType.Region 
-                      ? suggest.regionNames : suggest.systemNames"
-                      (submit)="onSubmitLocation($event)"></app-search>
-        </div>
-        <div class="col-1">
-          <button type="button"
-                  class="btn btn-raised btn-warning float-right"
-                  [disabled]="activeFilters.location==null"
-                  (click)="locationFilterSearch.clear();activeFilters.location=null">Reset</button>
-        </div>
-      </div>
-    </div>
-    <!-- Involved Filter -->
-    <div class="card row"
-         *ngIf="checked.involved">
-      <h5 class="card-header">Involved - <span [ngStyle]="{'color': activeFilters.involved ? 'green':'red'}">
-          {{activeFilters.involved? 'Active':'Inactive'}}</span> - {{activeFilters.involved?.description}}</h5>
-      <div class="card-body row">
-        <div class="col-2">
-          <select class="custom-select"
-                  [(ngModel)]="filterSettings.involved.whichType">
-            <option [value]="whichType.Victim">Victim</option>
-            <option [value]="whichType.Attacker">Attacker</option>
-          </select>
-        </div>
-        <div class="col-2">
-          <select class="custom-select"
-                  [(ngModel)]="filterSettings.involved.filterType">
-            <option [value]="involvedFilterType.Character"
-                    selected>Character</option>
-            <option [value]="involvedFilterType.Corporation">Corporation</option>
-            <option [value]="involvedFilterType.Alliance">Alliance</option>
-          </select>
-        </div>
-        <div class="col-7">
-          <app-search #involvedFilterSearch
-                      [placeholder]="'Search'"
-                      [useSuggestions]="false"
-                      (submit)="onSubmitInvolved($event)"></app-search>
-        </div>
-        <div class="col-1">
-          <button type="button"
-                  class="btn btn-raised btn-warning float-right"
-                  [disabled]="activeFilters.involved==null"
-                  (click)="involvedFilterSearch.clear();activeFilters.involved=null">Reset</button>
+        <!-- Involved Filter -->
+        <div class="card-body row"
+             *ngIf="filter.type === filterType.Involved">
+          <div class="col-2">
+            <select class="custom-select"
+                    [(ngModel)]="filter.whichType">
+              <option [value]="whichType.Victim">Victim</option>
+              <option [value]="whichType.Attacker">Attacker</option>
+            </select>
+          </div>
+          <div class="col-2">
+            <select class="custom-select"
+                    [(ngModel)]="filter.filterType">
+              <option [value]="involvedFilterType.Character">Character</option>
+              <option [value]="involvedFilterType.Corporation">Corporation</option>
+              <option [value]="involvedFilterType.Alliance">Alliance</option>
+            </select>
+          </div>
+          <div class="col-7">
+            <app-search #involvedFilterSearch
+                        [placeholder]="'Search'"
+                        [useSuggestions]="false"
+                        (submit)="onSubmitInvolved($event, i)"></app-search>
+          </div>
+          <div class="col-1">
+            <button type="button"
+                    class="btn btn-raised btn-warning float-right"
+                    [disabled]="!filter.active"
+                    (click)="involvedFilterSearch.clear();filter.active=false">Reset</button>
+          </div>
         </div>
       </div>
     </div>

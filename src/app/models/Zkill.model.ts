@@ -1,3 +1,9 @@
+export enum Filter {
+  Ship = 'Ship',
+  Location = 'Location',
+  Involved = 'Involved'
+}
+
 export enum WhichType {
   Victim = 'Victim',
   Attacker = 'Attacker'

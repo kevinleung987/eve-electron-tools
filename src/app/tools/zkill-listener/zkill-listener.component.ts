@@ -7,6 +7,7 @@ import {
   WhichType,
   ZkillMail,
   Character,
+  Filter,
 } from 'src/app/models/Zkill.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
@@ -25,21 +26,17 @@ export class ZkillListenerComponent implements OnInit {
   listening = false;
   length = 5;
   mails: ZkillMail[] = [];
-  checked = { filters: false, hideSettings: false, ship: false, location: false, involved: false, alerts: false, matchAll: false };
+  checked = { filters: true, hideSettings: false, alerts: false, matchAll: false };
   // Filter-related variables
   numFiltered = 0;
-  filterSettings = {
-    ship: { whichType: WhichType.Victim, filterType: ShipFilterType.Ship },
-    location: { filterType: LocationFilterType.Region },
-    involved: { whichType: WhichType.Victim, filterType: InvolvedFilterType.Character },
-  };
-  // Filter functions
-  activeFilters: {
-    ship: { description: string, filterFunc: ((mail: ZkillMail) => boolean) },
-    location: { description: string, filterFunc: ((mail: ZkillMail) => boolean) },
-    involved: { description: string, filterFunc: ((mail: ZkillMail) => boolean) }
-  } = { ship: null, location: null, involved: null };
+  // Filters
+  filters: {
+    active: boolean, type: Filter, description: string, whichType?: WhichType,
+    filterType: ShipFilterType | LocationFilterType | InvolvedFilterType,
+    filterFunc: ((mail: ZkillMail) => boolean)
+  }[] = [];
   // Bindings to Enums for template
+  filterType = Filter;
   whichType = WhichType;
   shipFilterType = ShipFilterType;
   locationFilterType = LocationFilterType;
@@ -56,6 +53,30 @@ export class ZkillListenerComponent implements OnInit {
     if (this.config.isDemo()) {
       this.mails.push(environment.zkillExample);
       console.log(this.mails[0]);
+      this.filters.push({
+        active: false,
+        type: Filter.Ship,
+        description: '',
+        whichType: WhichType.Victim,
+        filterType: ShipFilterType.Ship,
+        filterFunc: null
+      });
+      this.filters.push({
+        active: false,
+        type: Filter.Location,
+        description: '',
+        filterType: LocationFilterType.Region,
+        filterFunc: null
+      });
+      this.filters.push({
+        active: false,
+        type: Filter.Involved,
+        description: '',
+        whichType: WhichType.Victim,
+        filterType: InvolvedFilterType.Alliance,
+        filterFunc: null
+      });
+      console.log(this.filters);
     }
   }
 
@@ -111,11 +132,34 @@ export class ZkillListenerComponent implements OnInit {
     audio.play();
   }
 
-  onSubmitShip(event) {
+  addFilter(type: Filter) {
+    console.log(type);
+    this.filters.push({
+      active: false,
+      type: type,
+      description: '',
+      whichType: WhichType.Victim,
+      filterType: null,
+      filterFunc: null
+    });
+  }
+
+  getSource(filterType) {
+    switch (filterType) {
+      case ShipFilterType.Ship: return this.suggest.typeNames;
+      case ShipFilterType.ShipGroup: return this.suggest.groupNames;
+      case LocationFilterType.Region: return this.suggest.regionNames;
+      case LocationFilterType.System: return this.suggest.systemNames;
+      default: return null;
+    }
+  }
+
+  onSubmitShip(event, index: number) {
+    const filter = this.filters[index];
     // Create filter function, store the id to filter for in closure
     let filterFunc: ((typeId: number) => boolean) = null;
-    const description = `${this.filterSettings.ship.whichType}'s ${this.filterSettings.ship.filterType} must be ${event}`;
-    switch (this.filterSettings.ship.filterType) {
+    filter.description = `${filter.whichType}'s ${filter.filterType} must be ${event}`;
+    switch (filter.filterType) {
       case ShipFilterType.Ship:
         const filterTypeId = this.universe.getTypeId(event);
         filterFunc = (typeId: number) => (typeId === filterTypeId);
@@ -126,59 +170,55 @@ export class ZkillListenerComponent implements OnInit {
         break;
     }
     // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
-    switch (this.filterSettings.ship.whichType) {
+    switch (filter.whichType) {
       case WhichType.Victim:
-        this.activeFilters.ship = { description, filterFunc: (mail: ZkillMail) => filterFunc(mail.victim.ship_type_id) };
+        filter.filterFunc = (mail: ZkillMail) => filterFunc(mail.victim.ship_type_id);
         break;
       case WhichType.Attacker:
-        this.activeFilters.ship = {
-          description, filterFunc: (mail: ZkillMail) => {
-            let filtered = false;
-            mail.attackers.forEach(attacker => {
-              if (filterFunc(attacker.ship_type_id)) {
-                filtered = true;
-              }
-            });
-            return filtered;
-          }
+        filter.filterFunc = (mail: ZkillMail) => {
+          let filtered = false;
+          mail.attackers.forEach(attacker => {
+            if (filterFunc(attacker.ship_type_id)) {
+              filtered = true;
+            }
+          });
+          return filtered;
         };
         break;
     }
-    // console.log('Match:', this.applyFilters(this.mails[0]));
+    filter.active = true;
   }
 
-  onSubmitLocation(event) {
-    const description = `${this.filterSettings.location.filterType} must be ${event}`;
-    switch (this.filterSettings.location.filterType) {
+  onSubmitLocation(event, index: number) {
+    const filter = this.filters[index];
+    filter.description = `${filter.filterType} must be ${event}`;
+    switch (filter.filterType) {
       case LocationFilterType.Region:
         const filterRegionId = this.universe.getRegionId(event);
-        this.activeFilters.location = {
-          description, filterFunc: (mail: ZkillMail) => {
-            const regionId = this.universe.getSystemRegion(mail.solar_system_id);
-            return regionId === filterRegionId;
-          }
+        filter.filterFunc = (mail: ZkillMail) => {
+          const regionId = this.universe.getSystemRegion(mail.solar_system_id);
+          return regionId === filterRegionId;
         };
         break;
       case LocationFilterType.System:
         const filterSystemId = this.universe.getSystemId(event);
-        this.activeFilters.location = {
-          description, filterFunc: (mail: ZkillMail) => {
-            return mail.solar_system_id === filterSystemId;
-          }
+        filter.filterFunc = (mail: ZkillMail) => {
+          return mail.solar_system_id === filterSystemId;
         };
         break;
     }
-    // console.log('Match:', this.applyFilters(this.mails[0]));
+    filter.active = true;
   }
 
-  async onSubmitInvolved(event) {
+  async onSubmitInvolved(event, index: number) {
+    const filter = this.filters[index];
     // Create filter function, store the id to filter for in closure
     let filterFunc: ((character: Character) => boolean);
     let filterToken: string;
     // Name for the filter-description
     let getNameFunc: ((id: number) => Promise<any>);
     let name: string;
-    switch (this.filterSettings.involved.filterType) {
+    switch (filter.filterType) {
       case InvolvedFilterType.Character: filterToken = 'character'; getNameFunc = this.eve.characters.bind(this.eve); break;
       case InvolvedFilterType.Corporation: filterToken = 'corporation'; getNameFunc = this.eve.corporations.bind(this.eve); break;
       case InvolvedFilterType.Alliance: filterToken = 'alliance'; getNameFunc = this.eve.alliances.bind(this.eve); break;
@@ -191,43 +231,36 @@ export class ZkillListenerComponent implements OnInit {
     // Get the name of what is being filtered
     const nameResult = await getNameFunc(filterId);
     name = nameResult['name'];
-    const description =
-      `${this.filterSettings.involved.whichType}'s ${this.filterSettings.involved.filterType} must be ${name}[${filterId}]`;
+    filter.description = `${filter.whichType}'s ${filter.filterType} must be ${name}[${filterId}]`;
     // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
-    switch (this.filterSettings.involved.whichType) {
+    switch (filter.whichType) {
       case WhichType.Victim:
-        this.activeFilters.involved = { description, filterFunc: (mail: ZkillMail) => filterFunc(mail.victim) };
+        filter.filterFunc = (mail: ZkillMail) => filterFunc(mail.victim);
         break;
       case WhichType.Attacker:
-        this.activeFilters.involved = {
-          description, filterFunc: (mail: ZkillMail) => {
-            let filtered = false;
-            mail.attackers.forEach(attacker => {
-              if (filterFunc(attacker)) {
-                filtered = true;
-              }
-            });
-            return filtered;
-          }
+        filter.filterFunc = (mail: ZkillMail) => {
+          let filtered = false;
+          mail.attackers.forEach(attacker => {
+            if (filterFunc(attacker)) {
+              filtered = true;
+            }
+          });
+          return filtered;
         };
         break;
     }
-    // console.log('Match:', this.applyFilters(this.mails[0]));
+    filter.active = true;
   }
 
   applyFilters(mail: ZkillMail): boolean {
-    // No filters are active
-    if (this.activeFilters.ship == null && this.activeFilters.location == null && this.activeFilters.involved == null) {
-      return true;
-    }
     // True until a filter fails if in match-all mode, False until made True by a filter in match-any mode
     let filterMatch = this.checked.matchAll;
-    Object.keys(this.activeFilters).forEach(filterType => {
-      if (this.activeFilters[filterType] != null) {
+    this.filters.forEach(filter => {
+      if (filter.active === true) {
         if (this.checked.matchAll) {
-          filterMatch = filterMatch && this.activeFilters[filterType].filterFunc(mail);
+          filterMatch = filterMatch && filter.filterFunc(mail);
         } else {
-          filterMatch = this.activeFilters[filterType].filterFunc(mail) ? true : filterMatch;
+          filterMatch = filter.filterFunc(mail) ? true : filterMatch;
         }
       }
     });
@@ -235,5 +268,10 @@ export class ZkillListenerComponent implements OnInit {
       this.numFiltered++;
     }
     return filterMatch;
+  }
+
+  debug() {
+    console.log(this.filters);
+    console.log('Match:', this.applyFilters(this.mails[0]));
   }
 }
