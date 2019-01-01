@@ -1,7 +1,8 @@
 export enum Filter {
   Ship = 'Ship',
   Location = 'Location',
-  Involved = 'Involved'
+  Involved = 'Involved',
+  Value = 'Value'
 }
 
 export enum WhichType {

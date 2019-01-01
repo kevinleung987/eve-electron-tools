@@ -1,7 +1,10 @@
 <app-header [title]="'zKill Listener'">
   <div class="row">
     <h5 class="mx-auto"> Click on <kbd>Start Listening</kbd> to begin listening for new killmails from zKillboard. <kbd>Left-click</kbd>
-      to view a mail on zKillboard. <kbd>Right-click</kbd> to delete a mail.</h5>
+      to view a mail on zKillboard. <kbd>Right-click</kbd> to delete a mail. You can enable filtering by Ship-type,
+      Location, affiliation of those Involved, or by Value. Filtering on incoming mails can be done by matching against
+      <b>ANY</b> filter, or matching against <b>ALL</b> filters, be careful when enabling Match-ALL when you have
+      multiple filters that exclude each other.</h5>
   </div>
 </app-header>
 <div class="container">
@@ -42,20 +45,18 @@
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="checked.alerts"
-                 (click)="debug()"><b>Enable Alerts</b></label>
+                 [(ngModel)]="checked.alerts"><b>Enable Alerts</b></label>
       </div>
     </div>
   </div>
-  <!-- Filter toggles -->
+  <!-- Filter Controls -->
   <div class="row button-row"
        [hidden]="!checked.filters">
     <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-info"
               (click)="checked.hideSettings = !checked.hideSettings"
-              [disabled]="!checked.ship && !checked.location && !checked.involved">{{checked.hideSettings ? 'Show
-        Filters' : 'Hide Filters'}}</button>
+              [disabled]="filters.length === 0">{{checked.hideSettings ? 'Show Filters' : 'Hide Filters'}}</button>
     </div>
     <div class="col-2">
       <h5>Num. Filtered: {{numFiltered}}</h5>
@@ -66,11 +67,12 @@
         <option [value]="filterType.Ship">Ship</option>
         <option [value]="filterType.Location">Location</option>
         <option [value]="filterType.Involved">Involved</option>
+        <option [value]="filterType.Value">Value</option>
       </select>
     </div>
     <div class="col-2">
       <button type="button"
-              class="btn btn-raised btn-info"
+              class="btn btn-raised btn-success"
               (click)="addFilter(addFilterSelect.value)">Add Filter</button>
     </div>
     <div class="col-2">
@@ -81,13 +83,20 @@
       </div>
     </div>
   </div>
+  <!-- Filter Settings -->
   <div *ngIf="checked.filters && !checked.hideSettings">
     <div class="card row"
          *ngFor="let filter of filters; index as i">
       <div class="col-12">
         <div class="card-header row">
-          <div class="col-4">
-            <h5>{{filter.type}}</h5>
+          <div class="col-11">
+            <h5>{{filter.type}} - {{filter.description.length === 0 ? 'None' : filter.description}} - <span [ngStyle]="{'color': filter.active ? 'green' : 'red'}">
+                {{filter.active ? 'Active' : 'Inactive'}}</span></h5>
+          </div>
+          <div class="col-1">
+            <button type="button"
+                    class="btn btn-raised btn-danger float-right"
+                    (click)="deleteFilter(i)">X</button>
           </div>
         </div>
         <!-- Ship Filter -->
@@ -173,6 +182,27 @@
                     class="btn btn-raised btn-warning float-right"
                     [disabled]="!filter.active"
                     (click)="involvedFilterSearch.clear();filter.active=false">Reset</button>
+          </div>
+        </div>
+        <!-- Value Filter -->
+        <div class="card-body row"
+             *ngIf="filter.type === filterType.Value">
+          <div class="col-2">
+            <input #valueInput
+                   type="list-length"
+                   class="form-control">
+            <small>Greater than or Equal to</small>
+          </div>
+          <div class="col-2">
+            <button type="button"
+                    class="btn btn-raised btn-info float-right"
+                    (click)="onSubmitValue(valueInput.value, i)">Set Value</button>
+          </div>
+          <div class="col-1">
+            <button type="button"
+                    class="btn btn-raised btn-warning float-right"
+                    [disabled]="!filter.active"
+                    (click)="valueInput.value=0;filter.active=false">Reset</button>
           </div>
         </div>
       </div>

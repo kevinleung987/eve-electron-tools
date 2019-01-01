@@ -16,6 +16,7 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
 import { EveService } from 'src/app/services/eve.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -53,30 +54,6 @@ export class ZkillListenerComponent implements OnInit {
     if (this.config.isDemo()) {
       this.mails.push(environment.zkillExample);
       console.log(this.mails[0]);
-      this.filters.push({
-        active: false,
-        type: Filter.Ship,
-        description: '',
-        whichType: WhichType.Victim,
-        filterType: ShipFilterType.Ship,
-        filterFunc: null
-      });
-      this.filters.push({
-        active: false,
-        type: Filter.Location,
-        description: '',
-        filterType: LocationFilterType.Region,
-        filterFunc: null
-      });
-      this.filters.push({
-        active: false,
-        type: Filter.Involved,
-        description: '',
-        whichType: WhichType.Victim,
-        filterType: InvolvedFilterType.Alliance,
-        filterFunc: null
-      });
-      console.log(this.filters);
     }
   }
 
@@ -92,10 +69,7 @@ export class ZkillListenerComponent implements OnInit {
             message['final_blow'] = attacker;
           }
         });
-        if (this.checked.filters && this.applyFilters(message)) {
-          this.mails.unshift(message);
-          if (this.checked.alerts) { this.playAlert(); }
-        } else if (!this.checked.filters) {
+        if (!this.checked.filters || (this.checked.filters && this.applyFilters(message))) {
           this.mails.unshift(message);
           if (this.checked.alerts) { this.playAlert(); }
         }
@@ -133,15 +107,27 @@ export class ZkillListenerComponent implements OnInit {
   }
 
   addFilter(type: Filter) {
-    console.log(type);
+    let filterType;
+    switch (type) {
+      case Filter.Ship: filterType = ShipFilterType.Ship;
+        break;
+      case Filter.Location: filterType = LocationFilterType.Region;
+        break;
+      case Filter.Involved: filterType = InvolvedFilterType.Alliance;
+        break;
+    }
     this.filters.push({
       active: false,
-      type: type,
+      type,
       description: '',
       whichType: WhichType.Victim,
-      filterType: null,
+      filterType,
       filterFunc: null
     });
+  }
+
+  deleteFilter(index: number) {
+    this.filters.splice(index, 1);
   }
 
   getSource(filterType) {
@@ -252,7 +238,20 @@ export class ZkillListenerComponent implements OnInit {
     filter.active = true;
   }
 
+  onSubmitValue(event, index: number) {
+    const value = Number(event);
+    const filter = this.filters[index];
+    filter.description = `Value must be equal to or greater than ${new DecimalPipe('en-us').transform(event)} ISK`;
+    filter.filterFunc = (mail: ZkillMail) => {
+      return mail.zkb.totalValue >= value;
+    };
+    filter.active = true;
+  }
+
   applyFilters(mail: ZkillMail): boolean {
+    let numActive = 0;
+    this.filters.forEach(filter => { if (filter.active) { numActive++; } });
+    if (numActive === 0) { return true; }
     // True until a filter fails if in match-all mode, False until made True by a filter in match-any mode
     let filterMatch = this.checked.matchAll;
     this.filters.forEach(filter => {
@@ -268,10 +267,5 @@ export class ZkillListenerComponent implements OnInit {
       this.numFiltered++;
     }
     return filterMatch;
-  }
-
-  debug() {
-    console.log(this.filters);
-    console.log('Match:', this.applyFilters(this.mails[0]));
   }
 }
