@@ -11,7 +11,7 @@ import { SuggestionService } from 'src/app/services/suggestion.service';
 export class SearchComponent implements OnInit {
   @Input() placeholder: string;
   @Input() useSuggestions = true;
-  @Input() numSuggestions = 10;
+  @Input() numSuggestions = 5;
   @Input() searchDelay = 250;
   @Output() submit: EventEmitter<string> = new EventEmitter();
   @ViewChild('search') searchContainer: ElementRef;

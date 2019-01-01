@@ -1,27 +1,31 @@
 # EVE Electron Tools
 
-Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built using Electron, Angular, and Bootstrap. Check out the latest Browser build [here](https://kevinleung987.github.io/eve-electron-tools/). Releases for the Desktop build can be found [here](https://github.com/kevinleung987/eve-electron-tools/releases)
+Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built using Electron, Angular, and Bootstrap. The latest version of the code can always be found in the Browser build [here](https://kevinleung987.github.io/eve-electron-tools/). Releases for the Desktop build can be found [here](https://github.com/kevinleung987/eve-electron-tools/releases).
 
 ## About
 
 **EVE Electron Tools** is...
-- **Open-Source:** This application is free and open-source. A lot of popular community tools used by the EVE Online community are not open-source and some have even been known to log your input.
-- **Electron-Powered:** I found that most community tools for EVE Online are served as a web-page, but what happens if the owner decides to stop paying server fees? EVE-NT comes delivered as a cross-platform desktop application, but it can also be served as a web-page with reduced functionality. Electron exposes several operating system APIs that enable features that aren't possible in the browser-based deployment.
-
-![](preview.jpg?raw=true)
+- **Open-Source:** This application is free and open-source. Many of the popular community tools used by the EVE Online community are not open-source and some have rumored to log input and collect data. The desktop-only features in EVE-ET are explicitly meant to provide an open-source and transparent alternative to the closed-source desktop applications that are popularly used by EVE players.
+- **Stand-alone/Server-less:** Most community tools for EVE Online are served as a web-page, but what happens if the owner decides to stop supporting the application? The inspiration for this project was one such tool that no longer works because the application was closed-source and the author stopped paying server fees. EVE-NT is delivered as a stand-alone, server-less, cross-platform desktop application, but it can also be served as a web-page with reduced functionality.
+- **Electron-Powered:** Electron enables EVE-ET to feature an elegant web UI while also leveraging powerful NodeJS APIs that enable it to be a fully featured desktop application.
+## Previews
+Market Browser             |  Local Scan
+:-------------------------:|:-------------------------:
+![](preview-market.gif?raw=true)  |  ![](preview-scan.gif?raw=true)
 
 ## Features
 Some features require Electron and so are only available in the Desktop build.
-- **Parsing Tools(Local Scan/D-Scan):** Copy from the Local window or D-Scan and paste it into the parser to get a composition breakdown. Works exactly like the popular D-Scan websites except your results don't get logged by other people.
-- **Market Browser:** Quickly look up prices for items without having to login to the game.
-- **zKill Listener:** Listens for killmails on the zKillboard Live Feed as they come in, you can filter by alliance, corporation, location, ship-type and enable sound notifications.
-- **Profile Sync(Desktop-Only):** Sync your EVE settings between accounts or characters with the click of a button. Very useful for anyone managing multiple accounts.
-- **VNI Companion(Desktop-Only):** Multiple tools that enable safer and easier AFK Ratting. Watches Intel channel for mentions of systems close to you. You can also enable alerts for faction and capital spawns.
+- **Parsing Tools(Local Scan/D-Scan):** Copy from the Local window or D-Scan and paste it into the parser to get a composition breakdown. Works exactly like other EVE parsing tools except all requests and processing are made client-side, without a back-end server. Without centralized caching provided by a back-end, parsing is slower, but you keep full control over your data.
+- **Market Browser:** Quickly look up prices for items across any region in the game without having to login.
+- **Zkill Listener:** Listens for killmails on the zKillboard Live Feed as they come in, you can filter by alliance, corporation, location, ship-type and enable sound notifications.
+- **Navigation:** Quick-reference tools to check Jump-Distance, determine which systems are in range, or calculate gate routes with preference settings.
+- **Profile Sync(Desktop-Only):** Sync your EVE settings between accounts or characters. Very useful for anyone managing multiple accounts. Backups are made automatically before syncing to ensure your profiles stay safe.
+- **VNI Companion(Desktop-Only):** Multiple tools that enable safer and easier Ratting. Watches an Intel channel for activity in systems near you. Alerts for faction and capital spawns. Counts how much ISK you've accumulated during your Ratting session.
 
 ## Usage
 
-- The latest Browser build can be found [here](https://kevinleung987.github.io/eve-electron-tools/), the Browser version has reduced functionality.
-- You can find available releases of the full Desktop Application [here](https://github.com/kevinleung987/eve-electron-tools/releases)
+- The latest Browser build can be found [here](https://kevinleung987.github.io/eve-electron-tools/), this always represents the latest version of the codebase, however, it should be treated as more of a preview of the full Desktop Application.
+- You can find available releases of the full Desktop Application [here](https://github.com/kevinleung987/eve-electron-tools/releases).
 
 ## Development
 
@@ -38,9 +42,11 @@ Some features require Electron and so are only available in the Desktop build.
 - **[Angular](https://github.com/angular/angular)** - Front-end framework
 - **[Electron](https://github.com/electron/electron)** - Desktop Application framework
 - **[Bootstrap Material Design](https://github.com/FezVrasta/bootstrap-material-design)** - Material Design-flavoured Bootstrap
-- **[Electron-Builder](https://github.com/electron-userland/electron-builder)** - Cross-platform Electron builds
-- **[Travis](https://travis-ci.com/)** - Build automation
+- **[Electron-Builder](https://github.com/electron-userland/electron-builder)** - Cross-platform Electron application builds
+- **[Travis](https://travis-ci.com/)** - Build automation & deployment
+
 Other Dependencies:
+
 - **[ngx-papaparse](https://github.com/alberthaff/ngx-papaparse)** - Elegant CSV parsing
 - **[ngx-toastr](https://github.com/scttcper/ngx-toastr)** - Toast notifications
 - **[match-sorter](https://github.com/kentcdodds/match-sorter)** - String matching to power Suggestions service

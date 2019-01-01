@@ -99,7 +99,7 @@ export class ZkillListenerComponent implements OnInit {
   clear() {
     this.mails = [];
     this.numFiltered = 0;
-    this.alert.success('Cleared killmails.');
+    this.alert.success('Cleared Results.');
   }
 
   openLink(url: string) { this.electron.openUrl(url); }

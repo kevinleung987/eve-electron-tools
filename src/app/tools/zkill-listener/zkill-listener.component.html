@@ -87,7 +87,7 @@
       <div class="switch">
         <label>
           <input type="checkbox"
-                 [(ngModel)]="checked.matchAll"><b>Must match ALL filters</b></label>
+                 [(ngModel)]="checked.matchAll"><b>{{checked.matchAll ? 'Match ALL filters' : 'Match ANY filters'}}</b></label>
       </div>
     </div>
   </div>
