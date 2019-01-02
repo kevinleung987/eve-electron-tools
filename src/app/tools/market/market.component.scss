@@ -1,6 +1,9 @@
-.buy-column {
-  border-right: 1px solid rgba(0,0,0,.1);
-}
+@media (min-width: 1200px) { 
+  .buy-column {
+    border-right: 1px solid rgba(0,0,0,.1);
+  }
+ }
+
 
 .jumbotron {
   margin-top: 3em;
@@ -8,4 +11,9 @@
 
 .price {
   padding-left: 1em;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
 }

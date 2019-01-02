@@ -17,6 +17,7 @@ import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
 import { EveService } from 'src/app/services/eve.service';
 import { DecimalPipe } from '@angular/common';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -46,7 +47,8 @@ export class ZkillListenerComponent implements OnInit {
   private socket: WebSocketSubject<{}>;
 
   constructor(private config: ConfigService, private electron: ElectronService,
-    private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService, private eve: EveService) { }
+    private alert: AlertService, public universe: UniverseService, public suggest: SuggestionService,
+    private eve: EveService, private navigation: NavigationService) { }
 
   ngOnInit() {
     // @ts-ignore
@@ -111,7 +113,7 @@ export class ZkillListenerComponent implements OnInit {
     switch (type) {
       case Filter.Ship: filterType = ShipFilterType.Ship;
         break;
-      case Filter.Location: filterType = LocationFilterType.Region;
+      case Filter.Location: filterType = LocationFilterType.System;
         break;
       case Filter.Involved: filterType = InvolvedFilterType.Alliance;
         break;
@@ -175,12 +177,12 @@ export class ZkillListenerComponent implements OnInit {
     filter.active = true;
   }
 
-  onSubmitLocation(event, index: number) {
+  onSubmitLocation(event, index: number, numJumps = 0) {
     const filter = this.filters[index];
-    filter.description = `${filter.filterType} must be ${event}`;
     switch (filter.filterType) {
       case LocationFilterType.Region:
         const filterRegionId = this.universe.getRegionId(event);
+        filter.description = `Region must be ${event}`;
         filter.filterFunc = (mail: ZkillMail) => {
           const regionId = this.universe.getSystemRegion(mail.solar_system_id);
           return regionId === filterRegionId;
@@ -188,8 +190,11 @@ export class ZkillListenerComponent implements OnInit {
         break;
       case LocationFilterType.System:
         const filterSystemId = this.universe.getSystemId(event);
+        filter.description =
+          `System must be within ${numJumps} jumps of ${event}[${this.universe.getSystemRegionName(filterSystemId)}]`;
         filter.filterFunc = (mail: ZkillMail) => {
-          return mail.solar_system_id === filterSystemId;
+          const route = this.navigation.getRoute(filterSystemId, mail.solar_system_id);
+          return route.length <= numJumps;
         };
         break;
     }
@@ -204,6 +209,7 @@ export class ZkillListenerComponent implements OnInit {
     // Name for the filter-description
     let getNameFunc: ((id: number) => Promise<any>);
     let name: string;
+    // Bind needs to be used so the functions are run under the context of EveService
     switch (filter.filterType) {
       case InvolvedFilterType.Character: filterToken = 'character'; getNameFunc = this.eve.characters.bind(this.eve); break;
       case InvolvedFilterType.Corporation: filterToken = 'corporation'; getNameFunc = this.eve.corporations.bind(this.eve); break;
@@ -241,7 +247,7 @@ export class ZkillListenerComponent implements OnInit {
   onSubmitValue(event, index: number) {
     const value = Number(event);
     const filter = this.filters[index];
-    filter.description = `Value must be equal to or greater than ${new DecimalPipe('en-us').transform(event)} ISK`;
+    filter.description = `Value must be greater than or equal to ${new DecimalPipe('en-us').transform(event)} ISK`;
     filter.filterFunc = (mail: ZkillMail) => {
       return mail.zkb.totalValue >= value;
     };

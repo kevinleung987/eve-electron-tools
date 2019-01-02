@@ -10,38 +10,38 @@
 <div class="container">
   <!-- Top Button Row -->
   <div class="row button-row">
-    <div class="col-2">
+    <div class="col-4 col-lg-2">
       <button type="button"
               class="btn btn-raised btn-primary"
               (click)="start()"
               [disabled]="listening">Start Listening</button>
     </div>
-    <div class="col-2">
+    <div class="col-4 col-lg-2">
       <button type="button"
               class="btn btn-raised btn-danger"
               (click)="stop()"
               [disabled]="!listening">Stop Listening</button>
     </div>
-    <div class="col-2">
+    <div class="col-4 col-lg-2">
       <button type="button"
               class="btn btn-raised btn-success"
               (click)="clear()"
               [disabled]="mails.length === 0">Clear Results</button>
     </div>
-    <div class="col-2">
+    <div class="col-4 col-lg-2">
       <input type="list-length"
              class="form-control"
              [(ngModel)]="length">
       <small>Length of List</small>
     </div>
-    <div class="col-2">
+    <div class="col-4 col-lg-2">
       <div class="switch">
         <label>
           <input type="checkbox"
                  [(ngModel)]="checked.filters"><b>Enable Filters</b></label>
       </div>
     </div>
-    <div class="col-2">
+    <div class="col-4 col-lg-2">
       <div class="switch">
         <label>
           <input type="checkbox"
@@ -52,16 +52,10 @@
   <!-- Filter Controls -->
   <div class="row button-row"
        [hidden]="!checked.filters">
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-raised btn-info"
-              (click)="checked.hideSettings = !checked.hideSettings"
-              [disabled]="filters.length === 0">{{checked.hideSettings ? 'Show Filters' : 'Hide Filters'}}</button>
-    </div>
-    <div class="col-2">
+    <div class="col-3 col-lg-2">
       <h5>Num. Filtered: {{numFiltered}}</h5>
     </div>
-    <div class="col-2">
+    <div class="col-3 col-lg-2">
       <select class="custom-select"
               #addFilterSelect>
         <option [value]="filterType.Ship">Ship</option>
@@ -70,12 +64,18 @@
         <option [value]="filterType.Value">Value</option>
       </select>
     </div>
-    <div class="col-2">
+    <div class="col-3 col-lg-2">
       <button type="button"
               class="btn btn-raised btn-success"
               (click)="addFilter(addFilterSelect.value)">Add Filter</button>
     </div>
-    <div class="col-2">
+    <div class="col-3 col-lg-2">
+      <button type="button"
+              class="btn btn-raised btn-info"
+              (click)="checked.hideSettings = !checked.hideSettings"
+              [disabled]="filters.length === 0">{{checked.hideSettings ? 'Show Filters' : 'Hide Filters'}}</button>
+    </div>
+    <div class="col-3 col-lg-2">
       <div class="switch">
         <label>
           <input type="checkbox"
@@ -102,27 +102,27 @@
         <!-- Ship Filter -->
         <div class="card-body row"
              *ngIf="filter.type === filterType.Ship">
-          <div class="col-2">
+          <div class="col-6 col-lg-2">
             <select class="custom-select"
                     [(ngModel)]="filter.whichType">
               <option [value]="whichType.Victim">Victim</option>
               <option [value]="whichType.Attacker">Attacker</option>
             </select>
           </div>
-          <div class="col-2">
+          <div class="col-6 col-lg-2">
             <select class="custom-select"
                     [(ngModel)]="filter.filterType">
               <option [value]="shipFilterType.Ship">Ship</option>
               <option [value]="shipFilterType.ShipGroup">Ship Group</option>
             </select>
           </div>
-          <div class="col-7">
+          <div class="col-8 col-lg-7">
             <app-search #shipFilterSearch
                         [placeholder]="'Search'"
                         [source]="getSource(filter.filterType)"
                         (submit)="onSubmitShip($event, i)"></app-search>
           </div>
-          <div class="col-1">
+          <div class="col-4 col-lg-1">
             <button type="button"
                     class="btn btn-raised btn-warning float-right"
                     [disabled]="!filter.active"
@@ -132,21 +132,28 @@
         <!-- Location Filter -->
         <div class="card-body row"
              *ngIf="filter.type === filterType.Location">
-          <div class="col-2">
+          <div class="col-6 col-lg-2">
             <select class="custom-select"
                     [(ngModel)]="filter.filterType">
-              <option [value]="locationFilterType.Region">Region</option>
               <option [value]="locationFilterType.System">System</option>
+              <option [value]="locationFilterType.Region">Region</option>
             </select>
           </div>
-          <div class="col-2"></div>
-          <div class="col-7">
+          <div class="col-6 col-lg-2">
+            <input #numJumpsInput
+                   type="list-length"
+                   class="form-control"
+                   [disabled]="filter.filterType !== locationFilterType.System"
+                   [value]="0">
+            <small>Within # jumps</small>
+          </div>
+          <div class="col-8 col-lg-7">
             <app-search #locationFilterSearch
                         [placeholder]="'Search'"
                         [source]="getSource(filter.filterType)"
-                        (submit)="onSubmitLocation($event, i)"></app-search>
+                        (submit)="onSubmitLocation($event, i, numJumpsInput.value)"></app-search>
           </div>
-          <div class="col-1">
+          <div class="col-4 col-lg-1">
             <button type="button"
                     class="btn btn-raised btn-warning float-right"
                     [disabled]="!filter.active"
@@ -156,14 +163,14 @@
         <!-- Involved Filter -->
         <div class="card-body row"
              *ngIf="filter.type === filterType.Involved">
-          <div class="col-2">
+          <div class="col-6 col-lg-2">
             <select class="custom-select"
                     [(ngModel)]="filter.whichType">
               <option [value]="whichType.Victim">Victim</option>
               <option [value]="whichType.Attacker">Attacker</option>
             </select>
           </div>
-          <div class="col-2">
+          <div class="col-6 col-lg-2">
             <select class="custom-select"
                     [(ngModel)]="filter.filterType">
               <option [value]="involvedFilterType.Character">Character</option>
@@ -171,13 +178,13 @@
               <option [value]="involvedFilterType.Alliance">Alliance</option>
             </select>
           </div>
-          <div class="col-7">
+          <div class="col-8 col-lg-7">
             <app-search #involvedFilterSearch
                         [placeholder]="'Search'"
                         [useSuggestions]="false"
                         (submit)="onSubmitInvolved($event, i)"></app-search>
           </div>
-          <div class="col-1">
+          <div class="col-4 col-lg-1">
             <button type="button"
                     class="btn btn-raised btn-warning float-right"
                     [disabled]="!filter.active"
@@ -187,18 +194,18 @@
         <!-- Value Filter -->
         <div class="card-body row"
              *ngIf="filter.type === filterType.Value">
-          <div class="col-2">
+          <div class="col-4 col-lg-2">
             <input #valueInput
                    type="list-length"
                    class="form-control">
             <small>Greater than or Equal to</small>
           </div>
-          <div class="col-2">
+          <div class="col-4 col-lg-2">
             <button type="button"
                     class="btn btn-raised btn-info float-right"
                     (click)="onSubmitValue(valueInput.value, i)">Set Value</button>
           </div>
-          <div class="col-1">
+          <div class="col-4 col-lg-1">
             <button type="button"
                     class="btn btn-raised btn-warning float-right"
                     [disabled]="!filter.active"
@@ -216,27 +223,30 @@
          (click)="openLink(mail['zkb']['url'])"
          (contextmenu)="mails.pop(i)">
       <div class="card-body row">
-        <div class="col-2">
-          <div class="row detail-row">
+        <!-- Mail Info -->
+        <div class="col-12 col-lg-2">
+          <div class="row detail-row float-right float-lg-none">
             <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }} </div>
           <div class="row detail-row">
             <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}} <span>[<b [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
                 | slice:0:4)}}</b>]</span>
           </div>
-          <div class="row detail-row">
+          <div class="row detail-row float-right float-lg-none">
             <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }} </div>
           <div class="row detail-row">
             <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK </div>
         </div>
-        <div class="col-1">
+        <!-- Victim Images -->
+        <div class="col-3 col-lg-1">
           <img class="image"
                src="{{mail['victim']['character_id'] | image:'character'}}">
         </div>
-        <div class="col-1">
+        <div class="col-3 col-lg-1">
           <img class="image"
                src="{{mail['victim']['ship_type_id'] | image:'ship'}}">
         </div>
-        <div class="col-3">
+        <!-- Victim Info -->
+        <div class="col-6 col-lg-3">
           <div class="row">
             <b>Defender: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }} </div>
           <div class="row">
@@ -255,15 +265,17 @@
             <img src="{{mail['victim']['corporation_id'] | image:'corporation'}}"
                  class="image-icon"> {{ (mail['victim']['corporation_id'] | eve:'corporation' | async)?.name }} </div>
         </div>
-        <div class="col-1">
+        <!-- Attacker Images -->
+        <div class="col-3 col-lg-1">
           <img class="image"
                src="{{mail['final_blow']['character_id'] | image:'character'}}">
         </div>
-        <div class="col-1">
+        <div class="col-3 col-lg-1">
           <img class="image"
                src="{{mail['final_blow']['ship_type_id'] | image:'ship'}}">
         </div>
-        <div class="col-3">
+        <!-- Attacker Info -->
+        <div class="col-6 col-lg-3">
           <div class="row">
             <b>Attacker: </b>{{(mail['final_blow']['character_id'] | eve:'character' | async)?.name}} ({{
             mail['zkb']['npc'] ? 'NPC' : mail['attackers'].length }}) </div>

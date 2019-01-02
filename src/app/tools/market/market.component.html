@@ -8,13 +8,13 @@
 </app-header>
 <div class="container">
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
       <h5>Current Item: <b>{{currItem | universe:'item'}}</b></h5>
       <app-search [placeholder]="'Search for an item here...'"
                   [source]="suggest.typeNames"
                   (submit)="onSubmitItem($event)"></app-search>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
       <h5>Current Region: <b>{{currRegion | universe:'region'}}</b></h5>
       <app-search [placeholder]="'Select a market region here...'"
                   [source]="suggest.regionNames"
@@ -35,7 +35,7 @@
     </div>
     <hr class="my-4">
     <div class="row">
-      <div class="col-6 buy-column">
+      <div class="col-12 col-lg-6 buy-column">
         <h5>
           <p class="display-4 text-center">Buy</p>
           <p><b>Max: <span class="price">{{currPrice?.buy?.max | number}} ISK</span></b></p>
@@ -44,7 +44,7 @@
           <p>Quantity: {{currPrice?.buy?.quantity | number}}</p>
         </h5>
       </div>
-      <div class="col-6 sell-column">
+      <div class="col-12 col-lg-6 sell-column">
         <h5>
           <p class="display-4 text-center">Sell</p>
           <p>Max: <span class="price">{{currPrice?.sell?.max | number}} ISK</span></p>
