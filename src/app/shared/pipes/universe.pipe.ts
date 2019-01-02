@@ -25,7 +25,7 @@ export class UniversePipe implements PipeTransform {
       case 'group':
         return this.universe.getGroupName(value);
       default:
-        return null;
+        return 'None';
     }
   }
 }

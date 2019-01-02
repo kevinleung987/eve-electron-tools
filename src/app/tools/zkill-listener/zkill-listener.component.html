@@ -228,11 +228,11 @@
           <div class="row detail-row float-right float-lg-none">
             <b>Time: </b>{{ mail['killmail_time'] | date:'M/d/yy, H:mm':'+000' }} </div>
           <div class="row detail-row">
-            <b>System: </b>{{ universe.getSystemName(mail['solar_system_id'])}} <span>[<b [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{(universe.getSystemSecurity(mail['solar_system_id'])
-                | slice:0:4)}}</b>]</span>
+            <b>System: </b>{{ mail['solar_system_id'] | universe:'system'}} <span> [<b [ngStyle]="{'color': universe.getSecurityColor(universe.getSystemSecurity(mail['solar_system_id']))}">{{mail['solar_system_id']
+                | universe:'security' | slice:0:4}}</b>] </span>
           </div>
           <div class="row detail-row float-right float-lg-none">
-            <b>Region: </b>{{ universe.getSystemRegionName(mail['solar_system_id']) }} </div>
+            <b>Region: </b>{{ mail['solar_system_id'] | universe:'systemRegion' }} </div>
           <div class="row detail-row">
             <b>Value: </b>{{ mail['zkb']['totalValue'] | number }} ISK </div>
         </div>
@@ -250,7 +250,7 @@
           <div class="row">
             <b>Defender: </b>{{ (mail['victim']['character_id'] | eve:'character' | async)?.name }} </div>
           <div class="row">
-            <b>Ship: </b>{{ universe.getTypeName(mail['victim']['ship_type_id']) }} </div>
+            <b>Ship: </b>{{ mail['victim']['ship_type_id'] | universe:'item' }} </div>
           <div class="row"
                *ngIf="mail['victim']['alliance_id']">
             <img src="{{mail['victim']['alliance_id'] | image:'alliance'}}"
@@ -280,7 +280,7 @@
             <b>Attacker: </b>{{(mail['final_blow']['character_id'] | eve:'character' | async)?.name}} ({{
             mail['zkb']['npc'] ? 'NPC' : mail['attackers'].length }}) </div>
           <div class="row">
-            <b>Ship: </b>{{universe.getTypeName(mail['final_blow']['ship_type_id'])}} </div>
+            <b>Ship: </b>{{mail['final_blow']['ship_type_id'] | universe:'item'}} </div>
           <div class="row"
                *ngIf="mail['final_blow']['alliance_id']">
             <img class="image-icon"

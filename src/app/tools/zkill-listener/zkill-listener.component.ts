@@ -54,8 +54,10 @@ export class ZkillListenerComponent implements OnInit {
     // @ts-ignore
     window.$('app-zkill-listener').bootstrapMaterialDesign();
     if (this.config.isDemo()) {
-      this.mails.push(environment.zkillExample);
-      console.log(this.mails[0]);
+      this.universe.waitUntilLoaded(() => {
+        this.mails.push(environment.zkillExample);
+        console.log(this.mails[0]);
+      });
     }
   }
 

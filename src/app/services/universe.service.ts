@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Papa } from 'ngx-papaparse';
 import { PapaParseResult } from 'ngx-papaparse/lib/interfaces/papa-parse-result';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UniverseService {
   readonly numToLoad = 8;
-  public isLoaded = new BehaviorSubject(0);
+  private numLoaded = 0;
+  public isLoaded = new BehaviorSubject(false);
   public typeData = new BehaviorSubject(null);
   public systemData = new BehaviorSubject(null);
   public regionData = new BehaviorSubject(null);
@@ -43,6 +44,7 @@ export class UniverseService {
         this.incrementLoad(2);
       });
     this.waitUntilLoaded(() => {
+      console.log('Finished loading Universe Service.');
       if (!(this.getTypeName(34) === 'Tritanium')) { console.error('typeData could not be parsed.'); }
       if (!(this.getTypeId('Tritanium') === 34)) { console.error('typeNames could not be parsed.'); }
       if (!(this.getSystemName(30000142) === 'Jita')) { console.error('systemData could not be parsed.'); }
@@ -85,14 +87,15 @@ export class UniverseService {
   }
 
   incrementLoad(num: number) {
-    this.isLoaded.next(this.isLoaded.value + num);
+    this.numLoaded += num;
+    if (this.numLoaded >= this.numToLoad) {
+      this.isLoaded.next(true);
+    }
   }
 
   waitUntilLoaded(callback: () => void) {
-    this.isLoaded.subscribe((numLoaded => {
-      if (numLoaded >= this.numToLoad) {
-        callback();
-      }
+    this.isLoaded.subscribe((loaded => {
+      if (loaded) { callback(); }
     }));
   }
 
