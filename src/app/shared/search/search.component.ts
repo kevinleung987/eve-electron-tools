@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit {
   private _source: string[];
   dirty = false;
   suggestions = [];
-  searchValue = '';
+  @Input() searchValue = '';
   activeIndex = -1;
   suggestionsHidden = false;
 

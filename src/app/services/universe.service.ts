@@ -108,6 +108,10 @@ export class UniverseService {
     return this.typeData.value && this.typeData.value[id] ? Number(this.typeData.value[id]['groupID']) : null;
   }
 
+  getSystem(id: number): any {
+    return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id] : null;
+  }
+
   getSystemName(id: number): string {
     return this.systemData.value && this.systemData.value[id] ? this.systemData.value[id]['solarSystemName'] : null;
   }

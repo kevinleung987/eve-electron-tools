@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Papa, PapaParseResult } from 'ngx-papaparse';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { UniverseService } from './universe.service';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -10,7 +12,7 @@ export class NavigationService {
   jumps = {};
   ready = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private papa: Papa) {
+  constructor(private http: HttpClient, private papa: Papa, private universe: UniverseService) {
     this.http.get('./assets/' + this.fileName, { responseType: 'text' })
       .pipe(map((data: any) => data))
       .subscribe((data: any) => {
@@ -33,7 +35,13 @@ export class NavigationService {
       }, error => console.error(error));
     this.ready.subscribe((result) => {
       if (result) {
-        // console.log(this.getRoute(30001947, 30003647));
+        // this.universe.waitUntilLoaded(() => {
+        //   const starttime = Date.now();
+        //   Object.keys(this.universe.systemData.value).forEach(system => {
+        //     this.getDistance(30000001, Number(system));
+        //   });
+        //   console.log((Date.now() - starttime) / 1000);
+        // });
       }
     });
   }
@@ -41,7 +49,6 @@ export class NavigationService {
   getRoute(start: number, finish: number) {
     // Breadth-First-Search with cycle-checking, takes around 0.03 seconds for
     // 100 jump route
-    const startTime = Date.now();
     const prev = {};  // Cycle checking
     prev[start] = 0;
     const open = [];
@@ -50,7 +57,6 @@ export class NavigationService {
       const top: number[] = open.shift();
       const last: number = top[top.length - 1];
       if (last === finish) {
-        console.log((Date.now() - startTime) / 1000);
         return top;
       }
       const successors: number[] = this.jumps[last];
@@ -68,5 +74,20 @@ export class NavigationService {
         }
       });
     }
+  }
+
+  /**
+   * Get the distance in Light Years between two systems
+   * @param a First system
+   * @param b Second system
+   */
+  getDistance(a: number, b: number): number {
+    const aData = this.universe.getSystem(a);
+    const bData = this.universe.getSystem(b);
+    if (aData == null || bData == null) { return null; }
+    const x = aData['x'] - bData['x'];
+    const y = aData['y'] - bData['y'];
+    const z = aData['z'] - bData['z'];
+    return Math.sqrt(x * x + y * y + z * z) / 9460700000000000;
   }
 }

@@ -3,3 +3,76 @@
     <h5 class="mx-auto">Under Construction.</h5>
   </div>
 </app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <h5>Selected System: {{systemA | universe:'system'}}({{systemA | universe:'systemRegion'}})</h5>
+    </div>
+    <div class="col-12 col-lg-6">
+      <h5>Selected System: {{systemB | universe:'system'}}({{systemB | universe:'systemRegion'}})</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <app-search [placeholder]="'Search for an item here...'"
+                  [source]="suggest.systemNames"
+                  [searchValue]="config.isDemo ? 'Jita' : ''"
+                  [searchDelay]="50"
+                  (submit)="onSearch($event, 0)"></app-search>
+    </div>
+    <div class="col-12 col-lg-6">
+      <app-search [placeholder]="'Search for an item here...'"
+                  [source]="suggest.systemNames"
+                  [searchValue]="config.isDemo ? 'Hakonen' : ''"
+                  [searchDelay]="50"
+                  (submit)="onSearch($event, 1)"></app-search>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <h5>Jump Distance: {{currDistance ? currDistance : 'N/A'}}</h5>
+  </div>
+  <div class="row button-row justify-content-center">
+    <div class="col-3">
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="optionsRadios"
+                 [(ngModel)]="routePreference"
+                 value="shorter"
+                 routePreference>Prefer Shorter</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="optionsRadios"
+                 [(ngModel)]="routePreference"
+                 value="safer">Prefer Safer</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="optionsRadios"
+                 [(ngModel)]="routePreference"
+                 value="lessSecure">Prefer Less Secure</label>
+      </div>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-success"
+              (click)="getRoute()">Get Route</button>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-warning"
+              (click)="reset()">Reset</button>
+    </div>
+  </div>
+  <div class="row"
+       *ngIf="currRoute.length > 0">
+    <h5>
+      <p>{{currRoute.length}}</p>
+      <div *ngFor="let system of currRoute">{{system | universe:'system'}}[{{system | universe:'security' |
+        slice:0:4}}]</div>
+    </h5>
+  </div>
+</div>

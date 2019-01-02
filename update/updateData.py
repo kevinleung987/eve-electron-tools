@@ -33,7 +33,7 @@ downloadData('invTypes.csv.bz2', 'invTypes.csv',
              ['typeID', 'groupID', 'typeName'])
 print('mapSolarSystems')
 downloadData('mapSolarSystems.csv.bz2', 'mapSolarSystems.csv',
-             ['solarSystemID', 'solarSystemName', 'regionID', 'security'])
+             ['solarSystemID', 'solarSystemName', 'regionID', 'security', 'x', 'y', 'z'])
 print('mapRegions')
 downloadData('mapRegions.csv.bz2', 'mapRegions.csv',
              ['regionID', 'regionName'])
