@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DisplayAlliance, DisplayCorporation, EveAlliance, EveCharacter, EveCorporation, } from 'src/app/models/EveModels.model';
 import { EveService } from 'src/app/services/eve.service';
+import { ImagePipe } from '../shared/pipes/image.pipe';
 
 @Injectable({ providedIn: 'root' })
 export class LocalScanService {
@@ -134,7 +135,7 @@ export class LocalScanService {
       this.corporations[corpId] = {
         name: corpData['name'],
         alliance: corpData['alliance_id'] || null,
-        image: `http://image.eveonline.com/Corporation/${corpId}_128.png`
+        image: new ImagePipe().transform(corpId, 'corporation', 128)
       };
       result.corporation = corpId;
       if (allianceId) { // Corporation has alliance
@@ -145,8 +146,7 @@ export class LocalScanService {
           this.alliances[allianceId] = {
             name: allianceData['name'],
             corporations: [],
-            image:
-              `http://image.eveonline.com/Alliance/${allianceId}_128.png`
+            image: new ImagePipe().transform(allianceId, 'alliance', 128)
           };
         } else {
           this.cacheStats.alliance[0]++;

@@ -1,6 +1,6 @@
 # EVE Electron Tools
 
-Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built using Electron, Angular, and Bootstrap. The latest version of the code can always be found in the Browser build [here](https://kevinleung987.github.io/eve-electron-tools/). Releases for the Desktop build can be found [here](https://github.com/kevinleung987/eve-electron-tools/releases).
+Electron-powered toolset for [EVE Online](https://www.eveonline.com/). Built using Electron, Angular, and Bootstrap. The latest version of the code can always be found in the Browser build [here](https://eve-electron.kevinleung.net). Releases for the Desktop build can be found [here](https://github.com/kevinleung987/eve-electron-tools/releases).
 
 ## About
 
@@ -24,7 +24,7 @@ Some features require Electron and so are only available in the Desktop build.
 
 ## Usage
 
-- The latest Browser build can be found [here](https://kevinleung987.github.io/eve-electron-tools/), this always represents the latest version of the codebase, however, it should be treated as more of a preview of the full Desktop Application.
+- The latest Browser build can be found [here](https://eve-electron.kevinleung.net), this always represents the latest version of the codebase, however, it should be treated as more of a preview of the full Desktop Application.
 - You can find available releases of the full Desktop Application [here](https://github.com/kevinleung987/eve-electron-tools/releases).
 
 ## Development

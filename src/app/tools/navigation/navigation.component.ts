@@ -46,9 +46,8 @@ export class NavigationComponent implements OnInit {
         capable = `${capable}${capable.length > 0 ? ', ' : ''}${shipType[0]}`;
       }
     });
-    console.log(distance);
     this.currDistance =
-      `${new SlicePipe().transform(distance.toString(), 0, 4)} LY [${capable}]`;
+      `${new SlicePipe().transform(distance.toString(), 0, 4)} LY [${capable.length > 0 ? capable : 'None'}]`;
   }
 
   getRoute() {

@@ -33,7 +33,7 @@ script:
     fi
 
 before_deploy:
-  ng build --prod --base-href='/eve-electron-tools/'
+  npm run build:browser && echo -n 'eve-electron.kevinleung.net' > dist/CNAME
 
 deploy:
   - provider: pages

@@ -9,6 +9,7 @@
     "browser": "npm run postinstall:web && npm run ng:serve:web",
     "build": "npm run postinstall:electron && ng build",
     "build:prod": "npm run build -- -c production",
+    "build:browser": "npm run postinstall:web && ng build --prod",
     "bundle:linux": "npm run build:prod && npx electron-builder build --linux",
     "bundle:windows": "npm run build:prod && npx electron-builder build --windows",
     "bundle:mac": "npm run build:prod && npx electron-builder build --mac",
