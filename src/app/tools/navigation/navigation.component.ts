@@ -69,5 +69,6 @@ export class NavigationComponent implements OnInit {
     this.currDistance = null;
     this.systemA = null;
     this.systemB = null;
+    this.currRoute = [];
   }
 }
