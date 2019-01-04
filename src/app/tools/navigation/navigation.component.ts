@@ -52,7 +52,16 @@ export class NavigationComponent implements OnInit {
 
   getRoute() {
     if (this.systemA == null || this.systemB == null) { return; }
-    this.currRoute = this.navigation.getRoute(this.systemA, this.systemB);
+    let route;
+    switch (this.routePreference) {
+      case 'shorter': route = this.navigation.getShortestRoute(this.systemA, this.systemB);
+        break;
+      case 'safer': route = this.navigation.getSafestRoute(this.systemA, this.systemB);
+        break;
+      case 'lessSecure': route = this.navigation.getLessSecureRoute(this.systemA, this.systemB);
+        break;
+    }
+    this.currRoute = route;
     console.log(this.currRoute);
   }
 

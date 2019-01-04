@@ -195,7 +195,7 @@ export class ZkillListenerComponent implements OnInit {
         filter.description =
           `System must be within ${numJumps} jumps of ${event}[${this.universe.getSystemRegionName(filterSystemId)}]`;
         filter.filterFunc = (mail: ZkillMail) => {
-          const route = this.navigation.getRoute(filterSystemId, mail.solar_system_id);
+          const route = this.navigation.getShortestRoute(filterSystemId, mail.solar_system_id);
           return route.length <= numJumps;
         };
         break;
