@@ -7,14 +7,24 @@
   </div>
 </app-header>
 <div class="container">
-  <div class="row directory-buttons">
-    <button type="button"
-            class="btn btn-raised btn-primary mx-auto"
-            (click)="selectFolder()">Select Folder</button>
-    <button type="button"
-            class="btn btn-raised btn-info mx-auto"
-            (click)="parseProfiles()"
-            [disabled]="profilesPath === ''">Scan Profiles</button>
+  <div class="row directory-buttons justify-content-center">
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-primary"
+              (click)="selectFolder()">Select Folder</button>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-info"
+              (click)="parseProfiles()"
+              [disabled]="profilesPath === ''">Scan Profiles</button>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-success"
+              (click)="backupProfiles()"
+              [disabled]="accounts.length === 0 && characters.length === 0">Backup Profiles</button>
+    </div>
   </div>
   <div class="row current-directory card card-body"
        (click)="openProfilesFolder()">
@@ -47,8 +57,9 @@
              [class.bg-secondary]="account['selected'] === s.Secondary"
              (click)="select(account, s.Primary)"
              (contextmenu)="select(account, s.Secondary)">
-          <div class="card-body"> {{ account['id'] }} <b>{{ accountBindings[account['id']] ? ' -
-              '+accountBindings[account['id']] : null}}</b>
+          <div class="card-body">
+            <p>{{ account['id'] }} <b>{{ accountBindings[account['id']] ? ' - '+accountBindings[account['id']] : null}}</b><br>{{
+              account['mtime'] | date:'short' }}</p>
           </div>
         </div>
       </div>
@@ -71,8 +82,8 @@
                      src="{{character['id'] | image:'character'}}">
               </div>
               <div class="col-6">
-                <p>{{ character['id'] }}</p>
-                <p>{{ (character['id'] | eve:'character' | async)?.name }}</p>
+                <p>{{ character['id'] }} <br> {{ character['mtime'] | date:'short' }} <br>
+                  <b>{{ (character['id'] | eve:'character' | async)?.name }}</b></p>
               </div>
             </div>
           </div>

@@ -62,7 +62,6 @@ export class NavigationComponent implements OnInit {
         break;
     }
     this.currRoute = route;
-    console.log(this.currRoute);
   }
 
   reset() {

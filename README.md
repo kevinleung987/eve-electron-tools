@@ -34,8 +34,8 @@ Some features require Electron and so are only available in the Desktop build.
 - Install Angular CLI & Electron globally with `npm install -g @angular/cli electron`
 - Serve the application in the browser with `npm run browser` or under Electron with hot-reloading enabled using `npm start`. The Electron application can be built & bundled by running:
   - `npm run bundle:windows` - for Windows
-  - `npm run bundle:mac` - for MacOS
   - `npm run bundle:linux` - for Linux
+  - `npm run bundle:mac` - for MacOS, only works on systems running MacOS
 
 ## Tools Used
 

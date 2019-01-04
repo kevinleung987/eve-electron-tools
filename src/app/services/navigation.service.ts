@@ -49,7 +49,6 @@ export class NavigationService {
       const top: number[] = open.pop()[0];
       const last: number = top[top.length - 1];
       if (last === finish) {
-        console.log(prev[last]);
         return top;
       }
       const successors: number[] = this.jumps[last];
