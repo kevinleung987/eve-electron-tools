@@ -28,10 +28,8 @@ export class ProfileSyncComponent implements OnInit {
   selectFolder() {
     this.electron.remote.dialog.showOpenDialog({ properties: ['openDirectory'] }, (result) => {
       if (result && result.length > 0) {
-        console.log(result);
         this.profilesPath = result[0];
         this.config.set('profilesPath', this.profilesPath);
-        // this.parseProfiles();
         this.accounts = [];
         this.characters = [];
       }
@@ -70,8 +68,9 @@ export class ProfileSyncComponent implements OnInit {
         characters.push(character);
       }
     });
-    accounts.sort((a, b) => (b.mtime.getTime() - a.mtime.getTime()));
-    characters.sort((a, b) => (b.mtime.getTime() - a.mtime.getTime()));
+    const sortFunc = (a, b) => (b.mtime.getTime() - a.mtime.getTime());
+    accounts.sort(sortFunc);
+    characters.sort(sortFunc);
     this.accounts = accounts;
     this.characters = characters;
     console.log(this.accounts, this.characters);
@@ -134,6 +133,25 @@ export class ProfileSyncComponent implements OnInit {
       this.electron.fs.copyFileSync(character.filePath, this.electron.path.join(backupDir, character.fileName));
     });
     this.alert.success('All profiles have been backed up.');
+  }
+
+  syncProfiles(type: string) {
+    let profiles;
+    switch (type) {
+      case 'accounts': profiles = this.selectedProfiles.accounts; break;
+      case 'characters': profiles = this.selectedProfiles.characters; break;
+    }
+    const primaryFile = profiles.primary.filePath;
+    const primaryBuffer = this.electron.fs.readFileSync(primaryFile);
+    profiles.secondary.forEach((profile: Profile) => {
+      this.electron.fs.copyFileSync(primaryFile, profile.filePath);
+      const buffer = this.electron.fs.readFileSync(profile.filePath);
+      if (!primaryBuffer.equals(buffer)) {
+        this.alert.warning('File discrepency, check for Profile corruption.');
+      }
+    });
+    this.parseProfiles();
+    this.getSelected();
   }
 }
 

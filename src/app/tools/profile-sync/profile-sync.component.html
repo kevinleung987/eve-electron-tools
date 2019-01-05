@@ -51,12 +51,19 @@
     </div>
     <div class="row"
          *ngIf="accounts.length > 0">
-      <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success">{{accountBindings[selectedProfiles.accounts.primary?.id]
-          || selectedProfiles.accounts.primary?.id}}</span>
-        <span class="text-secondary"
-              *ngFor="let profile of selectedProfiles.accounts.secondary">, {{accountBindings[profile.id] ||
-          profile.id}}</span>
-      </h5>
+      <div class="col-10">
+        <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success"
+                *ngIf="selectedProfiles.accounts.primary != null">{{selectedProfiles.accounts.primary?.id}}</span>
+          <span class="text-secondary"
+                *ngFor="let profile of selectedProfiles.accounts.secondary">, {{profile.id}}</span>
+        </h5>
+      </div>
+      <div class="col-2">
+        <button type="button"
+                class="btn btn-raised btn-success"
+                [disabled]="selectedProfiles.accounts.primary==null || selectedProfiles.accounts.secondary.length === 0"
+                (click)="syncProfiles('accounts')">Synchronize</button>
+      </div>
     </div>
     <div class="row">
       <div class="col-3"
@@ -78,13 +85,21 @@
     </div>
     <div class="row"
          *ngIf="characters.length > 0">
-      <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success"
-              *ngIf="selectedProfiles.characters.primary != null">{{(selectedProfiles.characters.primary?.id |
-          eve:'character' | async)?.name}}</span>
-        <span class="text-secondary"
-              *ngFor="let profile of selectedProfiles.characters.secondary">, {{(profile.id | eve:'character' |
-          async)?.name}}</span>
-      </h5>
+      <div class="col-10">
+        <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success"
+                *ngIf="selectedProfiles.characters.primary != null">{{(selectedProfiles.characters.primary?.id |
+            eve:'character' | async)?.name}}</span>
+          <span class="text-secondary"
+                *ngFor="let profile of selectedProfiles.characters.secondary">, {{(profile.id | eve:'character' |
+            async)?.name}}</span>
+        </h5>
+      </div>
+      <div class="col-2">
+        <button type="button"
+                class="btn btn-raised btn-success"
+                [disabled]="selectedProfiles.characters.primary==null || selectedProfiles.characters.secondary.length === 0"
+                (click)="syncProfiles('characters')">Synchronize</button>
+      </div>
     </div>
     <div class="row">
       <div class="col-3"
