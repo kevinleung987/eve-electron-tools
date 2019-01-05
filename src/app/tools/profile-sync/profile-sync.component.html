@@ -1,9 +1,11 @@
 <app-header [title]="'Profile Sync'">
   <div class="row">
-    <h5 class="mx-auto">Locate your EVE Profiles folder using Select Folder and press Scan Profiles to load your
-      profiles. <kbd>Left-click</kbd> to select a "Primary" profile which will act as the source copy. <kbd>Right-click</kbd>
-      to select multiple "Secondary" profiles which act as destinations to write to. You can bind a name to a account
-      to make it easier to differentiate between accounts. Work In Progress.</h5>
+    <h5 class="mx-auto">Locate your EVE Profiles folder using <b>Select Folder</b> and press <b>Scan Profiles</b> to
+      load your game profiles. <kbd>Left-click</kbd> to select a <b class="text-success">Source</b> profile to use as a
+      source. <kbd>Right-click</kbd> to select multiple <b class="text-secondary">Destination</b> profiles to write to.
+      You can bind a name, like your username, to an account to make it easier to differentiate. After selecting how
+      you'd like to synchronize your profiles, press <b>Synchronize</b>. It is recommended to use <b>Backup Profiles</b>
+      to create a complete profile folder backup before syncing your profiles.</h5>
   </div>
 </app-header>
 <div class="container">
@@ -28,7 +30,7 @@
   </div>
   <div class="row current-directory card card-body"
        (click)="openProfilesFolder()">
-    <b class="mx-auto">Current Profile Directory: {{ profilesPath || 'No folder selected.' }}</b>
+    <b class="mx-auto">Selected Folder: {{ profilesPath || 'No folder selected.' }}</b>
   </div>
   <div *ngIf="profilesPath">
     <div class="row">
@@ -60,7 +62,7 @@
       </div>
       <div class="col-2">
         <button type="button"
-                class="btn btn-raised btn-success"
+                class="btn btn-raised btn-secondary"
                 [disabled]="selectedProfiles.accounts.primary==null || selectedProfiles.accounts.secondary.length === 0"
                 (click)="syncProfiles('accounts')">Synchronize</button>
       </div>
@@ -96,7 +98,7 @@
       </div>
       <div class="col-2">
         <button type="button"
-                class="btn btn-raised btn-success"
+                class="btn btn-raised btn-secondary"
                 [disabled]="selectedProfiles.characters.primary==null || selectedProfiles.characters.secondary.length === 0"
                 (click)="syncProfiles('characters')">Synchronize</button>
       </div>

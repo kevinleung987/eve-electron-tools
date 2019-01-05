@@ -132,7 +132,7 @@ export class ProfileSyncComponent implements OnInit {
     this.characters.forEach((character) => {
       this.electron.fs.copyFileSync(character.filePath, this.electron.path.join(backupDir, character.fileName));
     });
-    this.alert.success('All profiles have been backed up.');
+    this.alert.success('All profiles have been backed up. They can be found at: ' + backupDir);
   }
 
   syncProfiles(type: string) {
@@ -150,6 +150,7 @@ export class ProfileSyncComponent implements OnInit {
         this.alert.warning('File discrepency, check for Profile corruption.');
       }
     });
+    this.alert.success('Profiles synchronized.');
     this.parseProfiles();
     this.getSelected();
   }

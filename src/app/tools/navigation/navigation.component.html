@@ -1,8 +1,9 @@
 <app-header [title]="'Navigation'">
   <div class="row">
-    <h5 class="mx-auto">Quickly reference the distance between two systems in LightYears by selecting them in the two
-      search-bars below. You can also find the best route between them with a preference for shorter, safer, or less
-      secure routes.</h5>
+    <h5 class="mx-auto">Quickly reference the distance between two systems in Light Years by selecting them in the two
+      search-bars below. The jump-capable ship-types that can jump this distance will also be listed. You can find the
+      best route between them by pressing <kbd>Get Route</kbd> with a preference for Shorter, Safer, or Less Secure
+      routes.</h5>
   </div>
 </app-header>
 <div class="container">
@@ -31,7 +32,7 @@
     </div>
   </div>
   <div class="row button-row justify-content-center">
-    <h5>Jump Distance: {{currDistance ? currDistance : 'N/A'}}</h5>
+    <h5><b>Jump Distance: {{currDistance ? currDistance : 'N/A'}}</b></h5>
   </div>
   <div class="row button-row justify-content-center">
     <div class="col-3">

@@ -51,7 +51,7 @@ export class CanActivateElectron implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!this.electron.isElectron) {
-      this.alert.warning('This feature is only available in the Desktop client');
+      this.alert.warning('This feature is only available in the Desktop client, you can download it from the GitHub Releases page.');
     }
     return this.electron.isElectron;
   }
