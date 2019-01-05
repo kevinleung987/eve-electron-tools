@@ -51,7 +51,7 @@ import { NavigationComponent } from './tools/navigation/navigation.component';
     PapaParseModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      timeOut: 2500,
+      timeOut: 3000,
       maxOpened: 5,
       autoDismiss: true,
       preventDuplicates: true,

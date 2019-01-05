@@ -95,6 +95,12 @@ export class ZkillListenerComponent implements OnInit {
     this.listening = false;
   }
 
+  deleteMail(event: Event, index: number) {
+    this.mails.splice(index, 1);
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   clear() {
     this.mails = [];
     this.numFiltered = 0;

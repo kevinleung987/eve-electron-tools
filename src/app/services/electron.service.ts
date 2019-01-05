@@ -9,7 +9,6 @@ export class ElectronService {
   // Whether running under Electron or Browser
   isElectron: boolean;
   updateOccured: Subject<any>;
-
   // Electron APIs
   ipcRenderer: typeof ipcRenderer;
   webFrame: typeof webFrame;

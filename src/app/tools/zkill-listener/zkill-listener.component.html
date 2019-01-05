@@ -221,7 +221,7 @@
     <div class="card mail-info"
          style="width:100%;"
          (click)="openLink(mail['zkb']['url'])"
-         (contextmenu)="mails.pop(i)">
+         (contextmenu)="deleteMail($event, i)">
       <div class="card-body row">
         <!-- Mail Info -->
         <div class="col-12 col-lg-2">
