@@ -49,6 +49,15 @@
                 (click)="bindName()">Bind Name</button>
       </div>
     </div>
+    <div class="row"
+         *ngIf="accounts.length > 0">
+      <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success">{{accountBindings[selectedProfiles.accounts.primary?.id]
+          || selectedProfiles.accounts.primary?.id}}</span>
+        <span class="text-secondary"
+              *ngFor="let profile of selectedProfiles.accounts.secondary">, {{accountBindings[profile.id] ||
+          profile.id}}</span>
+      </h5>
+    </div>
     <div class="row">
       <div class="col-3"
            *ngFor="let account of accounts">
@@ -66,6 +75,16 @@
     </div>
     <div class="row">
       <h4 class="mx-auto section-header">Characters({{ characters.length }})</h4>
+    </div>
+    <div class="row"
+         *ngIf="characters.length > 0">
+      <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success"
+              *ngIf="selectedProfiles.characters.primary != null">{{(selectedProfiles.characters.primary?.id |
+          eve:'character' | async)?.name}}</span>
+        <span class="text-secondary"
+              *ngFor="let profile of selectedProfiles.characters.secondary">, {{(profile.id | eve:'character' |
+          async)?.name}}</span>
+      </h5>
     </div>
     <div class="row">
       <div class="col-3"

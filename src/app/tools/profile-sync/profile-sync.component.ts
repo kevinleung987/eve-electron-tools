@@ -15,6 +15,7 @@ export class ProfileSyncComponent implements OnInit {
   accounts: Profile[] = [];
   characters: Profile[] = [];
   accountBindings: { [id: number]: string };
+  selectedProfiles = { accounts: { primary: null, secondary: [] }, characters: { primary: null, secondary: [] } };
   name = '';
   s = Selected;
   constructor(private electron: ElectronService, private config: ConfigService, private alert: AlertService) { }
@@ -86,6 +87,7 @@ export class ProfileSyncComponent implements OnInit {
       });
     }
     item['selected'] = item['selected'] === selectionType ? null : selectionType;
+    this.getSelected();
   }
 
   bindName() {
@@ -100,6 +102,24 @@ export class ProfileSyncComponent implements OnInit {
       this.config.set('profileAccountBindings', this.accountBindings);
       this.name = null;
     }
+  }
+
+  getSelected() {
+    this.selectedProfiles = { accounts: { primary: null, secondary: [] }, characters: { primary: null, secondary: [] } };
+    this.accounts.forEach((account) => {
+      if (account['selected'] === Selected.Primary) {
+        this.selectedProfiles.accounts.primary = account;
+      } else if (account['selected'] === Selected.Secondary) {
+        this.selectedProfiles.accounts.secondary.push(account);
+      }
+    });
+    this.characters.forEach((character) => {
+      if (character['selected'] === Selected.Primary) {
+        this.selectedProfiles.characters.primary = character;
+      } else if (character['selected'] === Selected.Secondary) {
+        this.selectedProfiles.characters.secondary.push(character);
+      }
+    });
   }
 
   backupProfiles() {
