@@ -75,7 +75,7 @@ export class ZkillListenerComponent implements OnInit {
         });
         if (!this.checked.filters || (this.checked.filters && this.applyFilters(message))) {
           this.mails.unshift(message);
-          if (this.checked.alerts) { this.playAlert(); }
+          if (this.checked.alerts) { this.alert.playAlert('alert.wav'); }
         }
         console.log(message, this.applyFilters(message));
         if (this.mails.length > this.length) {
@@ -108,13 +108,6 @@ export class ZkillListenerComponent implements OnInit {
   }
 
   openLink(url: string) { this.electron.openUrl(url); }
-
-  playAlert() {
-    const audio = new Audio();
-    audio.src = 'assets/alert.wav';
-    audio.load();
-    audio.play();
-  }
 
   addFilter(type: Filter) {
     let filterType;

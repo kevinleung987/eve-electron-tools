@@ -31,15 +31,17 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-3">
+    <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-info mx-auto"
-              (click)="startListeningGameLogs()"
-              *ngIf="!(gameLogWatcher != null)">Start Listening</button>
+              [disabled]="gameLogWatcher!=null"
+              (click)="startListeningGameLogs()">Start Listening</button>
+    </div>
+    <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-warning mx-auto"
-              (click)="stopListeningGameLogs()"
-              *ngIf="!(gameLogWatcher == null)">Stop Listening</button>
+              [disabled]="gameLogWatcher==null"
+              (click)="stopListeningGameLogs()">Stop Listening</button>
     </div>
   </div>
   <div class="row">

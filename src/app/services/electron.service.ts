@@ -30,6 +30,7 @@ export class ElectronService {
       // Setup NodeJS APIs
       this.fs = window.require('fs');
       this.path = window.require('path');
+      this.remote.getCurrentWindow().once('focus', () => this.remote.getCurrentWindow().flashFrame(false));
     }
   }
 
@@ -47,5 +48,9 @@ export class ElectronService {
     } else {
       window.open(url, '_blank');
     }
+  }
+
+  flashFrame() {
+    this.remote.getCurrentWindow().flashFrame(true);
   }
 }

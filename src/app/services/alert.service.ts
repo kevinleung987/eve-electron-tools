@@ -20,4 +20,11 @@ export class AlertService {
   error(msg: string) {
     this.toast.error(msg);
   }
+
+  playAlert(file: string) {
+    const audio = new Audio();
+    audio.src = 'assets/' + file;
+    audio.load();
+    audio.play();
+  }
 }
