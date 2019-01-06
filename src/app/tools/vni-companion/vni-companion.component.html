@@ -4,24 +4,6 @@
   </div>
 </app-header>
 <div class="container">
-  <div class="row"
-       *ngIf="config.debug">
-    <div class="col-4">
-      <input #fileName
-             placeholder="File Name"
-             class="form-control search-field">
-    </div>
-    <div class="col-4">
-      <input #logEntry
-             placeholder="Log Entry"
-             class="form-control search-field">
-    </div>
-    <div class="col-4">
-      <button type="button"
-              class="btn btn-raised btn-primary mx-auto"
-              (click)="parseLogEntry(fileName.value, logEntry.value)">Mock Log Entry</button>
-    </div>
-  </div>
   <div class="row">
     <div class="col-10"> {{logsPath}} </div>
     <div class="col-2">
@@ -34,20 +16,22 @@
     <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-info mx-auto"
-              [disabled]="gameLogWatcher!=null"
-              (click)="startListeningGameLogs()">Start Listening</button>
+              [class.btn-info]="gameLogWatcher == null"
+              [class.btn-warning]="gameLogWatcher!=null"
+              (click)="toggleGameLogsListener()">{{gameLogWatcher == null ? 'Start Listening' : 'Stop Listening'}}</button>
     </div>
     <div class="col-2">
       <button type="button"
-              class="btn btn-raised btn-warning mx-auto"
-              [disabled]="gameLogWatcher==null"
-              (click)="stopListeningGameLogs()">Stop Listening</button>
+              class="btn btn-raised btn-info mx-auto"
+              [class.btn-info]="chatLogWatcher == null"
+              [class.btn-warning]="chatLogWatcher!=null"
+              (click)="toggleChatLogsListener()">{{chatLogWatcher == null ? 'Watch Intel' : 'Stop Watching Intel'}}</button>
     </div>
   </div>
   <div class="row">
     <div class="col-12"
          *ngIf="characters.length > 0">
-      <h5>Total ISK: {{totalIsk | number}}</h5>
+      <h5>Total ISK: {{totalIsk | number}} ISK</h5>
     </div>
     <div class="col-3"
          *ngFor="let character of characters">
@@ -63,8 +47,9 @@
               <p *ngIf="config.debug">{{character.fileName}}</p>
             </div>
           </div>
-          <div class="row">Revenue so far: {{character.isk | number}} ISK </div>
-          <div class="row">Time since last active: {{character.lastActive}}</div>
+          <div class="row">Revenue so far: {{character.isk | number}} ISK</div>
+          <div class="row">Revenue per hour: {{(character.isk / character.time) * 1440 | number}} ISK</div>
+          <div class="row">Time since last active: {{character.time - character.lastActive}}</div>
         </div>
       </div>
     </div>

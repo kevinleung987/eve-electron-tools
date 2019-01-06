@@ -25,6 +25,7 @@ export class VNICompanionComponent implements OnInit {
   fs = this.electron.fs; // Alias to reduce clutter
   inactiveTime = 600;
   logsPath: string;
+  // Game logs - In-game activity
   gameLogWatcher: FSWatcher = null;
   gameLogFiles: {
     [fileName: string]:
@@ -35,12 +36,23 @@ export class VNICompanionComponent implements OnInit {
       filePath: string,
       size: number,
       isk: number,
+      time: number,
       lastActive: number
     }
   } = {};
   characters = [];
-
   totalIsk = 0;
+  // Chat logs - In-game chat messages
+  chatLogWatcher: FSWatcher = null;
+  watchedChannelNames: string[] = [];
+  channels: {
+    [name: string]:
+    {
+      filePath: string,
+      size: number,
+      lastMessage: Date
+    }
+  } = {};
 
   constructor(public config: ConfigService, private electron: ElectronService, private navigation: NavigationService,
     private eve: EveService, private universe: UniverseService, private alert: AlertService) { }
@@ -53,32 +65,47 @@ export class VNICompanionComponent implements OnInit {
   selectLogsFolder() {
     this.electron.remote.dialog.showOpenDialog({ properties: ['openDirectory'] }, (result) => {
       if (result && result.length > 0) {
-        console.log(result);
         this.logsPath = result[0];
         this.config.set('logsPath', this.logsPath);
       }
     });
   }
 
-  startListeningGameLogs() {
-    this.gameLogWatcher = this.parseGameLogs();
+  toggleGameLogsListener() {
+    if (this.gameLogWatcher == null) {
+      this.gameLogWatcher = this.parseGameLogs();
+    } else {
+      this.gameLogWatcher.close();
+      this.gameLogWatcher = null;
+    }
   }
 
-  stopListeningGameLogs() {
-    this.gameLogWatcher.close();
-    this.gameLogWatcher = null;
+  toggleChatLogsListener() {
+    if (this.chatLogWatcher == null) {
+      this.chatLogWatcher = this.parseChatLogs();
+    } else {
+      this.chatLogWatcher.close();
+      this.chatLogWatcher = null;
+    }
   }
 
   gameLogsPath() {
     return this.electron.path.join(this.logsPath, 'Gamelogs') + this.electron.path.sep;
   }
 
+  chatLogsPath() {
+    return this.electron.path.join(this.logsPath, 'Chatlogs') + this.electron.path.sep;
+  }
+
   incrementTime() {
     if (this.gameLogWatcher != null) {
       this.characters.forEach(character => {
-        character.lastActive++;
-        if (character.lastActive >= this.inactiveTime && character.lastActive % this.alertInterval === 0) {
-          this.alert.playAlert('alert.wav');
+        character.time++;
+        if (character.time - character.lastActive >= this.inactiveTime) {
+          if (character.time - character.lastActive % this.alertInterval === 0) {
+            this.alert.playAlert('alert.wav');
+            this.electron.flashFrame();
+          }
         }
       });
     }
@@ -86,7 +113,6 @@ export class VNICompanionComponent implements OnInit {
 
   parseGameLogs() {
     return this.fs.watch(this.gameLogsPath(), async (eventType, fileName) => {
-      // const starttime = Date.now();
       if (!this.gameLogFiles[fileName]) {
         const filePath = this.gameLogsPath() + fileName;
         const name = this.fs.readFileSync(filePath).toString().split('\n')[2].split(': ')[1];
@@ -97,6 +123,7 @@ export class VNICompanionComponent implements OnInit {
           filePath,
           size: this.fs.statSync(filePath).size,
           isk: 0,
+          time: 0,
           lastActive: 0
         };
         this.characters.push(this.gameLogFiles[fileName]);
@@ -108,39 +135,43 @@ export class VNICompanionComponent implements OnInit {
         console.log(this.gameLogFiles[fileName]);
       } else {
         this.electron.updateView();
-        const changes = this.checkGameLogChanges(fileName);
-        // console.log(changes);
+        const changes = this.checkLogChanges(this.gameLogFiles[fileName]);
         changes.forEach((change: string) => {
           if (change.length === 0) { return; }
-          this.parseLogEntry(fileName, change);
+          this.parseGameLogEntry(fileName, change);
         });
       }
-      // console.log((Date.now() - starttime) / 1000);
     });
   }
 
-  checkGameLogChanges(fileName: string): string[] {
+  parseChatLogs() {
+    return this.fs.watch(this.chatLogsPath(), (eventType, fileName) => {
+      console.log(fileName);
+    });
+  }
+
+  checkLogChanges(logFile: any): string[] {
     // Read only the changes that occur from when we last saw the file by looking at file sizes
-    const filePath = this.gameLogFiles[fileName].filePath;
+    const filePath = logFile.filePath;
     const newFileSize = this.fs.statSync(filePath).size;
-    const fileSize = this.gameLogFiles[fileName].size;
+    const fileSize = logFile.size;
     const sizeDiff = newFileSize - fileSize;
     if (sizeDiff < 0) {
-      this.gameLogFiles[fileName].size = newFileSize;
+      logFile.size = newFileSize;
       return [];
     }
     const buffer = Buffer.alloc(sizeDiff);
     const fd = this.fs.openSync(filePath, 'r');
     this.fs.readSync(fd, buffer, 0, sizeDiff, fileSize);
     this.fs.closeSync(fd);
-    this.gameLogFiles[fileName].size = newFileSize;
+    logFile.size = newFileSize;
     // Remove XML tags and split by line
     return buffer.toString().replace(/<.*?>/g, '').split('\n');
   }
 
-  parseLogEntry(fileName: string, logEntry: string) {
+  parseGameLogEntry(fileName: string, logEntry: string) {
     const character = this.gameLogFiles[fileName];
-    character.lastActive = 0;
+    character.lastActive = character.time;
     if (this.isBounty.test(logEntry)) {
       let bounty = logEntry.match(this.getBounty)[0];
       // Extract just the number
