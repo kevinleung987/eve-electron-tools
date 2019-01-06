@@ -7,6 +7,7 @@ import { FSWatcher } from 'fs';
 import { UniverseService } from 'src/app/services/universe.service';
 import { AlertService } from 'src/app/services/alert.service';
 import * as chokidar from 'chokidar';
+import { SuggestionService } from 'src/app/services/suggestion.service';
 
 @Component({
   selector: 'app-vni-companion',
@@ -42,22 +43,23 @@ export class VNICompanionComponent implements OnInit {
   totalIsk = 0;
   // Chat logs - In-game chat messages
   chatLogWatcher: FSWatcher = null;
-  watchedChannelNames: string[] = [];
-  channels: {
-    [name: string]:
-    {
-      filePath: string,
-      size: number,
-      lastMessage: Date
-    }
-  } = {};
+  channels = [];
+  channelDetails: { [channelName: string]: { lastMessage: string } } = {};
+  watchedSystem: number;
 
   constructor(public config: ConfigService, private electron: ElectronService, private navigation: NavigationService,
-    private eve: EveService, private universe: UniverseService, private alert: AlertService) { }
+    private eve: EveService, private universe: UniverseService, private alert: AlertService, public suggest: SuggestionService) { }
 
   ngOnInit() {
-    this.logsPath = this.config.default('logsPath', null);
-    setInterval(this.incrementTime.bind(this), 1000);
+    this.universe.waitUntilLoaded(() => {
+      this.logsPath = this.config.default('logsPath', null);
+      this.watchedSystem = this.config.default('watchedSystem', null);
+      this.config.get('channels').forEach(channel => {
+        this.channels.push(channel);
+        this.channelDetails[channel] = { lastMessage: '' };
+      });
+      setInterval(this.incrementTime.bind(this), 1000);
+    });
   }
 
   selectLogsFolder() {
@@ -87,12 +89,40 @@ export class VNICompanionComponent implements OnInit {
     }
   }
 
+  systemSelect(name) {
+    this.watchedSystem = this.universe.getSystemId(name);
+    this.config.set('watchedSystem', this.watchedSystem);
+  }
+
+  addChannel(channel) {
+    if (!this.channels.includes(channel)) {
+      this.channels.push(channel);
+      this.channelDetails[channel] = { lastMessage: '' };
+      this.config.set('channels', this.channels);
+    } else {
+      this.alert.warning('That channel already exists!');
+    }
+  }
+
+  removeChannel(index) {
+    this.channels.splice(index, 1);
+    this.config.set('channels', this.channels);
+  }
+
   gameLogsPath() {
-    return this.electron.path.join(this.logsPath, 'Gamelogs') + this.electron.path.sep;
+    const path = this.electron.path.join(this.logsPath, 'Gamelogs') + this.electron.path.sep;
+    if (!this.fs.existsSync(path)) {
+      throw new Error('Gamelogs folder not found.');
+    }
+    return path;
   }
 
   chatLogsPath() {
-    return this.electron.path.join(this.logsPath, 'Chatlogs') + this.electron.path.sep;
+    const path = this.electron.path.join(this.logsPath, 'Chatlogs') + this.electron.path.sep;
+    if (!this.fs.existsSync(path)) {
+      throw new Error('Chatlogs folder not found.');
+    }
+    return path;
   }
 
   incrementTime() {
@@ -152,7 +182,17 @@ export class VNICompanionComponent implements OnInit {
     }).on('error', error => console.log(`Watcher error: ${error}`))
       .on('ready', () => this.alert.success('Chat Log Scanner initialized. Ready for changes.'))
       .on('raw', (event, path, details) => {
-        this.checkLogChanges(path, details, 'ucs2').forEach(item => console.log(item));
+        const channel = this.electron.path.basename(path).replace(/_\d*_\d*.txt/g, '');
+        if (this.channels.includes(channel)) {
+          this.checkLogChanges(path, details, 'ucs2').forEach(item => {
+            let message = item.match(/> .*/g)[0];
+            message = message.substring(2, message.length);
+            if (this.channelDetails[channel].lastMessage !== message) {
+              this.channelDetails[channel].lastMessage = message;
+              console.log(message);
+            }
+          });
+        }
       });
   }
 
@@ -168,8 +208,12 @@ export class VNICompanionComponent implements OnInit {
     const fd = this.fs.openSync(path, 'r');
     this.fs.readSync(fd, buffer, 0, sizeDiff, fileSize);
     this.fs.closeSync(fd);
-    // Remove XML tags, non-ASCII characters and split by line
-    return buffer.toString(encoding).replace(/<.*?>/g, '').replace(/[^\x00-\x7F]/g, '').split('\n');
+    // Remove XML tags and split by line
+    let lines = buffer.toString(encoding).replace(/<.*?>/g, '').split('\n');
+    // Remove carriage return on Windows
+    lines = lines.map(line => line.replace(/[\n\r]+/g, ''));
+    lines = lines.filter((line) => line.length > 0);
+    return lines;
   }
 
   parseGameLogEntry(fileName: string, logEntry: string) {

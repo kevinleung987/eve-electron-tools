@@ -12,46 +12,105 @@
               (click)="selectLogsFolder()">Select Folder</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-raised btn-info mx-auto"
-              [class.btn-info]="gameLogWatcher == null"
-              [class.btn-warning]="gameLogWatcher!=null"
-              (click)="toggleGameLogsListener()">{{gameLogWatcher == null ? 'Start Listening' : 'Stop Listening'}}</button>
-    </div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-raised btn-info mx-auto"
-              [class.btn-info]="chatLogWatcher == null"
-              [class.btn-warning]="chatLogWatcher!=null"
-              (click)="toggleChatLogsListener()">{{chatLogWatcher == null ? 'Watch Intel' : 'Stop Watching Intel'}}</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12"
-         *ngIf="characters.length > 0">
-      <h5>Total ISK: {{totalIsk | number}} ISK</h5>
-    </div>
-    <div class="col-3"
-         *ngFor="let character of characters">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <img style="height: 64px; width: 64px;"
-                   src="{{character['id'] | image:'character'}}">
-            </div>
-            <div class="col-8">
-              <p>{{character.name}}</p>
-              <p *ngIf="config.debug">{{character.fileName}}</p>
-            </div>
-          </div>
-          <div class="row">Revenue so far: {{character.isk | number}} ISK</div>
-          <div class="row">Revenue per hour: {{(character.isk / character.time) * 1440 | number}} ISK</div>
-          <div class="row">Time since last active: {{character.time - character.lastActive}}</div>
+  <div class="row content-section">
+    <div class="col-7">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="text-center">Characters[{{characters.length}}]</h2>
         </div>
       </div>
+      <div class="row">
+        <div class="col-8">
+          <h5>Total ISK: {{totalIsk | number}} ISK</h5>
+        </div>
+        <div class="col-4">
+          <button type="button"
+                  class="btn btn-raised btn-info mx-auto"
+                  [class.btn-info]="gameLogWatcher == null"
+                  [class.btn-warning]="gameLogWatcher!=null"
+                  (click)="toggleGameLogsListener()">{{gameLogWatcher == null ? 'Start Listening' : 'Stop Listening'}}</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4"
+             *ngFor="let character of characters">
+          <div class="card">
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-8">
+                  <img style="height: 64px; width: 64px;"
+                       src="{{character['id'] | image:'character'}}">
+                </div>
+                <div class="col-8">
+                  <p><b>{{character.name}}</b></p>
+                  <p *ngIf="config.debug">{{character.fileName}}</p>
+                </div>
+              </div>
+              <div class="row">Revenue: {{character.isk | number}} ISK</div>
+              <div class="row">Per hour: {{(character.isk / character.time) * 1440 | number}} ISK</div>
+              <div class="row">Last active: {{character.time - character.lastActive}} s ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-5">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="text-center">Intel</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <h5>Current System: {{watchedSystem | universe:'system'}}</h5>
+        </div>
+        <div class="col-4">
+          <button type="button"
+                  class="btn btn-raised btn-info"
+                  [class.btn-info]="chatLogWatcher == null"
+                  [class.btn-warning]="chatLogWatcher!=null"
+                  [disabled]="watchedSystem===-1 || channels.length === 0"
+                  (click)="toggleChatLogsListener()">{{chatLogWatcher == null ? 'Watch Intel' : 'Stop Watching'}}</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-search [placeholder]="'Search for a system here...'"
+                      [source]="suggest.systemNames"
+                      (submit)="systemSelect($event)"></app-search>
+        </div>
+      </div>
+      <div class="row content-section">
+        <div class="col-12">
+          <h5 class="text-center">Watched Channels</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-11">
+          <input #intelChannel
+                 type="intel"
+                 class="form-control">
+          <small>Name of Intel Channel</small>
+        </div>
+        <div class="col-1">
+          <button type="button"
+                  class="btn btn-raised btn-success"
+                  (click)="addChannel(intelChannel.value)">+</button>
+        </div>
+      </div>
+      <div class="card"
+           *ngFor="let channel of channels; let i = index">
+        <div class="row">
+          <div class="col-9">
+            <h5 class="text-center">{{channel}}</h5>
+          </div>
+          <div class="col-3">
+            <button type="button"
+                    class="btn btn-raised btn-danger float-right"
+                    (click)="removeChannel(i)">-</button>
+          </div>
+        </div>
+      </div> {{channelDetails | json}}
     </div>
   </div>
 </div>

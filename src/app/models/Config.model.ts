@@ -3,4 +3,6 @@ export class ConfigFile {
   profilesPath = '';
   profileAccountBindings: { [id: number]: string } = {};
   logsPath = '';
+  watchedSystem = -1;
+  channels = [];
 }
