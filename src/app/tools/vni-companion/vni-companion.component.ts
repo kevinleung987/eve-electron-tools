@@ -32,6 +32,7 @@ export class VNICompanionComponent implements OnInit {
   } = {};
   characters = [];
   fs = this.electron.fs; // Alias to reduce clutter
+  totalIsk = 0;
 
   constructor(public config: ConfigService, private electron: ElectronService, private navigation: NavigationService,
     private eve: EveService) { }
@@ -65,9 +66,11 @@ export class VNICompanionComponent implements OnInit {
   }
 
   incrementTime() {
-    this.characters.forEach(character => {
-      character.lastActive++;
-    });
+    if (this.gameLogWatcher != null) {
+      this.characters.forEach(character => {
+        character.lastActive++;
+      });
+    }
   }
 
   parseGameLogs() {
@@ -86,6 +89,7 @@ export class VNICompanionComponent implements OnInit {
           lastActive: 0
         };
         this.characters.push(this.gameLogFiles[fileName]);
+        this.characters.sort((a, b) => a.name < b.name ? -1 : 1);
         const search = await this.eve.search(name, 'character', true);
         if (!(search && search['character'] && search['character'].length > 0)) { return; }
         const id = search['character'][0];
@@ -105,7 +109,6 @@ export class VNICompanionComponent implements OnInit {
   }
 
   checkGameLogChanges(fileName: string): string[] {
-    // https://stackoverflow.com/questions/38190773/node-js-monitor-file-for-changes-and-parse-them/38191024#38191024
     // Read only the changes that occur from when we last saw the file by looking at file sizes
     const filePath = this.gameLogFiles[fileName].filePath;
     const newFileSize = this.fs.statSync(filePath).size;
@@ -129,10 +132,11 @@ export class VNICompanionComponent implements OnInit {
     character.lastActive = 0;
     if (this.isBounty.test(logEntry)) {
       let bounty = logEntry.match(this.getBounty)[0];
+      // Extract just the number
       bounty = bounty.substring(0, bounty.length - 4).replace(/\,/g, '');
-      console.log(bounty);
       character.isk += Number(bounty);
-    } else if (this.isCombat.test(logEntry)) { // <b>.*?<\/b>
+      this.totalIsk += Number(bounty);
+    } else if (this.isCombat.test(logEntry)) {
 
       if (/to (\w|\s)* -/g.test(logEntry)) {// Dealing damage to
 

@@ -4,7 +4,6 @@
   </div>
 </app-header>
 <div class="container">
-  <div class="row"> {{logsPath}} </div>
   <div class="row"
        *ngIf="config.debug">
     <div class="col-4">
@@ -24,19 +23,30 @@
     </div>
   </div>
   <div class="row">
-    <button type="button"
-            class="btn btn-raised btn-primary mx-auto"
-            (click)="selectLogsFolder()">Select Folder</button>
-    <button type="button"
-            class="btn btn-raised btn-primary mx-auto"
-            (click)="startListeningGameLogs()"
-            [disabled]="gameLogWatcher != null">Start Listening</button>
-    <button type="button"
-            class="btn btn-raised btn-primary mx-auto"
-            (click)="stopListeningGameLogs()"
-            [disabled]="gameLogWatcher == null">Stop Listening</button>
+    <div class="col-10"> {{logsPath}} </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-raised btn-primary mx-auto"
+              (click)="selectLogsFolder()">Select Folder</button>
+    </div>
   </div>
   <div class="row">
+    <div class="col-3">
+      <button type="button"
+              class="btn btn-raised btn-info mx-auto"
+              (click)="startListeningGameLogs()"
+              *ngIf="!(gameLogWatcher != null)">Start Listening</button>
+      <button type="button"
+              class="btn btn-raised btn-warning mx-auto"
+              (click)="stopListeningGameLogs()"
+              *ngIf="!(gameLogWatcher == null)">Stop Listening</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12"
+         *ngIf="characters.length > 0">
+      <h5>Total ISK: {{totalIsk | number}}</h5>
+    </div>
     <div class="col-3"
          *ngFor="let character of characters">
       <div class="card">

@@ -99,7 +99,6 @@ export class NavigationService {
 }
 
 /**
- * https://stackoverflow.com/questions/42919469/efficient-way-to-implement-priority-queue-in-javascript
  * Priority queue used in A* search
  */
 class PriorityQueue {
