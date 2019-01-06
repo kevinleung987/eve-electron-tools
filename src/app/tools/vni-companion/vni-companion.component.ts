@@ -6,6 +6,7 @@ import { EveService } from 'src/app/services/eve.service';
 import { FSWatcher } from 'fs';
 import { UniverseService } from 'src/app/services/universe.service';
 import { AlertService } from 'src/app/services/alert.service';
+import * as chokidar from 'chokidar';
 
 @Component({
   selector: 'app-vni-companion',
@@ -28,13 +29,10 @@ export class VNICompanionComponent implements OnInit {
   // Game logs - In-game activity
   gameLogWatcher: FSWatcher = null;
   gameLogFiles: {
-    [fileName: string]:
+    [file: string]:
     {
       id: number,
       name: string,
-      fileName: string,
-      filePath: string,
-      size: number,
       isk: number,
       time: number,
       lastActive: number
@@ -112,61 +110,66 @@ export class VNICompanionComponent implements OnInit {
   }
 
   parseGameLogs() {
-    return this.fs.watch(this.gameLogsPath(), async (eventType, fileName) => {
-      if (!this.gameLogFiles[fileName]) {
-        const filePath = this.gameLogsPath() + fileName;
-        const name = this.fs.readFileSync(filePath).toString().split('\n')[2].split(': ')[1];
-        this.gameLogFiles[fileName] = {
-          id: null,
-          name: name.trim(),
-          fileName,
-          filePath,
-          size: this.fs.statSync(filePath).size,
-          isk: 0,
-          time: 0,
-          lastActive: 0
-        };
-        this.characters.push(this.gameLogFiles[fileName]);
-        this.characters.sort((a, b) => a.name < b.name ? -1 : 1);
-        const search = await this.eve.search(name, 'character', true);
-        if (!(search && search['character'] && search['character'].length > 0)) { return; }
-        const id = search['character'][0];
-        this.gameLogFiles[fileName].id = id;
-        console.log(this.gameLogFiles[fileName]);
-      } else {
-        this.electron.updateView();
-        const changes = this.checkLogChanges(this.gameLogFiles[fileName]);
-        changes.forEach((change: string) => {
-          if (change.length === 0) { return; }
-          this.parseGameLogEntry(fileName, change);
-        });
-      }
-    });
+    return chokidar.watch(this.gameLogsPath(), {
+      persistent: true,
+      usePolling: true,
+      interval: 100,
+    }).on('error', error => console.log(`Watcher error: ${error}`))
+      .on('ready', () => this.alert.success('Game Log Scanner initialized. Ready for changes.'))
+      .on('raw', async (event, path, details) => {
+        if (!this.gameLogFiles[path]) {
+          const name = this.fs.readFileSync(path).toString().split('\n')[2].split(': ')[1];
+          this.gameLogFiles[path] = {
+            id: null,
+            name: name.trim(),
+            isk: 0,
+            time: 0,
+            lastActive: 0
+          };
+          this.characters.push(this.gameLogFiles[path]);
+          this.characters.sort((a, b) => a.name < b.name ? -1 : 1);
+          const search = await this.eve.search(name, 'character', true);
+          if (!(search && search['character'] && search['character'].length > 0)) { return; }
+          const id = search['character'][0];
+          this.gameLogFiles[path].id = id;
+          console.log(this.gameLogFiles[path]);
+        } else {
+          this.electron.updateView();
+          const changes = this.checkLogChanges(path, details);
+          changes.forEach((change: string) => {
+            if (change.length === 0) { return; }
+            this.parseGameLogEntry(path, change);
+          });
+        }
+      });
   }
 
   parseChatLogs() {
-    return this.fs.watch(this.chatLogsPath(), (eventType, fileName) => {
-      console.log(fileName);
-    });
+    return chokidar.watch(this.chatLogsPath(), {
+      persistent: true,
+      usePolling: true,
+      interval: 100,
+    }).on('error', error => console.log(`Watcher error: ${error}`))
+      .on('ready', () => this.alert.success('Chat Log Scanner initialized. Ready for changes.'))
+      .on('raw', (event, path, details) => {
+        this.checkLogChanges(path, details, 'ucs2').forEach(item => console.log(item));
+      });
   }
 
-  checkLogChanges(logFile: any): string[] {
+  checkLogChanges(path: any, changeDetails, encoding: string = 'utf8'): string[] {
     // Read only the changes that occur from when we last saw the file by looking at file sizes
-    const filePath = logFile.filePath;
-    const newFileSize = this.fs.statSync(filePath).size;
-    const fileSize = logFile.size;
+    const newFileSize = changeDetails.curr.size;
+    const fileSize = changeDetails.prev.size;
     const sizeDiff = newFileSize - fileSize;
     if (sizeDiff < 0) {
-      logFile.size = newFileSize;
       return [];
     }
     const buffer = Buffer.alloc(sizeDiff);
-    const fd = this.fs.openSync(filePath, 'r');
+    const fd = this.fs.openSync(path, 'r');
     this.fs.readSync(fd, buffer, 0, sizeDiff, fileSize);
     this.fs.closeSync(fd);
-    logFile.size = newFileSize;
-    // Remove XML tags and split by line
-    return buffer.toString().replace(/<.*?>/g, '').split('\n');
+    // Remove XML tags, non-ASCII characters and split by line
+    return buffer.toString(encoding).replace(/<.*?>/g, '').replace(/[^\x00-\x7F]/g, '').split('\n');
   }
 
   parseGameLogEntry(fileName: string, logEntry: string) {
