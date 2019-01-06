@@ -46,11 +46,15 @@ export class VNICompanionComponent implements OnInit {
   channels = [];
   channelDetails: { [channelName: string]: { lastMessage: string } } = {};
   watchedSystem: number;
+  numJumps = 10;
+  matchExact = true;
 
   constructor(public config: ConfigService, private electron: ElectronService, private navigation: NavigationService,
     private eve: EveService, private universe: UniverseService, private alert: AlertService, public suggest: SuggestionService) { }
 
   ngOnInit() {
+    // @ts-ignore
+    window.$('app-vni-companion').bootstrapMaterialDesign();
     this.universe.waitUntilLoaded(() => {
       this.logsPath = this.config.default('logsPath', null);
       this.watchedSystem = this.config.default('watchedSystem', null);
@@ -164,10 +168,8 @@ export class VNICompanionComponent implements OnInit {
           this.gameLogFiles[path].id = id;
           console.log(this.gameLogFiles[path]);
         } else {
-          this.electron.updateView();
           const changes = this.checkLogChanges(path, details);
           changes.forEach((change: string) => {
-            if (change.length === 0) { return; }
             this.parseGameLogEntry(path, change);
           });
         }
@@ -187,9 +189,23 @@ export class VNICompanionComponent implements OnInit {
           this.checkLogChanges(path, details, 'ucs2').forEach(item => {
             let message = item.match(/> .*/g)[0];
             message = message.substring(2, message.length);
+            // Don't parse message if its a duplicate produced by multiple listeners/FSWatcher bug
             if (this.channelDetails[channel].lastMessage !== message) {
               this.channelDetails[channel].lastMessage = message;
-              console.log(message);
+              message.split(' ').forEach(token => {
+                if (token.length >= 3) {
+                  const match = this.suggest.match(this.suggest.systemNames, token, this.matchExact ? 'EQUALS' : 'STARTS_WITH');
+                  if (match) {
+                    const system = this.universe.getSystemId(match);
+                    const distance = this.navigation.getShortestRoute(this.watchedSystem, system).length;
+                    console.log(distance);
+                    if (distance <= this.numJumps) {
+                      this.alert.playAlert('alert.wav');
+                      this.electron.flashFrame();
+                    }
+                  }
+                }
+              });
             }
           });
         }

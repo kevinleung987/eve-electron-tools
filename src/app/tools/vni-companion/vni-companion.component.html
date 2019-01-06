@@ -82,7 +82,25 @@
       </div>
       <div class="row content-section">
         <div class="col-12">
-          <h5 class="text-center">Watched Channels</h5>
+          <h5><b>Options</b></h5>
+        </div>
+        <div class="col-8">
+          <input [(ngModel)]="numJumps"
+                 type="intel"
+                 class="form-control">
+          <small># of Jumps from Current System</small>
+        </div>
+        <div class="col-4">
+          <div class="switch">
+            <label>
+              <input type="checkbox"
+                     [(ngModel)]="matchExact"><b>Match Name Exactly</b></label>
+          </div>
+        </div>
+      </div>
+      <div class="row content-section">
+        <div class="col-12">
+          <h5><b>Watched Channels</b></h5>
         </div>
       </div>
       <div class="row">
@@ -110,7 +128,7 @@
                     (click)="removeChannel(i)">-</button>
           </div>
         </div>
-      </div> {{channelDetails | json}}
+      </div>
     </div>
   </div>
 </div>

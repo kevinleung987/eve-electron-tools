@@ -50,6 +50,7 @@ Other Dependencies:
 - **[ngx-papaparse](https://github.com/alberthaff/ngx-papaparse)** - Elegant CSV parsing
 - **[ngx-toastr](https://github.com/scttcper/ngx-toastr)** - Toast notifications
 - **[match-sorter](https://github.com/kentcdodds/match-sorter)** - String matching to power Suggestions service
+- **[chokidar](https://github.com/paulmillr/chokidar)** - Cross-platform NodeJS fs.watch wrapper to simplify watching file changes
 
 ## Note About Data Dependencies
 

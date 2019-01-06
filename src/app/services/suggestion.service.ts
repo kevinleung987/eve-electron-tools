@@ -32,4 +32,10 @@ export class SuggestionService {
     const result = matchSorter(items, value).slice(0, num);
     return result;
   }
+
+  match(items: any[], value: any, threshold: string) {
+    if (items == null || value == null || value.length < 1) { return null; }
+    const result = matchSorter(items, value, { threshold: matchSorter.rankings[threshold] });
+    return result[0];
+  }
 }
