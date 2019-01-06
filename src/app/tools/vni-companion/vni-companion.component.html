@@ -5,6 +5,24 @@
 </app-header>
 <div class="container">
   <div class="row"> {{logsPath}} </div>
+  <div class="row"
+       *ngIf="config.debug">
+    <div class="col-4">
+      <input #fileName
+             placeholder="File Name"
+             class="form-control search-field">
+    </div>
+    <div class="col-4">
+      <input #logEntry
+             placeholder="Log Entry"
+             class="form-control search-field">
+    </div>
+    <div class="col-4">
+      <button type="button"
+              class="btn btn-raised btn-primary mx-auto"
+              (click)="parseLogEntry(fileName.value, logEntry.value)">Mock Log Entry</button>
+    </div>
+  </div>
   <div class="row">
     <button type="button"
             class="btn btn-raised btn-primary mx-auto"
@@ -23,8 +41,19 @@
          *ngFor="let character of characters">
       <div class="card">
         <div class="card-body">
-          <img style="height: 64px; width: 64px;"
-               src="{{character['id'] | image:'character'}}"> {{character.name}} {{character.isk}}</div>
+          <div class="row">
+            <div class="col-4">
+              <img style="height: 64px; width: 64px;"
+                   src="{{character['id'] | image:'character'}}">
+            </div>
+            <div class="col-8">
+              <p>{{character.name}}</p>
+              <p *ngIf="config.debug">{{character.fileName}}</p>
+            </div>
+          </div>
+          <div class="row">Revenue so far: {{character.isk | number}} ISK </div>
+          <div class="row">Time since last active: {{character.lastActive}}</div>
+        </div>
       </div>
     </div>
   </div>
