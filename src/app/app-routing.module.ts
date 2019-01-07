@@ -15,9 +15,8 @@ import { DirectionalScanComponent } from 'src/app/tools/directional-scan/directi
 import { LocalScanComponent } from 'src/app/tools/local-scan/local-scan.component';
 import { MarketComponent } from 'src/app/tools/market/market.component';
 import { NavigationComponent } from 'src/app/tools/navigation/navigation.component';
-import { ProfileSyncComponent } from 'src/app/tools/profile-sync/profile-sync.component';
-import { VNICompanionComponent } from 'src/app/tools/vni-companion/vni-companion.component';
 import { ZkillListenerComponent } from 'src/app/tools/zkill-listener/zkill-listener.component';
+import { extraRoutes } from 'src/environments/routes';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
   handlers: { [key: string]: DetachedRouteHandle } = {};
@@ -45,18 +44,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 }
 
-@Injectable()
-export class CanActivateElectron implements CanActivate {
-  constructor(private electron: ElectronService, private alert: AlertService) { }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (!this.electron.isElectron) {
-      this.alert.warning('This feature is only available in the Desktop client, you can download it from the GitHub Releases page.');
-    }
-    return this.electron.isElectron;
-  }
-}
-
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -65,13 +52,11 @@ const routes: Routes = [
   { path: 'market', component: MarketComponent },
   { path: 'zkill-listener', component: ZkillListenerComponent },
   { path: 'navigation', component: NavigationComponent },
-  { path: 'profile-sync', component: ProfileSyncComponent, canActivate: [CanActivateElectron] },
-  { path: 'vni-companion', component: VNICompanionComponent, canActivate: [CanActivateElectron] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
-  providers: [CanActivateElectron], exports: [RouterModule]
+  imports: [RouterModule.forRoot([...routes, ...extraRoutes], { useHash: true })],
+  providers: [], exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

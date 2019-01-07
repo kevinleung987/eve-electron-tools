@@ -5,7 +5,7 @@
 </app-header>
 <div class="container">
   <div class="row">
-    <div class="col-10"> {{logsPath}} </div>
+    <div class="col-10"><b>Current Log Directory: {{logsPath || 'None'}}</b></div>
     <div class="col-2">
       <button type="button"
               class="btn btn-raised btn-primary mx-auto"
@@ -152,6 +152,11 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-center">Event Log</h3>
     </div>
   </div>
 </div>
