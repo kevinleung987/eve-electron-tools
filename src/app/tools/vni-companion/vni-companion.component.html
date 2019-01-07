@@ -20,6 +20,29 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-4">
+          <div class="switch">
+            <label>
+              <input type="checkbox"
+                     [(ngModel)]="checked.faction"><b>Alert on Faction spawn</b></label>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="switch">
+            <label>
+              <input type="checkbox"
+                     [(ngModel)]="checked.capital"><b>Alert on Capital spawn</b></label>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="switch">
+            <label>
+              <input type="checkbox"
+                     [(ngModel)]="checked.inactivity"><b>Alert on Inactivity</b></label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-8">
           <h5>Total ISK: {{totalIsk | number}} ISK</h5>
         </div>
@@ -48,7 +71,7 @@
               </div>
               <div class="row">Revenue: {{character.isk | number}} ISK</div>
               <div class="row">Per hour: {{(character.isk / character.time) * 1440 | number}} ISK</div>
-              <div class="row">Last active: {{character.time - character.lastActive}} s ago</div>
+              <div class="row">Last active: {{character.time - character.lastActive}}s ago</div>
             </div>
           </div>
         </div>
@@ -94,7 +117,7 @@
           <div class="switch">
             <label>
               <input type="checkbox"
-                     [(ngModel)]="matchExact"><b>Match Name Exactly</b></label>
+                     [(ngModel)]="checked.matchExact"><b>Match Name Exactly</b></label>
           </div>
         </div>
       </div>

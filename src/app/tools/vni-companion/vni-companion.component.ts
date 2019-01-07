@@ -19,7 +19,7 @@ export class VNICompanionComponent implements OnInit {
   readonly factionSpawns = [789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 807, 808, 809, 810, 811,
     812, 813, 814, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 1285, 1286, 1287];
   readonly capitalSpawns = [1681, 1682, 1683, 1684, 1685, 1686, 1687, 1688, 1689, 1690, 1691, 1692];
-  // RegExes for parsing log entries // regexr.com/45t6h
+  // RegExes for parsing log entries
   readonly isBounty: RegExp = /\[.*\] \(bounty\)/g;
   readonly isCombat: RegExp = /\[.*\] \(combat\)/g;
   readonly getBounty: RegExp = /([\d]+(\,|\.))+[0-9]{2} ISK/g;
@@ -27,6 +27,8 @@ export class VNICompanionComponent implements OnInit {
   fs = this.electron.fs; // Alias to reduce clutter
   inactiveTime = 600;
   logsPath: string;
+  numJumps = 10; // Distance threshold for Intel watcher
+  checked = { faction: true, capital: true, inactivity: true, matchExact: true };
   // Game logs - In-game activity
   gameLogWatcher: FSWatcher = null;
   gameLogFiles: {
@@ -46,8 +48,6 @@ export class VNICompanionComponent implements OnInit {
   channels = [];
   channelDetails: { [channelName: string]: { lastMessage: string } } = {};
   watchedSystem: number;
-  numJumps = 10;
-  matchExact = true;
 
   constructor(public config: ConfigService, private electron: ElectronService, private navigation: NavigationService,
     private eve: EveService, private universe: UniverseService, private alert: AlertService, public suggest: SuggestionService) { }
@@ -133,7 +133,7 @@ export class VNICompanionComponent implements OnInit {
     if (this.gameLogWatcher != null) {
       this.characters.forEach(character => {
         character.time++;
-        if (character.time - character.lastActive >= this.inactiveTime) {
+        if (this.checked.inactivity && (character.time - character.lastActive >= this.inactiveTime)) {
           if (character.time - character.lastActive % this.alertInterval === 0) {
             this.alert.playAlert('alert.wav');
             this.electron.flashFrame();
@@ -194,15 +194,16 @@ export class VNICompanionComponent implements OnInit {
               this.channelDetails[channel].lastMessage = message;
               message.split(' ').forEach(token => {
                 if (token.length >= 3) {
-                  const match = this.suggest.match(this.suggest.systemNames, token, this.matchExact ? 'EQUALS' : 'STARTS_WITH');
-                  if (match) {
-                    const system = this.universe.getSystemId(match);
-                    const distance = this.navigation.getShortestRoute(this.watchedSystem, system).length;
-                    console.log(distance);
-                    if (distance <= this.numJumps) {
-                      this.alert.playAlert('alert.wav');
-                      this.electron.flashFrame();
-                    }
+                  const match = this.suggest.match(this.suggest.systemNames, token, this.checked.matchExact ? 'EQUALS' : 'STARTS_WITH');
+                  if (match == null) { return; }
+                  const system = this.universe.getSystemId(match);
+                  const route = this.navigation.getShortestRoute(this.watchedSystem, system);
+                  if (route == null) { return; }
+                  const distance = this.navigation.getShortestRoute(this.watchedSystem, system).length;
+                  console.log(distance);
+                  if (distance <= this.numJumps) {
+                    this.alert.playAlert('alert.wav');
+                    this.electron.flashFrame();
                   }
                 }
               });
@@ -246,10 +247,10 @@ export class VNICompanionComponent implements OnInit {
         let attacker = logEntry.match(/from .+? -/g)[0];
         attacker = attacker.substring(5, attacker.length - 2);
         const groupId = this.universe.getTypeGroup(this.universe.getTypeId(attacker));
-        if (this.capitalSpawns.includes(groupId)) {
+        if (this.capitalSpawns.includes(groupId) && this.checked.capital) {
           this.alert.playAlert('alert.wav');
           this.electron.flashFrame();
-        } else if (this.factionSpawns.includes(groupId)) {
+        } else if (this.factionSpawns.includes(groupId) && this.checked.faction) {
           this.alert.playAlert('cash.mp3');
           this.electron.flashFrame();
         }
