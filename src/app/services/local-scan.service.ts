@@ -16,6 +16,7 @@ export class LocalScanService {
   public displayCorporations: DisplayCorporation[] = [];
   public displayAlliances: DisplayAlliance[] = [];
   // Statistics
+  public total = 0;
   public progress = 0;
   public cacheStats = { character: [0, 0], corporation: [0, 0], alliance: [0, 0] }; // Hits/Misses
   public runTime = 0;
@@ -36,6 +37,7 @@ export class LocalScanService {
     this.reset();
     const data = [];
     const lines = localList.split('\n');
+    this.total = lines.length;
     // Process each line to get corp and alliance info
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
@@ -185,6 +187,7 @@ export class LocalScanService {
     this.displayCorporations = [];
     this.displayAlliances = [];
     this.progress = 0;
+    this.total = 0;
     this.cacheStats = { character: [0, 0], corporation: [0, 0], alliance: [0, 0] };
     this.runTime = 0;
   }

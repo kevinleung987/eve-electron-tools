@@ -3,9 +3,8 @@
     <h5 class="mx-auto">Paste the names of the pilots from the local channel in-game, or from other channels and press
       <kbd>Scan</kbd>. This tool will break down which Corporation and Alliance they belong to. You can mouseover the
       results to see the relationship between Corporations and Alliances.</h5>
-    <div class="alert alert-warning"
-         role="alert"
-         *ngIf="parallel">Enabling <kbd>Parallel Mode</kbd> will cause the tool to make as many API requests as
+    <div class="alert alert-warning" role="alert" *ngIf="parallel">Enabling <kbd>Parallel Mode</kbd> will cause the
+      tool to make as many API requests as
       possible in parallel, this can make the UI unresponsive but will sometimes speed up large input. When Parallel is
       disabled, requests are made sequentially and all results are cached, which significantly reduces the number of
       requests that need to be made and is usually faster than Parallel.</div>
@@ -15,31 +14,23 @@
   <div class="row">
     <div class="col-sm-12 col-lg-4">
       <label><b>Local Scan</b></label>
-      <textarea #localInput
-                type="text"
-                rows="20"
-                [placeholder]="'Paste Local Scan here.'"
-                [value]="placeholder">
+      <textarea #localInput type="text" rows="20" [placeholder]="'Paste Local Scan here.'" [value]="placeholder">
       </textarea>
-      <button class="btn btn-raised btn-primary btn-block"
-              (click)="onSubmit(localInput.value)"
-              [disabled]="local.busy">Scan</button>
-      <button class="btn btn-raised btn-danger btn-block"
-              (click)="resetView()">Reset</button>
+      <div class="progress" style="margin: 0.5em 0 0.5em 0;" *ngIf="local.busy">
+        <div class="progress-bar" role="progressbar" [ngStyle]="{'width': ((local.progress / local.total)*100)+'%'}"></div>
+      </div>
+      <button class="btn btn-raised btn-primary btn-block" (click)="onSubmit(localInput.value)" [disabled]="local.busy">Scan</button>
+      <button class="btn btn-raised btn-danger btn-block" (click)="resetView()">Reset</button>
       <div class="switch">
         <label>
-          <input type="checkbox"
-                 [(ngModel)]="parallel"><b>Parallel Mode</b></label>
+          <input type="checkbox" [(ngModel)]="parallel"><b>Parallel Mode</b></label>
       </div>
     </div>
     <div class="col-sm-12 col-lg-4">
       <label><b>Corporations({{ local.displayCorporations.length }})</b></label>
       <div class="local-area container">
-        <div class="row display-item"
-             *ngFor="let corp of local.displayCorporations"
-             [class.bg-success]="corp.highlighted"
-             (mouseenter)="highlightCorporation(corp)"
-             (mouseleave)="resetHighlight()">
+        <div class="row display-item" *ngFor="let corp of local.displayCorporations" [class.bg-success]="corp.highlighted"
+          (mouseenter)="highlightCorporation(corp)" (mouseleave)="resetHighlight()">
           <div class="col-3">
             <img [src]="corp.corporation.image">
           </div>
@@ -62,11 +53,8 @@
     <div class="col-sm-12 col-lg-4">
       <label><b>Alliances({{ local.displayAlliances.length }})</b></label>
       <div class="local-area container">
-        <div class="row display-item"
-             *ngFor="let alliance of local.displayAlliances"
-             [class.bg-success]="alliance.highlighted"
-             (mouseenter)="highlightAlliance(alliance)"
-             (mouseleave)="resetHighlight()">
+        <div class="row display-item" *ngFor="let alliance of local.displayAlliances" [class.bg-success]="alliance.highlighted"
+          (mouseenter)="highlightAlliance(alliance)" (mouseleave)="resetHighlight()">
           <div class="col-3">
             <img [src]="alliance.alliance.image">
           </div>

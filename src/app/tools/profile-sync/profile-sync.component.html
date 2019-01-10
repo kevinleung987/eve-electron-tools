@@ -11,70 +11,47 @@
 <div class="container">
   <div class="row directory-buttons justify-content-center">
     <div class="col-2">
-      <button type="button"
-              class="btn btn-raised btn-primary"
-              (click)="selectFolder()">Select Folder</button>
+      <button type="button" class="btn btn-raised btn-primary" (click)="selectFolder()">Select Folder</button>
     </div>
     <div class="col-2">
-      <button type="button"
-              class="btn btn-raised btn-info"
-              (click)="parseProfiles()"
-              [disabled]="profilesPath === ''">Scan Profiles</button>
+      <button type="button" class="btn btn-raised btn-info" (click)="parseProfiles()" [disabled]="profilesPath === ''">Scan
+        Profiles</button>
     </div>
     <div class="col-2">
-      <button type="button"
-              class="btn btn-raised btn-success"
-              (click)="backupProfiles()"
-              [disabled]="accounts.length === 0 && characters.length === 0">Backup Profiles</button>
+      <button type="button" class="btn btn-raised btn-success" (click)="backupProfiles()" [disabled]="accounts.length === 0 && characters.length === 0">Backup
+        Profiles</button>
     </div>
   </div>
-  <div class="row current-directory card card-body"
-       (click)="openProfilesFolder()">
+  <div class="row current-directory card card-body" (click)="openProfilesFolder()">
     <b class="mx-auto">Selected Folder: {{ profilesPath || 'No folder selected.' }}</b>
   </div>
   <div *ngIf="profilesPath">
     <div class="row">
       <h4 class="mx-auto section-header">Accounts({{ accounts.length }})</h4>
     </div>
-    <div class="row justify-content-center"
-         *ngIf="accounts.length > 0">
+    <div class="row justify-content-center" *ngIf="accounts.length > 0">
       <div class="col-4">
-        <input type="name"
-               class="form-control"
-               id="accountName"
-               placeholder="Enter name"
-               [(ngModel)]="name">
+        <input type="name" class="form-control" id="accountName" placeholder="Enter name" [(ngModel)]="name">
       </div>
       <div class="col-2">
-        <button type="button"
-                class="btn btn-raised btn-success mx-auto"
-                (click)="bindName()">Bind Name</button>
+        <button type="button" class="btn btn-raised btn-success mx-auto" (click)="bindName()">Bind Name</button>
       </div>
     </div>
-    <div class="row"
-         *ngIf="accounts.length > 0">
+    <div class="row" *ngIf="accounts.length > 0">
       <div class="col-10">
-        <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success"
-                *ngIf="selectedProfiles.accounts.primary != null">{{selectedProfiles.accounts.primary?.id}}</span>
-          <span class="text-secondary"
-                *ngFor="let profile of selectedProfiles.accounts.secondary">, {{profile.id}}</span>
+        <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success" *ngIf="selectedProfiles.accounts.primary != null">{{selectedProfiles.accounts.primary?.id}}</span>
+          <span class="text-secondary" *ngFor="let profile of selectedProfiles.accounts.secondary">, {{profile.id}}</span>
         </h5>
       </div>
       <div class="col-2">
-        <button type="button"
-                class="btn btn-raised btn-secondary"
-                [disabled]="selectedProfiles.accounts.primary==null || selectedProfiles.accounts.secondary.length === 0"
-                (click)="syncProfiles('accounts')">Synchronize</button>
+        <button type="button" class="btn btn-raised btn-secondary" [disabled]="selectedProfiles.accounts.primary==null || selectedProfiles.accounts.secondary.length === 0"
+          (click)="syncProfiles('accounts')">Synchronize</button>
       </div>
     </div>
     <div class="row">
-      <div class="col-3"
-           *ngFor="let account of accounts">
-        <div class="card"
-             [class.bg-success]="account['selected'] === s.Primary"
-             [class.bg-secondary]="account['selected'] === s.Secondary"
-             (click)="select(account, s.Primary)"
-             (contextmenu)="select(account, s.Secondary)">
+      <div class="col-3" *ngFor="let account of accounts">
+        <div class="card" [class.bg-success]="account['selected'] === s.Primary" [class.bg-secondary]="account['selected'] === s.Secondary"
+          (click)="select(account, s.Primary)" (contextmenu)="select(account, s.Secondary)">
           <div class="card-body">
             <p>{{ account['id'] }} <b>{{ accountBindings[account['id']] ? ' - '+accountBindings[account['id']] : null}}</b><br>{{
               account['mtime'] | date:'short' }}</p>
@@ -85,37 +62,29 @@
     <div class="row">
       <h4 class="mx-auto section-header">Characters({{ characters.length }})</h4>
     </div>
-    <div class="row"
-         *ngIf="characters.length > 0">
+    <div class="row" *ngIf="characters.length > 0">
       <div class="col-10">
-        <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success"
-                *ngIf="selectedProfiles.characters.primary != null">{{(selectedProfiles.characters.primary?.id |
+        <h5 class="mx-auto section-header">Selected Profiles: <span class="text-success" *ngIf="selectedProfiles.characters.primary != null">{{(selectedProfiles.characters.primary?.id
+            |
             eve:'character' | async)?.name}}</span>
-          <span class="text-secondary"
-                *ngFor="let profile of selectedProfiles.characters.secondary">, {{(profile.id | eve:'character' |
+          <span class="text-secondary" *ngFor="let profile of selectedProfiles.characters.secondary">, {{(profile.id |
+            eve:'character' |
             async)?.name}}</span>
         </h5>
       </div>
       <div class="col-2">
-        <button type="button"
-                class="btn btn-raised btn-secondary"
-                [disabled]="selectedProfiles.characters.primary==null || selectedProfiles.characters.secondary.length === 0"
-                (click)="syncProfiles('characters')">Synchronize</button>
+        <button type="button" class="btn btn-raised btn-secondary" [disabled]="selectedProfiles.characters.primary==null || selectedProfiles.characters.secondary.length === 0"
+          (click)="syncProfiles('characters')">Synchronize</button>
       </div>
     </div>
     <div class="row">
-      <div class="col-3"
-           *ngFor="let character of characters">
-        <div class="card"
-             [class.bg-success]="character['selected'] === s.Primary"
-             [class.bg-secondary]="character['selected'] === s.Secondary"
-             (click)="select(character, s.Primary)"
-             (contextmenu)="select(character, s.Secondary)">
+      <div class="col-3" *ngFor="let character of characters">
+        <div class="card" [class.bg-success]="character['selected'] === s.Primary" [class.bg-secondary]="character['selected'] === s.Secondary"
+          (click)="select(character, s.Primary)" (contextmenu)="select(character, s.Secondary)">
           <div class="card-body">
             <div class="row">
               <div class="col-6">
-                <img style="height: 64px; width: 64px;"
-                     src="{{character['id'] | image:'character'}}">
+                <img style="height: 64px; width: 64px;" src="{{character['id'] | image:'character'}}">
               </div>
               <div class="col-6">
                 <p>{{ character['id'] }} <br> {{ character['mtime'] | date:'short' }} <br>

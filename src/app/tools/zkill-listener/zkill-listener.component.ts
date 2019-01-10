@@ -1,23 +1,23 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import {
+  Character,
+  Filter,
   InvolvedFilterType,
   LocationFilterType,
   ShipFilterType,
   WhichType,
   ZkillMail,
-  Character,
-  Filter,
 } from 'src/app/models/Zkill.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
+import { EveService } from 'src/app/services/eve.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
 import { environment } from 'src/environments/environment';
-import { EveService } from 'src/app/services/eve.service';
-import { DecimalPipe } from '@angular/common';
-import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -25,6 +25,14 @@ import { NavigationService } from 'src/app/services/navigation.service';
   styleUrls: ['./zkill-listener.component.scss']
 })
 export class ZkillListenerComponent implements OnInit {
+  readonly zkillUrl = 'wss://zkillboard.com:2096';
+  // Bindings to Enums for template
+  readonly filterType = Filter;
+  readonly whichType = WhichType;
+  readonly shipFilterType = ShipFilterType;
+  readonly locationFilterType = LocationFilterType;
+  readonly involvedFilterType = InvolvedFilterType;
+
   listening = false;
   length = 5;
   mails: ZkillMail[] = [];
@@ -37,13 +45,7 @@ export class ZkillListenerComponent implements OnInit {
     filterType: ShipFilterType | LocationFilterType | InvolvedFilterType,
     filterFunc: ((mail: ZkillMail) => boolean)
   }[] = [];
-  // Bindings to Enums for template
-  filterType = Filter;
-  whichType = WhichType;
-  shipFilterType = ShipFilterType;
-  locationFilterType = LocationFilterType;
-  involvedFilterType = InvolvedFilterType;
-
+  // Web-socket connection to zkillboard
   private socket: WebSocketSubject<{}>;
 
   constructor(private config: ConfigService, private electron: ElectronService,
@@ -62,41 +64,41 @@ export class ZkillListenerComponent implements OnInit {
   }
 
   start() {
-    this.socket = new WebSocketSubject('wss://zkillboard.com:2096');
+    this.socket = new WebSocketSubject(this.zkillUrl);
     this.socket.next({ action: 'sub', channel: 'killstream' });
-    this.listening = true;
     this.socket.subscribe(
       (message: ZkillMail) => {
         // Add explicit final_blow field for quick access
-        message['attackers'].forEach(attacker => {
-          if (attacker['final_blow']) {
-            message['final_blow'] = attacker;
+        message.attackers.forEach(attacker => {
+          if (attacker.final_blow) {
+            message.final_blow = attacker;
           }
         });
         if (!this.checked.filters || (this.checked.filters && this.applyFilters(message))) {
           this.mails.unshift(message);
           if (this.checked.alerts) { this.alert.playAlert('alert.wav'); }
         }
-        console.log(message, this.applyFilters(message));
         if (this.mails.length > this.length) {
           this.mails.pop();
         }
       },
-      err => {
-        console.error(err);
+      (err: Error) => {
         this.listening = false;
+        throw err;
       });
+    this.listening = true;
     this.alert.success('Started listening to zKillboard.');
   }
 
   stop() {
     this.socket.unsubscribe();
-    this.alert.info('Stopped listening to zKillboard.');
     this.listening = false;
+    this.alert.info('Stopped listening to zKillboard.');
   }
 
   deleteMail(event: Event, index: number) {
     this.mails.splice(index, 1);
+    // Prevent default context-menu on some browsers
     event.preventDefault();
     event.stopPropagation();
   }
@@ -119,6 +121,7 @@ export class ZkillListenerComponent implements OnInit {
       case Filter.Involved: filterType = InvolvedFilterType.Alliance;
         break;
     }
+    // Empty, in-active filter
     this.filters.push({
       active: false,
       type,
@@ -145,33 +148,30 @@ export class ZkillListenerComponent implements OnInit {
 
   onSubmitShip(event, index: number) {
     const filter = this.filters[index];
-    // Create filter function, store the id to filter for in closure
+    // Create filter function, store filter parameter in function closure
     let filterFunc: ((typeId: number) => boolean) = null;
     filter.description = `${filter.whichType}'s ${filter.filterType} must be ${event}`;
     switch (filter.filterType) {
-      case ShipFilterType.Ship:
+      case ShipFilterType.Ship: // Filter against typeId
         const filterTypeId = this.universe.getTypeId(event);
         filterFunc = (typeId: number) => (typeId === filterTypeId);
         break;
-      case ShipFilterType.ShipGroup:
+      case ShipFilterType.ShipGroup: // Filter against groupId
         const filterGroupId = this.universe.getGroupId(event);
         filterFunc = (typeId: number) => (this.universe.getTypeGroup(typeId) === filterGroupId);
         break;
     }
     // How we apply filterFunc depends on whether we're filltering for Victim/Attacker
     switch (filter.whichType) {
-      case WhichType.Victim:
+      case WhichType.Victim: // Filter against single Charcter, the Victim
         filter.filterFunc = (mail: ZkillMail) => filterFunc(mail.victim.ship_type_id);
         break;
-      case WhichType.Attacker:
+      case WhichType.Attacker: // Filter against all Attackers
         filter.filterFunc = (mail: ZkillMail) => {
-          let filtered = false;
-          mail.attackers.forEach(attacker => {
-            if (filterFunc(attacker.ship_type_id)) {
-              filtered = true;
-            }
-          });
-          return filtered;
+          for (let i = 0; i < mail.attackers.length; i++) {
+            if (filterFunc(mail.attackers[i].ship_type_id)) { return true; }
+          }
+          return false;
         };
         break;
     }
@@ -181,7 +181,7 @@ export class ZkillListenerComponent implements OnInit {
   onSubmitLocation(event, index: number, numJumps = 0) {
     const filter = this.filters[index];
     switch (filter.filterType) {
-      case LocationFilterType.Region:
+      case LocationFilterType.Region: // Filter against mail's region
         const filterRegionId = this.universe.getRegionId(event);
         filter.description = `Region must be ${event}`;
         filter.filterFunc = (mail: ZkillMail) => {
@@ -189,7 +189,7 @@ export class ZkillListenerComponent implements OnInit {
           return regionId === filterRegionId;
         };
         break;
-      case LocationFilterType.System:
+      case LocationFilterType.System: // Filter against mail's system
         const filterSystemId = this.universe.getSystemId(event);
         filter.description =
           `System must be within ${numJumps} jumps of ${event}[${this.universe.getSystemRegionName(filterSystemId)}]`;
@@ -210,18 +210,18 @@ export class ZkillListenerComponent implements OnInit {
     // Name for the filter-description
     let getNameFunc: ((id: number) => Promise<any>);
     let name: string;
-    // Bind needs to be used so the functions are run under the context of EveService
+    // Bind used so the functions are run under the context of EveService
     switch (filter.filterType) {
       case InvolvedFilterType.Character: filterToken = 'character'; getNameFunc = this.eve.characters.bind(this.eve); break;
       case InvolvedFilterType.Corporation: filterToken = 'corporation'; getNameFunc = this.eve.corporations.bind(this.eve); break;
       case InvolvedFilterType.Alliance: filterToken = 'alliance'; getNameFunc = this.eve.alliances.bind(this.eve); break;
     }
-    // Get the id of what is being filtered
+    // Search for id of the filtered subject
     const searchResult = await this.eve.search(event, filterToken, true);
     if (searchResult[filterToken] == null) { this.alert.error(`No ${filterToken} found.`); return; }
     const filterId = searchResult[filterToken][0];
     filterFunc = (character: Character) => (character[filterToken + '_id'] === filterId);
-    // Get the name of what is being filtered
+    // Get name of the filtered subject
     const nameResult = await getNameFunc(filterId);
     name = nameResult['name'];
     filter.description = `${filter.whichType}'s ${filter.filterType} must be ${name}[${filterId}]`;
@@ -232,13 +232,11 @@ export class ZkillListenerComponent implements OnInit {
         break;
       case WhichType.Attacker:
         filter.filterFunc = (mail: ZkillMail) => {
-          let filtered = false;
-          mail.attackers.forEach(attacker => {
-            if (filterFunc(attacker)) {
-              filtered = true;
-            }
-          });
-          return filtered;
+          for (let i = 0; i < mail.attackers.length; i++) {
+            const attacker = mail.attackers[i];
+            if (filterFunc(attacker)) { return true; }
+          }
+          return false;
         };
         break;
     }
@@ -249,19 +247,19 @@ export class ZkillListenerComponent implements OnInit {
     const value = Number(event);
     const filter = this.filters[index];
     filter.description = `Value must be greater than or equal to ${new DecimalPipe('en-us').transform(event)} ISK`;
-    filter.filterFunc = (mail: ZkillMail) => {
-      return mail.zkb.totalValue >= value;
-    };
+    filter.filterFunc = (mail: ZkillMail) => (mail.zkb.totalValue >= value);
     filter.active = true;
   }
 
   applyFilters(mail: ZkillMail): boolean {
+    // Only filter the mail if we have at least one active filter
     let numActive = 0;
     this.filters.forEach(filter => { if (filter.active) { numActive++; } });
     if (numActive === 0) { return true; }
-    // True until a filter fails if in match-all mode, False until made True by a filter in match-any mode
+    // True until a filter fails in match-all mode, False until made True by a filter in match-any mode
     let filterMatch = this.checked.matchAll;
-    this.filters.forEach(filter => {
+    for (let i = 0; i < this.filters.length; i++) {
+      const filter = this.filters[i];
       if (filter.active === true) {
         if (this.checked.matchAll) {
           filterMatch = filterMatch && filter.filterFunc(mail);
@@ -269,7 +267,7 @@ export class ZkillListenerComponent implements OnInit {
           filterMatch = filter.filterFunc(mail) ? true : filterMatch;
         }
       }
-    });
+    }
     if (!filterMatch) {
       this.numFiltered++;
     }

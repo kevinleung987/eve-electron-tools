@@ -27,13 +27,13 @@ export class SuggestionService {
     });
   }
 
-  suggest(items: any[], value: any, num: number) {
+  suggest(items: any[], value: any, num: number): any[] {
     if (items == null || value == null || value.length < 1) { return null; }
     const result = matchSorter(items, value).slice(0, num);
     return result;
   }
 
-  match(items: any[], value: any, threshold: string) {
+  match(items: any[], value: any, threshold: string): string {
     if (items == null || value == null || value.length < 1) { return null; }
     const result = matchSorter(items, value, { threshold: matchSorter.rankings[threshold] });
     return result[0];

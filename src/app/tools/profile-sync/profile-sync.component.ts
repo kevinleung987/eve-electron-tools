@@ -11,13 +11,15 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class ProfileSyncComponent implements OnInit {
   readonly backupDirName = 'profile_backups';
+  readonly s = Selected;
+
   profilesPath: string;
+  name = '';
   accounts: Profile[] = [];
   characters: Profile[] = [];
   accountBindings: { [id: number]: string };
   selectedProfiles = { accounts: { primary: null, secondary: [] }, characters: { primary: null, secondary: [] } };
-  name = '';
-  s = Selected;
+
   constructor(private electron: ElectronService, private config: ConfigService, private alert: AlertService) { }
 
   ngOnInit() {

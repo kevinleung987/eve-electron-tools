@@ -64,12 +64,15 @@ export class NavigationService {
     }
   }
 
+  /**
+   * Cost functions for use in getRoute
+   */
   getShortestRoute(start: number, finish: number) {
     return this.getRoute(start, finish, (id: number) => {
       return 1;
     });
   }
-  // TODO: Modify these cost functions to make them more representative of the game's navigation
+
   getSafestRoute(start: number, finish: number) {
     return this.getRoute(start, finish, (id: number) => {
       return 1 - Number(this.universe.getSystemSecurity(id));

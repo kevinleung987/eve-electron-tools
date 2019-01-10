@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, enableProdMode } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +11,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  // Pre-load essential services so their startups don't impact performance
   constructor(private electron: ElectronService, private universe: UniverseService,
     private config: ConfigService, private alert: AlertService, private suggest: SuggestionService,
     private changeDetector: ChangeDetectorRef) {

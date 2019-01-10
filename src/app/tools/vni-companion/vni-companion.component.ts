@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from 'src/app/services/navigation.service';
-import { ElectronService } from 'src/app/services/electron.service';
-import { ConfigService } from 'src/app/services/config.service';
-import { EveService } from 'src/app/services/eve.service';
-import { FSWatcher } from 'fs';
-import { UniverseService } from 'src/app/services/universe.service';
-import { AlertService } from 'src/app/services/alert.service';
 import * as chokidar from 'chokidar';
+import { FSWatcher } from 'fs';
+import { AlertService } from 'src/app/services/alert.service';
+import { ConfigService } from 'src/app/services/config.service';
+import { ElectronService } from 'src/app/services/electron.service';
+import { EveService } from 'src/app/services/eve.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
+import { UniverseService } from 'src/app/services/universe.service';
 
 @Component({
   selector: 'app-vni-companion',
@@ -20,8 +20,8 @@ export class VNICompanionComponent implements OnInit {
     812, 813, 814, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 1285, 1286, 1287];
   readonly capitalSpawns = [1681, 1682, 1683, 1684, 1685, 1686, 1687, 1688, 1689, 1690, 1691, 1692];
   // RegExes for parsing log entries
-  readonly isBounty: RegExp = /\[.*\] \(bounty\)/g;
-  readonly isCombat: RegExp = /\[.*\] \(combat\)/g;
+  readonly isBounty: RegExp = /\(bounty\)/g;
+  readonly isCombat: RegExp = /\(combat\)/g;
   readonly getBounty: RegExp = /([\d]+(\,|\.))+[0-9]{2} ISK/g;
   readonly alertInterval = 30;
   fs = this.electron.fs; // Alias to reduce clutter
@@ -56,9 +56,10 @@ export class VNICompanionComponent implements OnInit {
     // @ts-ignore
     window.$('app-vni-companion').bootstrapMaterialDesign();
     this.universe.waitUntilLoaded(() => {
+      // Get previous settings
       this.logsPath = this.config.default('logsPath', null);
       this.watchedSystem = this.config.default('watchedSystem', null);
-      this.config.get('channels').forEach(channel => {
+      this.config.default('channels', []).forEach(channel => {
         this.channels.push(channel);
         this.channelDetails[channel] = { lastMessage: '' };
       });
@@ -68,9 +69,10 @@ export class VNICompanionComponent implements OnInit {
 
   selectLogsFolder() {
     this.electron.remote.dialog.showOpenDialog({ properties: ['openDirectory'] }, (result) => {
-      if (result && result.length > 0) {
+      if (result && result.length > 0) { // User selected a directory
         this.logsPath = result[0];
         this.config.set('logsPath', this.logsPath);
+        this.electron.updateView();
       }
     });
   }
@@ -135,12 +137,16 @@ export class VNICompanionComponent implements OnInit {
         character.time++;
         if (this.checked.inactivity && (character.time - character.lastActive >= this.inactiveTime)) {
           if (character.time - character.lastActive % this.alertInterval === 0) {
-            this.alert.playAlert('alert.wav');
-            this.electron.flashFrame();
+            this.playAlert('alert.wav');
           }
         }
       });
     }
+  }
+
+  playAlert(file: string) {
+    this.alert.playAlert(file);
+    this.electron.flashFrame();
   }
 
   parseGameLogs() {
@@ -151,7 +157,8 @@ export class VNICompanionComponent implements OnInit {
     }).on('error', error => console.log(`Watcher error: ${error}`))
       .on('ready', () => this.alert.success('Game Log Scanner initialized. Ready for changes.'))
       .on('raw', async (event, path, details) => {
-        if (!this.gameLogFiles[path]) {
+        if (!this.gameLogFiles[path]) { // New character
+          // Get name of the character of the game log file
           const name = this.fs.readFileSync(path).toString().split('\n')[2].split(': ')[1];
           this.gameLogFiles[path] = {
             id: null,
@@ -166,11 +173,10 @@ export class VNICompanionComponent implements OnInit {
           if (!(search && search['character'] && search['character'].length > 0)) { return; }
           const id = search['character'][0];
           this.gameLogFiles[path].id = id;
-          console.log(this.gameLogFiles[path]);
-        } else {
+        } else { // Existing character
           const changes = this.checkLogChanges(path, details);
-          changes.forEach((change: string) => {
-            this.parseGameLogEntry(path, change);
+          changes.forEach((entry: string) => {
+            this.parseGameLogEntry(path, entry);
           });
         }
       });
@@ -184,8 +190,10 @@ export class VNICompanionComponent implements OnInit {
     }).on('error', error => console.log(`Watcher error: ${error}`))
       .on('ready', () => this.alert.success('Chat Log Scanner initialized. Ready for changes.'))
       .on('raw', (event, path, details) => {
+        // Parse channel name from filename
         const channel = this.electron.path.basename(path).replace(/_\d*_\d*.txt/g, '');
         if (this.channels.includes(channel)) {
+          // Chat logs are encoded in UTF-16
           this.checkLogChanges(path, details, 'ucs2').forEach(item => {
             let message = item.match(/> .*/g)[0];
             message = message.substring(2, message.length);
@@ -193,18 +201,15 @@ export class VNICompanionComponent implements OnInit {
             if (this.channelDetails[channel].lastMessage !== message) {
               this.channelDetails[channel].lastMessage = message;
               message.split(' ').forEach(token => {
-                if (token.length >= 3) {
-                  const match = this.suggest.match(this.suggest.systemNames, token, this.checked.matchExact ? 'EQUALS' : 'STARTS_WITH');
-                  if (match == null) { return; }
-                  const system = this.universe.getSystemId(match);
-                  const route = this.navigation.getShortestRoute(this.watchedSystem, system);
-                  if (route == null) { return; }
-                  const distance = this.navigation.getShortestRoute(this.watchedSystem, system).length;
-                  console.log(distance);
-                  if (distance <= this.numJumps) {
-                    this.alert.playAlert('alert.wav');
-                    this.electron.flashFrame();
-                  }
+                if (token.length < 3) { return; }
+                const match = this.suggest.match(this.suggest.systemNames, token, this.checked.matchExact ? 'EQUALS' : 'STARTS_WITH');
+                if (match == null) { return; }
+                const system = this.universe.getSystemId(match);
+                const route = this.navigation.getShortestRoute(this.watchedSystem, system);
+                if (route == null) { return; }
+                const distance = route.length;
+                if (distance <= this.numJumps) {
+                  this.playAlert('alert.wav');
                 }
               });
             }
@@ -247,12 +252,13 @@ export class VNICompanionComponent implements OnInit {
         let attacker = logEntry.match(/from .+? -/g)[0];
         attacker = attacker.substring(5, attacker.length - 2);
         const groupId = this.universe.getTypeGroup(this.universe.getTypeId(attacker));
+        if (groupId == null) { // Taking damage from player TODO:
+          return;
+        }
         if (this.capitalSpawns.includes(groupId) && this.checked.capital) {
-          this.alert.playAlert('alert.wav');
-          this.electron.flashFrame();
+          this.playAlert('alert.wav');
         } else if (this.factionSpawns.includes(groupId) && this.checked.faction) {
-          this.alert.playAlert('cash.mp3');
-          this.electron.flashFrame();
+          this.playAlert('cash.mp3');
         }
       }
     }
