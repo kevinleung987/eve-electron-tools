@@ -52,6 +52,11 @@ Other Dependencies:
 - **[match-sorter](https://github.com/kentcdodds/match-sorter)** - String matching to power Suggestions service
 - **[chokidar](https://github.com/paulmillr/chokidar)** - Cross-platform NodeJS fs.watch wrapper to simplify watching file changes
 
+## Difference between Desktop & Browser versions
+
+- The Desktop version should be considered the primary version of EVE-ET.
+- The Browser version is built with the Electron-dependent tools taken out of the Routing Module, this allows WebPack to treeshake any dependencies like `chokidar` that are desktop-only. Because of this, the Browser version can only be run with AoT compilation where the tree-shaking can take place and prevent a compile error that occurs when trying to bundle desktop NodeJS libraries with the Browser client.
+
 ## Note About Data Dependencies
 
 EVE data dumps (Static Data Exports or SDEs) are used to reduce the number of API calls needed for the operation of various tools. These provide static game data like item names but sometimes need updating after a game patch. I've written a tool in Python 3 which can be found under `updateData.py`. The tool will take the latest SDEs, prune excess columns, and place the output .csv files into a folder `downloads`. The update tool requires `pandas` and `requests`.

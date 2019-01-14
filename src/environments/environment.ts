@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  esiUrl: 'https://esi.evetech.net',
   configFileName: 'settings.json',
   localScanPlaceholder: `Chribba
 The Mittani
