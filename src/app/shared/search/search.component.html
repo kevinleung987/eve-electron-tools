@@ -2,7 +2,7 @@
      class="search"
      (focusout)="hide($event)">
   <div class="row">
-    <div class="col-10">
+    <div class="col-9">
       <input #searchBar
              id="searchBar"
              class="form-control search-field"
@@ -12,7 +12,7 @@
              (keydown)="onKeydown($event, true)"
              (focusin)="suggestionsHidden=false">
     </div>
-    <div class="col-2">
+    <div class="col-3">
       <button type="button"
               class="btn btn-raised btn-primary"
               (click)="onSubmit()"
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-10">
+    <div class="col-9">
       <div class="list-group card card-body suggestion-list"
            [class.hidden]="suggestionsHidden"
            *ngIf="suggestions.length > 0"

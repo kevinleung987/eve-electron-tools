@@ -1,5 +1,7 @@
 export const environment = {
   production: false,
+  version: require('../../package.json').version,
+  tracking: 'UA-126818055-2',
   esiUrl: 'https://esi.evetech.net',
   configFileName: 'settings.json',
   localScanPlaceholder: `Chribba
