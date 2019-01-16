@@ -1,6 +1,6 @@
 <app-header [title]="'EVE Electron Tools'">
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
       <h5 class="mx-auto">
         <p>Check out the tools available in the nav-bar above.</p>
         <p>Enabling <kbd>Demo Mode</kbd> will load preset demonstration values in all tools.</p>
@@ -9,13 +9,13 @@
         <p *ngIf="electron.isElectron">You are running under Electron.</p>
       </h5>
     </div>
-    <div class="col-3">
+    <div class="col-6 col-lg-3">
       <label class="btn btn-raised btn-info btn-lg mx-auto"
              (click)="toggleDemo($event)">
         <input type="checkbox"
                [checked]="config.isDemo()">Demo Mode</label>
     </div>
-    <div class="col-3">
+    <div class="col-6 col-lg-3">
       <label class="btn btn-raised btn-warning btn-lg mx-auto"
              (click)="toggleDebug($event)">
         <input type="checkbox"
@@ -23,12 +23,28 @@
     </div>
   </div>
 </app-header>
-<div class="container"
-     *ngIf="config.debug">
+<div class="container">
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
+      <h3>Features Available:</h3>
+      <p><b>Scan Tools(Local Scan/D-Scan):</b> Copy from the Local window or D-Scan and paste it into the parser to get
+        a composition breakdown. Works exactly like other EVE parsing tools except all requests and processing are made
+        client-side, without a back-end server. Without centralized caching provided by a back-end, parsing is slower,
+        but you keep full control over your data.</p>
+      <p><b>Market Browser:</b> Quickly look up prices for items across any region in the game without having to login.</p>
+      <p><b>Zkill Listener:</b> Listens for killmails on the zKillboard Live Feed as they come in, you can filter by
+        alliance, corporation, location, ship-type and enable sound notifications. </p>
+      <p><b>Navigation:</b> Quick-reference tools to check Jump-Distance, determine which systems are in range, or
+        calculate gate routes with preference settings. </p>
+      <p><b>Profile Sync(Desktop-Only):</b> Sync your EVE settings between accounts or characters. Very useful for
+        anyone managing multiple accounts. Backups are made automatically before syncing to ensure your profiles stay
+        safe. </p>
+      <p><b>VNI Companion(Desktop-Only):</b> Multiple tools that enable safer and easier Ratting. Watches an Intel
+        channel for activity in systems near you. Alerts for faction and capital spawns. Counts how much ISK you've
+        accumulated during your Ratting session. </p>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-lg-6"
+         *ngIf="config.debug">
       <div class="row">
         <div class="col-12">
           <h3>Config Editor</h3>
