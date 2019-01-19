@@ -19,36 +19,31 @@ export class EveService {
 
   characters(id: number): Promise<any> {
     return this.http
-      .get(
-        `${this.esiUrl}/latest/characters/${id}/?datasource=tranquility`)
+      .get(`${this.esiUrl}/latest/characters/${id}/?datasource=tranquility`)
       .toPromise();
   }
 
   corporations(id: number): Promise<any> {
     return this.http
-      .get(
-        `${this.esiUrl}/latest/corporations/${id}/?datasource=tranquility`)
+      .get(`${this.esiUrl}/latest/corporations/${id}/?datasource=tranquility`)
       .toPromise();
   }
 
   alliances(id: number): Promise<any> {
     return this.http
-      .get(
-        `${this.esiUrl}/latest/alliances/${id}/?datasource=tranquility`)
+      .get(`${this.esiUrl}/latest/alliances/${id}/?datasource=tranquility`)
       .toPromise();
   }
 
   marketOrders(typeId: number, regionId: number): Promise<any> {
     return this.http
-      .get(
-        `${this.esiUrl}/latest/markets/${regionId}/orders/?datasource=tranquility&order_type=all&type_id=${typeId}`)
+      .get(`${this.esiUrl}/latest/markets/${regionId}/orders/?datasource=tranquility&order_type=all&type_id=${typeId}`)
       .toPromise();
   }
 
   universeTypes(typeId: number): Promise<any> {
     return this.http
-      .get(
-        `${this.esiUrl}/latest/universe/types/${typeId}/?datasource=tranquility&language=en-us`)
+      .get(`${this.esiUrl}/latest/universe/types/${typeId}/?datasource=tranquility&language=en-us`)
       .toPromise();
   }
 }
