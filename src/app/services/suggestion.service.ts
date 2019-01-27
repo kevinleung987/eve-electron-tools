@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import matchSorter from 'match-sorter';
-import { UniverseService } from 'src/app/services/universe.service';
 import { BehaviorSubject } from 'rxjs';
+import { UniverseService } from 'src/app/services/universe.service';
 
 @Injectable({ providedIn: 'root' })
 export class SuggestionService {

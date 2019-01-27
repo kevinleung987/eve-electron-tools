@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
-import { DisplayAlliance, DisplayCorporation, EveAlliance, EveCharacter, EveCorporation, } from 'src/app/models/EveModels.model';
+import {
+  DisplayAlliance,
+  DisplayCorporation,
+  EveAlliance,
+  EveCharacter,
+  EveCorporation,
+} from 'src/app/models/EveModels.model';
 import { EveService } from 'src/app/services/eve.service';
-import { ImagePipe } from '../shared/pipes/image.pipe';
+import { ImagePipe } from 'src/app/shared/pipes/image.pipe';
 
 @Injectable({ providedIn: 'root' })
 export class LocalScanService {

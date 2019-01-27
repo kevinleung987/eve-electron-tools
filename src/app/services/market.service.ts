@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Price } from 'src/app/models/Market.model';
 import { EveService } from 'src/app/services/eve.service';
 import { UniverseService } from 'src/app/services/universe.service';
-import { Price } from 'src/app/models/Market.model';
 
 @Injectable({ providedIn: 'root' })
 export class MarketService {

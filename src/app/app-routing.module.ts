@@ -1,15 +1,5 @@
-import { Injectable, NgModule } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  DetachedRouteHandle,
-  RouteReuseStrategy,
-  RouterModule,
-  RouterStateSnapshot,
-  Routes,
-} from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
-import { ElectronService } from 'src/app/services/electron.service';
+import { NgModule } from '@angular/core';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from 'src/app/shared/home/home.component';
 import { DirectionalScanComponent } from 'src/app/tools/directional-scan/directional-scan.component';
 import { LocalScanComponent } from 'src/app/tools/local-scan/local-scan.component';

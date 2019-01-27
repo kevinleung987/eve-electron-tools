@@ -1,9 +1,9 @@
+import { SlicePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from 'src/app/services/config.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
-import { ConfigService } from 'src/app/services/config.service';
-import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-navigation',

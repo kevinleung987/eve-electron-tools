@@ -19,10 +19,10 @@ import { SearchComponent } from 'src/app/shared/search/search.component';
 import { DirectionalScanComponent } from 'src/app/tools/directional-scan/directional-scan.component';
 import { LocalScanComponent } from 'src/app/tools/local-scan/local-scan.component';
 import { MarketComponent } from 'src/app/tools/market/market.component';
+import { NavigationComponent } from 'src/app/tools/navigation/navigation.component';
 import { ProfileSyncComponent } from 'src/app/tools/profile-sync/profile-sync.component';
 import { VNICompanionComponent } from 'src/app/tools/vni-companion/vni-companion.component';
 import { ZkillListenerComponent } from 'src/app/tools/zkill-listener/zkill-listener.component';
-import { NavigationComponent } from './tools/navigation/navigation.component';
 
 @NgModule({
   declarations: [

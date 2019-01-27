@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Selected, Profile } from 'src/app/models/Profile.model';
+import { Profile, Selected } from 'src/app/models/Profile.model';
+import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { ElectronService } from 'src/app/services/electron.service';
-import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-profile-sync',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Price } from 'src/app/models/Market.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
+import { MarketService } from 'src/app/services/market.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
-import { MarketService } from 'src/app/services/market.service';
-import { Price } from 'src/app/models/Market.model';
 
 
 @Component({
