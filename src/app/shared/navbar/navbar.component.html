@@ -62,7 +62,10 @@
                (click)="navigate('/vni-companion')">VNI Companion</a>
          </li>
       </ul>
-      <button class="btn btn-outline-success"
+      <button *ngIf="!electron.isElectron"
+              class="btn btn-outline-warning navbar-button"
+              (click)="electron.openUrl('https://github.com/kevinleung987/eve-electron-tools/releases')">Desktop Client</button>
+      <button class="btn btn-outline-success navbar-button"
               (click)="electron.openUrl('https://github.com/kevinleung987/eve-electron-tools')">⭐ on GitHub</button>
    </div>
 </nav>
