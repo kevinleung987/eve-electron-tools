@@ -8,6 +8,7 @@ import { EveService } from 'src/app/services/eve.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-vni-companion',
@@ -16,9 +17,8 @@ import { UniverseService } from 'src/app/services/universe.service';
 })
 export class VNICompanionComponent implements OnInit {
   // GroupIDs for faction/capital spawns
-  readonly factionSpawns = [789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 807, 808, 809, 810, 811,
-    812, 813, 814, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 1285, 1286, 1287];
-  readonly capitalSpawns = [1681, 1682, 1683, 1684, 1685, 1686, 1687, 1688, 1689, 1690, 1691, 1692];
+  readonly factionSpawns = environment.factionSpawns;
+  readonly capitalSpawns = environment.capitalSpawns;
   // RegExes for parsing log entries
   readonly isBounty: RegExp = /\(bounty\)/g;
   readonly isCombat: RegExp = /\(combat\)/g;

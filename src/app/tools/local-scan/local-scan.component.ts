@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class LocalScanComponent implements OnInit {
   placeholder = this.config.isDemo() ? environment.localScanPlaceholder : null;
   parallel = false;
+  @ViewChild('localInput') localInput;
 
   constructor(public config: ConfigService, private alert: AlertService, public local: LocalScanService) { }
 
@@ -32,6 +33,7 @@ export class LocalScanComponent implements OnInit {
   resetView() {
     this.local.reset();
     this.placeholder = '';
+    this.localInput.value = '';
     this.alert.info('Results cleared.');
   }
 
