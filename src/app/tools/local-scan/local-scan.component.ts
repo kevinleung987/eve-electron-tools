@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { LocalScanService } from 'src/app/services/local-scan.service';
@@ -31,6 +31,7 @@ export class LocalScanComponent implements OnInit {
 
   resetView() {
     this.local.reset();
+    this.placeholder = '';
     this.alert.info('Results cleared.');
   }
 

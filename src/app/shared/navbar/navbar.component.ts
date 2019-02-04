@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     if (this.electron.isElectron) {
       this.router.navigate([route]);
     } else {
-      this.alert.warning('This feature is only available in the Desktop client, you can download it from the GitHub Releases page.');
+      this.alert.warning('This feature is only available in the Desktop Client, you can download it from the GitHub Releases page.');
     }
   }
 }
