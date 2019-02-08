@@ -7,7 +7,6 @@
         <p *ngIf="!electron.isElectron">You are running not running under Electron. Please download the Desktop Client
           if you want to use any of the Electron-powered tools.</p>
         <p *ngIf="electron.isElectron">You are running under Electron.</p>
-        <p>Current EVE Time: <b>{{now | date:'HH:mm':'+000'}}</b></p>
       </h5>
     </div>
     <div class="col-6 col-lg-3">

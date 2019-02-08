@@ -10,15 +10,10 @@ import { ElectronService } from 'src/app/services/electron.service';
 })
 export class HomeComponent implements OnInit {
   configText = this.config.getConfig();
-  now = new Date();
 
   constructor(public electron: ElectronService, public config: ConfigService, private alert: AlertService) { }
 
-  ngOnInit() {
-    setInterval(() => {
-      this.now = new Date();
-    }, 60000);
-  }
+  ngOnInit() { }
 
   writeConfig(config) {
     this.config.setConfig(config);

@@ -9,9 +9,15 @@ import { AlertService } from 'src/app/services/alert.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  now = new Date();
+
   constructor(public electron: ElectronService, private router: Router, private alert: AlertService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    setInterval(() => {
+      this.now = new Date();
+    }, 60000);
+  }
 
   navigate(route: string) {
     if (this.electron.isElectron) {

@@ -62,6 +62,7 @@
                (click)="navigate('/vni-companion')">VNI Companion</a>
          </li>
       </ul>
+      <span class="time">{{now | date:'HH:mm':'+000'}}</span>
       <button *ngIf="!electron.isElectron"
               class="btn btn-outline-warning navbar-button"
               (click)="electron.openUrl('https://github.com/kevinleung987/eve-electron-tools/releases')">Desktop Client</button>
