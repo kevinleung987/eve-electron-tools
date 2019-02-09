@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { UniverseService } from 'src/app/services/universe.service';
-import { environment } from 'src/environments/environment';
+import { Demo } from 'src/app/util/demo';
 
 @Component({
   selector: 'app-dscan',
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./directional-scan.component.scss']
 })
 export class DirectionalScanComponent implements OnInit {
-  placeholder = this.config.isDemo() ? environment.dScanPlaceholder : null;
+  placeholder = this.config.isDemo() ? Demo.dScanPlaceholder : null;
   busy = false;
   results: { [name: string]: { typeId: number, count: number } } = {};
   display: { name: string, typeId: number, count: number }[] = [];

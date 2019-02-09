@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { LocalScanService } from 'src/app/services/local-scan.service';
-import { environment } from 'src/environments/environment';
+import { Demo } from 'src/app/util/demo';
 
 @Component({
   selector: 'app-local-scan',
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./local-scan.component.scss']
 })
 export class LocalScanComponent implements OnInit {
-  placeholder = this.config.isDemo() ? environment.localScanPlaceholder : null;
+  placeholder = this.config.isDemo() ? Demo.localScanPlaceholder : null;
   parallel = false;
   @ViewChild('localInput') localInput;
 

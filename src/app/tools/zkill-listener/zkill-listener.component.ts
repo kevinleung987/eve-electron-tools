@@ -17,7 +17,7 @@ import { EveService } from 'src/app/services/eve.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SuggestionService } from 'src/app/services/suggestion.service';
 import { UniverseService } from 'src/app/services/universe.service';
-import { environment } from 'src/environments/environment';
+import { Demo } from 'src/app/util/demo';
 
 @Component({
   selector: 'app-zkill-listener',
@@ -57,7 +57,7 @@ export class ZkillListenerComponent implements OnInit {
     window.$('app-zkill-listener').bootstrapMaterialDesign();
     if (this.config.isDemo()) {
       this.universe.waitUntilLoaded(() => {
-        this.mails.push(environment.zkillExample);
+        this.mails.push(Demo.zkillExample);
         console.log(this.mails[0]);
       });
     }
