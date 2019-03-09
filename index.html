@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>EVE Electron Tools</title>
+  <base href="">
+  <!-- Ensure jQuery is loaded before Bootstrap-MD -->
+  <script>
+    if (navigator.userAgent.toLowerCase().indexOf(' electron/') > -1) {
+      window.$ = window.jQuery = require('jquery');
+    }
+  </script>
+  <script async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-126818055-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+  </script>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <link rel="icon"
+        type="image/x-icon"
+        href="favicon.ico">
+<link rel="stylesheet" href="styles.a8b0c83bc365d1ac021a.css"></head>
+
+<body>
+  <app-root></app-root>
+<script type="text/javascript" src="runtime.a5dd35324ddfd942bef1.js"></script><script type="text/javascript" src="polyfills.698952173c7ffe02e13c.js"></script><script type="text/javascript" src="scripts.837d38392c2387eb8cc5.js"></script><script type="text/javascript" src="main.7fd758bd4914b3ae9870.js"></script></body>
+
+</html>
